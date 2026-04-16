@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSC HPMS — Hierarchical Promotion Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --g900:#0a2614;--g800:#0f3d20;--g700:#1a6b3c;--g600:#228b4e;--g500:#2da862;
+  --g200:#a8d5ba;--g100:#d4eede;--g50:#f0faf4;
+  --amber:#f59e0b;--amber-bg:#fffbeb;--amber-border:#fde68a;
+  --red:#ef4444;--red-bg:#fef2f2;--red-border:#fecaca;
+  --blue:#3b82f6;--blue-bg:#eff6ff;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --border:#e2e8f0;--border2:#f1f5f9;
+  --surface:#fff;--bg:#f8fafc;--sidebar:#0f2a1a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
+
+/* ── SURFACE SWITCHER ── */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:var(--g900);height:52px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 24px;
+}
+.top-bar-logo{display:flex;align-items:center;gap:10px;}
+.top-bar-logo .wordmark{font-family:'DM Serif Display',serif;color:#fff;font-size:18px;letter-spacing:0.02em;}
+.top-bar-logo .badge{background:var(--g700);color:#a8d5ba;font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px;letter-spacing:0.06em;text-transform:uppercase;}
+.surface-tabs{display:flex;gap:4px;background:rgba(255,255,255,0.08);padding:4px;border-radius:10px;}
+.surface-tab{
+  padding:5px 16px;border-radius:7px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  color:rgba(255,255,255,0.6);background:transparent;transition:all .2s;
+  display:flex;align-items:center;gap:6px;
+}
+.surface-tab.active{background:#fff;color:var(--g900);}
+.surface-tab svg{width:13px;height:13px;}
+.top-bar-right{color:rgba(255,255,255,0.4);font-size:11px;}
+
+/* ── SURFACES ── */
+.surface{display:none;margin-top:52px;}
+.surface.active{display:block;}
+
+/* ── ADMIN PORTAL ── */
+.admin-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 52px);}
+.sidebar{
+  background:var(--sidebar);position:sticky;top:52px;height:calc(100vh - 52px);
+  overflow-y:auto;display:flex;flex-direction:column;padding:16px 0;
+}
+.sidebar-section{padding:0 12px;margin-bottom:24px;}
+.sidebar-label{font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;padding:0 8px;margin-bottom:6px;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;
+  color:rgba(255,255,255,0.55);font-size:13px;font-weight:500;cursor:pointer;
+  transition:all .15s;margin-bottom:2px;border:none;background:transparent;width:100%;text-align:left;
+}
+.nav-item:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.85);}
+.nav-item.active{background:var(--g700);color:#fff;}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;}
+.nav-item .badge-count{margin-left:auto;background:var(--amber);color:#000;font-size:10px;font-weight:700;padding:1px 6px;border-radius:100px;}
+.sidebar-bottom{margin-top:auto;padding:12px;border-top:1px solid rgba(255,255,255,0.08);}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;}
+.sidebar-avatar{width:32px;height:32px;border-radius:50%;background:var(--g700);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;}
+.sidebar-user-info .name{color:#fff;font-size:12px;font-weight:600;}
+.sidebar-user-info .role{color:rgba(255,255,255,0.4);font-size:11px;}
+
+/* ── ADMIN MAIN ── */
+.admin-main{padding:28px 32px;overflow-x:hidden;}
+.admin-view{display:none;}
+.admin-view.active{display:block;}
+.page-header{margin-bottom:24px;}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:4px;}
+.page-subtitle{color:var(--text2);font-size:13px;}
+
+/* ── STAT CARDS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:20px;position:relative;overflow:hidden;
+}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.stat-card.green::before{background:var(--g700);}
+.stat-card.amber::before{background:var(--amber);}
+.stat-card.red::before{background:var(--red);}
+.stat-card.blue::before{background:var(--blue);}
+.stat-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+.stat-value{font-size:28px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px;}
+.stat-sub{font-size:12px;color:var(--text3);}
+.stat-icon{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.stat-icon.green{background:var(--g50);}
+.stat-icon.amber{background:var(--amber-bg);}
+.stat-icon.red{background:var(--red-bg);}
+.stat-icon.blue{background:var(--blue-bg);}
+.stat-icon svg{width:18px;height:18px;}
+.stat-icon.green svg{color:var(--g700);}
+.stat-icon.amber svg{color:var(--amber);}
+.stat-icon.red svg{color:var(--red);}
+.stat-icon.blue svg{color:var(--blue);}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-weight:600;font-size:14px;color:var(--text);}
+.card-body{padding:20px;}
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:28px;}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:600;}
+.badge.verified{background:#dcfce7;color:#166534;}
+.badge.pending{background:var(--amber-bg);color:#92400e;}
+.badge.flagged{background:var(--red-bg);color:#991b1b;}
+.badge.suspended{background:#f1f5f9;color:#475569;}
+.badge.active{background:var(--g50);color:var(--g700);}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;background:var(--bg);border-bottom:1px solid var(--border);}
+td{padding:12px 14px;border-bottom:1px solid var(--border2);font-size:13px;color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg);}
+.action-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;}
+.action-btn:hover{border-color:var(--g600);color:var(--g700);}
+.action-btn.primary{background:var(--g700);color:#fff;border-color:var(--g700);}
+.action-btn.primary:hover{background:var(--g600);}
+.action-btn.danger{color:var(--red);border-color:var(--red-border);}
+.action-btn.danger:hover{background:var(--red-bg);}
+
+/* ── SEARCH / FILTER BAR ── */
+.toolbar{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--border);}
+.search-input{flex:1;max-width:280px;padding:7px 12px 7px 32px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg);outline:none;transition:border-color .15s;position:relative;}
+.search-wrap{position:relative;max-width:280px;flex:1;}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text3);}
+.search-wrap input{width:100%;padding:7px 12px 7px 32px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg);outline:none;}
+.search-wrap input:focus{border-color:var(--g600);}
+.filter-btn{padding:7px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.filter-btn.active,.filter-btn:hover{border-color:var(--g600);color:var(--g700);background:var(--g50);}
+
+/* ── NETWORK TREE ── */
+.tree-container{padding:24px;overflow-x:auto;}
+.tree-node{display:flex;flex-direction:column;align-items:center;}
+.tree-card{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;
+  min-width:160px;text-align:center;position:relative;cursor:pointer;transition:all .2s;
+}
+.tree-card:hover{border-color:var(--g600);box-shadow:0 0 0 3px var(--g50);}
+.tree-card.fl{border-color:var(--g700);background:var(--g50);}
+.tree-card.fa{border-color:#93c5fd;background:#eff6ff;}
+.tree-card.fr{border-color:var(--border);}
+.tree-card .tc-name{font-weight:600;font-size:12px;color:var(--text);}
+.tree-card .tc-meta{font-size:10px;color:var(--text3);margin-top:2px;}
+.tree-card .tc-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px;white-space:nowrap;}
+.tc-badge.fl{background:var(--g700);color:#fff;}
+.tc-badge.fa{background:#3b82f6;color:#fff;}
+.tc-badge.fr{background:#8b5cf6;color:#fff;}
+.tree-row{display:flex;gap:16px;align-items:flex-start;justify-content:center;}
+.tree-connector{width:2px;height:20px;background:var(--border);margin:0 auto;}
+.tree-branches{display:flex;gap:16px;position:relative;}
+.tree-branches::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:calc(100% - 160px);height:2px;background:var(--border);}
+.branch-wrap{display:flex;flex-direction:column;align-items:center;}
+.branch-wrap .tree-connector{margin-top:0;}
+
+/* ── ACTIVITY FEED ── */
+.activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2);}
+.activity-item:last-child{border-bottom:none;}
+.activity-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+.activity-dot.green{background:var(--g700);}
+.activity-dot.amber{background:var(--amber);}
+.activity-dot.red{background:var(--red);}
+.activity-dot.blue{background:var(--blue);}
+.activity-text{font-size:12px;color:var(--text);line-height:1.5;}
+.activity-time{font-size:11px;color:var(--text3);margin-top:2px;}
+
+/* ── MOBILE FRAME ── */
+.mobile-surface{display:flex;align-items:flex-start;justify-content:center;padding:32px 20px;gap:60px;background:var(--bg);min-height:calc(100vh - 52px);}
+.mobile-label{text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);margin-bottom:12px;}
+.phone-frame{
+  width:375px;height:780px;background:var(--g900);border-radius:44px;
+  padding:3px;box-shadow:0 40px 80px rgba(0,0,0,0.25),0 0 0 1px rgba(255,255,255,0.08);
+  flex-shrink:0;position:relative;
+}
+.phone-inner{
+  width:100%;height:100%;background:var(--surface);border-radius:42px;overflow:hidden;
+  display:flex;flex-direction:column;position:relative;
+}
+.phone-statusbar{
+  height:44px;background:var(--surface);display:flex;align-items:center;
+  justify-content:space-between;padding:12px 24px 0;flex-shrink:0;
+}
+.phone-statusbar .time{font-weight:600;font-size:14px;}
+.phone-statusbar .icons{display:flex;gap:4px;align-items:center;font-size:11px;}
+.phone-screen{flex:1;overflow:hidden;position:relative;}
+.app-screen{position:absolute;inset:0;overflow-y:auto;display:none;}
+.app-screen.active{display:block;}
+.phone-nav{
+  height:70px;background:var(--surface);border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-around;padding:0 8px;flex-shrink:0;
+}
+.phone-nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;
+  border-radius:12px;cursor:pointer;transition:all .15s;border:none;background:transparent;
+  font-family:'DM Sans',sans-serif;
+}
+.phone-nav-item svg{width:22px;height:22px;color:var(--text3);}
+.phone-nav-item span{font-size:9px;font-weight:600;color:var(--text3);}
+.phone-nav-item.active svg{color:var(--g700);}
+.phone-nav-item.active span{color:var(--g700);}
+
+/* ── PROMOTER APP SCREENS ── */
+.app-header{padding:16px 20px 12px;background:var(--surface);}
+.app-header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
+.app-greeting{font-size:11px;color:var(--text3);}
+.app-name{font-family:'DM Serif Display',serif;font-size:20px;color:var(--text);}
+.notif-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg);cursor:pointer;position:relative;}
+.notif-btn svg{width:16px;height:16px;}
+.notif-dot{position:absolute;top:7px;right:8px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1.5px solid var(--surface);}
+
+.kpi-card{
+  margin:12px 16px;background:linear-gradient(135deg,var(--g800),var(--g700));
+  border-radius:16px;padding:20px;color:#fff;position:relative;overflow:hidden;
+}
+.kpi-card::after{content:'';position:absolute;top:-20px;right:-20px;width:120px;height:120px;background:rgba(255,255,255,0.05);border-radius:50%;}
+.kpi-month{font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.kpi-msv{font-size:30px;font-weight:700;margin-bottom:2px;}
+.kpi-label{font-size:11px;opacity:0.7;margin-bottom:14px;}
+.kpi-tier{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;}
+.kpi-tier .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);}
+
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 16px;}
+.mini-stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.mini-stat-val{font-size:22px;font-weight:700;color:var(--text);}
+.mini-stat-label{font-size:11px;color:var(--text3);margin-top:2px;}
+
+.section-title{font-weight:600;font-size:13px;color:var(--text);padding:12px 16px 8px;display:flex;justify-content:space-between;align-items:center;}
+.section-title a{font-size:11px;color:var(--g700);text-decoration:none;font-weight:500;}
+
+.pharmacy-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border2);}
+.pharmacy-row:last-child{border-bottom:none;}
+.ph-icon{width:36px;height:36px;border-radius:10px;background:var(--g50);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ph-icon svg{width:18px;height:18px;color:var(--g700);}
+.ph-info{flex:1;}
+.ph-name{font-size:13px;font-weight:600;color:var(--text);}
+.ph-meta{font-size:11px;color:var(--text3);}
+.ph-amount{font-size:13px;font-weight:700;color:var(--text);}
+
+/* QR BARCODE SCREEN */
+.qr-screen{display:flex;flex-direction:column;align-items:center;padding:24px 20px;}
+.qr-screen h2{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;}
+.qr-screen p{font-size:12px;color:var(--text3);margin-bottom:24px;text-align:center;}
+.qr-box{
+  width:220px;height:220px;border-radius:20px;padding:16px;
+  background:var(--surface);border:2px solid var(--border);
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);margin-bottom:16px;
+}
+.qr-box canvas,.qr-box img,.qr-box svg{width:100%;height:100%;}
+.qr-id{font-size:13px;font-weight:700;color:var(--text);text-align:center;letter-spacing:0.1em;margin-bottom:6px;}
+.qr-name{font-size:11px;color:var(--text3);text-align:center;margin-bottom:20px;}
+.qr-share-btn{
+  width:100%;padding:14px;background:var(--g700);color:#fff;border:none;border-radius:14px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;
+}
+.qr-share-btn:hover{background:var(--g600);}
+.qr-share-btn svg{width:16px;height:16px;}
+
+/* EARNINGS SCREEN */
+.earnings-header{background:linear-gradient(135deg,var(--g900),var(--g800));padding:20px;color:#fff;}
+.earnings-total{font-size:32px;font-weight:700;margin-bottom:2px;}
+.earnings-label{font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.06em;}
+.earnings-chart-wrap{padding:16px;}
+.earnings-breakdown{padding:0 16px 16px;}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border2);}
+.breakdown-row:last-child{border-bottom:none;}
+.breakdown-ph{font-size:12px;font-weight:500;color:var(--text);}
+.breakdown-msv{font-size:11px;color:var(--text3);}
+.breakdown-amount{font-size:13px;font-weight:700;color:var(--g700);}
+
+/* PROMOTER NETWORK SCREEN */
+.network-screen{padding:16px;}
+.network-screen h3{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px;}
+.network-screen p{font-size:12px;color:var(--text3);margin-bottom:16px;}
+.mobile-tree-level{margin-bottom:12px;}
+.mobile-tree-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);margin-bottom:6px;}
+.mobile-tree-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;
+  margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s;
+}
+.mobile-tree-card:hover{border-color:var(--g600);}
+.mtc-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.mtc-avatar.fa{background:#dbeafe;color:#1d4ed8;}
+.mtc-avatar.fr{background:#f3e8ff;color:#7c3aed;}
+.mtc-name{font-size:12px;font-weight:600;color:var(--text);}
+.mtc-meta{font-size:10px;color:var(--text3);}
+.mtc-chevron{margin-left:auto;color:var(--text3);}
+.mtc-chevron svg{width:14px;height:14px;}
+
+/* ── PHARMACY APP ── */
+.scan-screen{display:flex;flex-direction:column;align-items:center;padding:24px 20px;}
+.scan-title{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;}
+.scan-sub{font-size:12px;color:var(--text3);text-align:center;margin-bottom:24px;}
+.scan-viewport{
+  width:220px;height:220px;border-radius:20px;background:var(--g900);position:relative;
+  overflow:hidden;margin-bottom:20px;
+}
+.scan-corner{position:absolute;width:24px;height:24px;border-color:var(--g500);border-style:solid;}
+.scan-corner.tl{top:12px;left:12px;border-width:3px 0 0 3px;border-radius:3px 0 0 0;}
+.scan-corner.tr{top:12px;right:12px;border-width:3px 3px 0 0;border-radius:0 3px 0 0;}
+.scan-corner.bl{bottom:12px;left:12px;border-width:0 0 3px 3px;border-radius:0 0 0 3px;}
+.scan-corner.br{bottom:12px;right:12px;border-width:0 3px 3px 0;border-radius:0 0 3px 0;}
+.scan-line{
+  position:absolute;left:20px;right:20px;height:2px;background:var(--g500);
+  box-shadow:0 0 8px var(--g500);animation:scan-anim 2s ease-in-out infinite;top:20px;
+}
+@keyframes scan-anim{0%,100%{top:20px;}50%{top:180px;}}
+.scan-label{font-size:12px;color:#fff;opacity:0.6;position:absolute;bottom:14px;width:100%;text-align:center;}
+.scan-state-success{display:none;}
+.scan-state-success.show{display:block;}
+.success-check{
+  width:60px;height:60px;background:var(--g50);border-radius:50%;display:flex;align-items:center;
+  justify-content:center;margin:0 auto 12px;
+}
+.success-check svg{width:28px;height:28px;color:var(--g700);}
+.promoter-found{background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:12px 16px;margin:0 0 20px;width:100%;}
+.promoter-found .pf-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--g700);margin-bottom:4px;}
+.promoter-found .pf-name{font-size:15px;font-weight:700;color:var(--text);}
+.promoter-found .pf-id{font-size:11px;color:var(--text3);}
+
+.register-form{padding:16px 20px;}
+.form-group{margin-bottom:16px;}
+.form-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px;display:block;}
+.form-input{
+  width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;
+  font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;background:var(--bg);
+  transition:border-color .15s;
+}
+.form-input:focus{border-color:var(--g700);background:#fff;}
+.form-submit{
+  width:100%;padding:14px;background:var(--g700);color:#fff;border:none;border-radius:14px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-top:4px;
+  transition:background .2s;
+}
+.form-submit:hover{background:var(--g600);}
+
+.orders-screen{padding:0;}
+.orders-header{padding:16px 20px 8px;}
+.orders-header h3{font-family:'DM Serif Display',serif;font-size:20px;}
+.orders-header p{font-size:12px;color:var(--text3);}
+.order-row{padding:12px 20px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:12px;}
+.order-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.order-icon.settled{background:#dcfce7;}
+.order-icon.processing{background:var(--amber-bg);}
+.order-icon.pending{background:var(--blue-bg);}
+.order-icon svg{width:18px;height:18px;}
+.order-icon.settled svg{color:#16a34a;}
+.order-icon.processing svg{color:var(--amber);}
+.order-icon.pending svg{color:var(--blue);}
+.order-info{flex:1;}
+.order-ref{font-size:12px;font-weight:600;color:var(--text);}
+.order-meta{font-size:11px;color:var(--text3);}
+.order-right{text-align:right;}
+.order-amount{font-size:13px;font-weight:700;color:var(--text);}
+.order-status-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px;margin-top:2px;display:inline-block;}
+.order-status-badge.settled{background:#dcfce7;color:#16a34a;}
+.order-status-badge.processing{background:var(--amber-bg);color:#92400e;}
+.order-status-badge.pending{background:var(--blue-bg);color:#1d4ed8;}
+
+/* AUDIT LOG */
+.audit-row{display:flex;gap:14px;padding:12px 14px;border-bottom:1px solid var(--border2);align-items:flex-start;}
+.audit-ts{font-size:11px;color:var(--text3);white-space:nowrap;padding-top:2px;min-width:110px;}
+.audit-actor{font-size:12px;font-weight:600;color:var(--text);}
+.audit-action{font-size:12px;color:var(--text2);}
+.audit-tag{font-size:10px;font-weight:700;padding:1px 7px;border-radius:100px;margin-top:3px;display:inline-block;}
+.audit-tag.create{background:var(--g50);color:var(--g700);}
+.audit-tag.verify{background:#dbeafe;color:#1d4ed8;}
+.audit-tag.suspend{background:var(--red-bg);color:var(--red);}
+.audit-tag.commission{background:var(--amber-bg);color:#92400e;}
+
+/* COMMISSION TABLE */
+.commission-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px 20px;background:var(--g50);border-bottom:1px solid var(--border);}
+.cs-item{}
+.cs-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);}
+.cs-val{font-size:20px;font-weight:700;color:var(--text);}
+.cs-val.green{color:var(--g700);}
+
+/* MISC */
+.empty-state{text-align:center;padding:40px;color:var(--text3);}
+.empty-state svg{width:40px;height:40px;margin-bottom:8px;opacity:0.3;}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all .15s;}
+.chip:hover,.chip.active{border-color:var(--g600);background:var(--g50);color:var(--g700);}
+.flex{display:flex;align-items:center;}
+.gap-2{gap:8px;}
+.ml-auto{margin-left:auto;}
+.text-muted{color:var(--text3);}
+.font-bold{font-weight:700;}
+.mt-4{margin-top:16px;}
+
+@media(max-width:900px){
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .two-col{grid-template-columns:1fr;}
+  .mobile-surface{flex-direction:column;align-items:center;gap:40px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-logo">
+    <span class="wordmark">MSC</span>
+    <span class="badge">HPMS</span>
+  </div>
+  <div class="surface-tabs">
+    <button class="surface-tab active" onclick="switchSurface('admin')" id="tab-admin">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Admin Portal
+    </button>
+    <button class="surface-tab" onclick="switchSurface('promoter')" id="tab-promoter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Promoter App
+    </button>
+    <button class="surface-tab" onclick="switchSurface('pharmacy')" id="tab-pharmacy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Pharmacy App
+    </button>
+  </div>
+  <div class="top-bar-right">MSC-HPMS v2.0 · Prototype</div>
+</div>
+
+<!-- ═══════════════ ADMIN PORTAL ═══════════════ -->
+<div class="surface active" id="surface-admin">
+  <div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Main</div>
+        <button class="nav-item active" onclick="showAdminView('dashboard', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-item" onclick="showAdminView('network', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
+          Network Tree
+        </button>
+        <button class="nav-item" onclick="showAdminView('pharmacies', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Pharmacies
+          <span class="badge-count">18</span>
+        </button>
+        <button class="nav-item" onclick="showAdminView('commissions', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Commissions
+        </button>
+        <button class="nav-item" onclick="showAdminView('audit', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Audit Log
+        </button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Manage</div>
+        <button class="nav-item" onclick="showAdminView('promoters', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Promoters
+        </button>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">SA</div>
+          <div class="sidebar-user-info">
+            <div class="name">Super Admin</div>
+            <div class="role">MSC Back-office</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- DASHBOARD -->
+      <div class="admin-view active" id="view-dashboard">
+        <div class="page-header">
+          <div class="page-title">Dashboard</div>
+          <div class="page-subtitle">April 2026 · Network overview and performance summary</div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card green">
+            <div class="stat-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-label">Total Promoters</div>
+            <div class="stat-value">247</div>
+            <div class="stat-sub">12 Field Leads · 84 Agents · 151 Reps</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </div>
+            <div class="stat-label">Active Pharmacies</div>
+            <div class="stat-value">1,284</div>
+            <div class="stat-sub">+43 this month</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-icon amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-label">Pending Verification</div>
+            <div class="stat-value">18</div>
+            <div class="stat-sub">3 flagged for review</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="stat-label">MTD Commission</div>
+            <div class="stat-value">₦3.2M</div>
+            <div class="stat-sub">Across 247 promoters</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Monthly Commission Payouts</span>
+              <span class="text-muted" style="font-size:11px;">Nov 2025 – Apr 2026</span>
+            </div>
+            <div class="card-body" style="padding:16px;">
+              <canvas id="commissionChart" height="200"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Recent Activity</span></div>
+            <div class="card-body" style="padding:12px 16px;">
+              <div class="activity-item">
+                <div class="activity-dot green"></div>
+                <div>
+                  <div class="activity-text"><strong>HealthCare Plus Pharmacy</strong> verified by Admin</div>
+                  <div class="activity-time">5 min ago · Ikeja, Lagos</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot amber"></div>
+                <div>
+                  <div class="activity-text"><strong>MedPlus Abuja</strong> flagged — duplicate CAC number</div>
+                  <div class="activity-time">23 min ago · Garki, Abuja</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot green"></div>
+                <div>
+                  <div class="activity-text"><strong>Emeka Dike</strong> (Field Agent) onboarded <strong>PharmaLife</strong></div>
+                  <div class="activity-time">1 hr ago · Onitsha, Anambra</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot blue"></div>
+                <div>
+                  <div class="activity-text">April commission batch triggered — 247 promoters processed</div>
+                  <div class="activity-time">2 hrs ago · System</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot red"></div>
+                <div>
+                  <div class="activity-text"><strong>Tunde Alli</strong> (Frontline Rep) attempted to recruit — blocked</div>
+                  <div class="activity-time">3 hrs ago · System</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot green"></div>
+                <div>
+                  <div class="activity-text"><strong>Blessing Nwosu</strong> (Field Lead) created — Abuja North</div>
+                  <div class="activity-time">Yesterday · Admin</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Network Performance — Top Field Leads (April 2026)</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Field Lead</th><th>Region</th><th>Agents</th><th>Reps</th><th>Pharmacies</th><th>MSV</th><th>Commission</th><th>Tier</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Adeyemi Okafor</strong></td><td>Lagos Central</td><td>8</td><td>23</td><td>142</td><td>₦18.4M</td><td>₦308,000</td><td><span class="badge active">Elite</span></td></tr>
+                <tr><td><strong>Blessing Nwosu</strong></td><td>Abuja North</td><td>5</td><td>12</td><td>89</td><td>₦11.2M</td><td>₦184,000</td><td><span class="badge active">Strong</span></td></tr>
+                <tr><td><strong>Chidi Okonkwo</strong></td><td>Port Harcourt</td><td>4</td><td>9</td><td>67</td><td>₦8.6M</td><td>₦136,000</td><td><span class="badge active">Strong</span></td></tr>
+                <tr><td><strong>Fatima Suleiman</strong></td><td>Kano</td><td>3</td><td>7</td><td>45</td><td>₦5.1M</td><td>₦76,000</td><td><span class="badge pending">Minimum</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- NETWORK TREE -->
+      <div class="admin-view" id="view-network">
+        <div class="page-header">
+          <div class="page-title">Network Tree</div>
+          <div class="page-subtitle">Full 3-level hierarchy — Field Lead → Field Agent → Frontline Rep</div>
+        </div>
+        <div class="card">
+          <div class="toolbar" style="gap:12px;">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search promoter…">
+            </div>
+            <button class="chip active">All Leads</button>
+            <button class="chip">Lagos</button>
+            <button class="chip">Abuja</button>
+            <button class="chip">Port Harcourt</button>
+          </div>
+          <div class="tree-container">
+            <!-- ROOT -->
+            <div class="tree-node">
+              <div class="tree-card" style="border-color:var(--g900);background:var(--g900);color:#fff;min-width:180px;">
+                <div class="tc-name" style="color:#fff;">MSC Administration</div>
+                <div class="tc-meta" style="color:rgba(255,255,255,0.5);">System Root</div>
+              </div>
+              <div class="tree-connector"></div>
+            </div>
+            <!-- FIELD LEADS ROW -->
+            <div class="tree-row" style="gap:40px;">
+              <!-- FL 1 -->
+              <div class="branch-wrap">
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                  <div class="tree-card fl" style="min-width:180px;">
+                    <span class="tc-badge fl">Field Lead</span>
+                    <div class="tc-name" style="margin-top:4px;">Adeyemi Okafor</div>
+                    <div class="tc-meta">Lagos Central · 8 agents</div>
+                  </div>
+                  <div class="tree-connector"></div>
+                  <!-- FA under FL1 -->
+                  <div class="tree-row" style="gap:16px;">
+                    <div class="branch-wrap">
+                      <div style="display:flex;flex-direction:column;align-items:center;">
+                        <div class="tree-card fa">
+                          <span class="tc-badge fa">Field Agent</span>
+                          <div class="tc-name" style="margin-top:4px;">Emeka Dike</div>
+                          <div class="tc-meta">5 pharmacies</div>
+                        </div>
+                        <div class="tree-connector"></div>
+                        <div class="tree-row" style="gap:10px;">
+                          <div class="tree-card fr"><span class="tc-badge fr">FR</span><div class="tc-name" style="margin-top:4px;">Tunde Alli</div><div class="tc-meta">3 pharmacies</div></div>
+                          <div class="tree-card fr"><span class="tc-badge fr">FR</span><div class="tc-name" style="margin-top:4px;">Chioma Obi</div><div class="tc-meta">2 pharmacies</div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="branch-wrap">
+                      <div style="display:flex;flex-direction:column;align-items:center;">
+                        <div class="tree-card fa">
+                          <span class="tc-badge fa">Field Agent</span>
+                          <div class="tc-name" style="margin-top:4px;">Nkem Eze</div>
+                          <div class="tc-meta">4 pharmacies</div>
+                        </div>
+                        <div class="tree-connector"></div>
+                        <div class="tree-row" style="gap:10px;">
+                          <div class="tree-card fr"><span class="tc-badge fr">FR</span><div class="tc-name" style="margin-top:4px;">Seun Bello</div><div class="tc-meta">4 pharmacies</div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- FL 2 -->
+              <div class="branch-wrap">
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                  <div class="tree-card fl" style="min-width:180px;">
+                    <span class="tc-badge fl">Field Lead</span>
+                    <div class="tc-name" style="margin-top:4px;">Blessing Nwosu</div>
+                    <div class="tc-meta">Abuja North · 5 agents</div>
+                  </div>
+                  <div class="tree-connector"></div>
+                  <div class="tree-row" style="gap:16px;">
+                    <div class="branch-wrap">
+                      <div style="display:flex;flex-direction:column;align-items:center;">
+                        <div class="tree-card fa">
+                          <span class="tc-badge fa">Field Agent</span>
+                          <div class="tc-name" style="margin-top:4px;">Aminu Ibrahim</div>
+                          <div class="tc-meta">6 pharmacies</div>
+                        </div>
+                        <div class="tree-connector"></div>
+                        <div class="tree-row" style="gap:10px;">
+                          <div class="tree-card fr"><span class="tc-badge fr">FR</span><div class="tc-name" style="margin-top:4px;">Zainab Musa</div><div class="tc-meta">3 pharmacies</div></div>
+                          <div class="tree-card fr"><span class="tc-badge fr">FR</span><div class="tc-name" style="margin-top:4px;">Peter Okeke</div><div class="tc-meta">2 pharmacies</div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="branch-wrap">
+                      <div style="display:flex;flex-direction:column;align-items:center;">
+                        <div class="tree-card fa">
+                          <span class="tc-badge fa">Field Agent</span>
+                          <div class="tc-name" style="margin-top:4px;">Fatima Aliyu</div>
+                          <div class="tc-meta">3 pharmacies</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHARMACIES -->
+      <div class="admin-view" id="view-pharmacies">
+        <div class="page-header">
+          <div class="page-title">Pharmacies</div>
+          <div class="page-subtitle">1,284 registered · 18 pending verification</div>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search by name, CAC, city…">
+            </div>
+            <button class="filter-btn active" onclick="filterPharm(this,'all')">All</button>
+            <button class="filter-btn" onclick="filterPharm(this,'verified')">Verified</button>
+            <button class="filter-btn" onclick="filterPharm(this,'pending')">Pending</button>
+            <button class="filter-btn" onclick="filterPharm(this,'flagged')">Flagged</button>
+          </div>
+          <div class="table-wrap">
+            <table id="pharmacyTable">
+              <thead><tr><th>Pharmacy Name</th><th>CAC No.</th><th>City / LGA</th><th>Promoter</th><th>Status</th><th>Registered</th><th>Actions</th></tr></thead>
+              <tbody id="pharmacyBody">
+                <tr data-status="verified"><td><strong>Kingsway Pharmacy</strong></td><td>BN-123456</td><td>Ikeja, Lagos</td><td>Adeyemi Okafor (FL)</td><td><span class="badge verified">Verified</span></td><td>12 Mar 2026</td><td><button class="action-btn">View</button></td></tr>
+                <tr data-status="pending"><td><strong>MedPlus Ikeja</strong></td><td>BN-234567</td><td>Ikeja, Lagos</td><td>Emeka Dike (FA)</td><td><span class="badge pending">Pending</span></td><td>02 Apr 2026</td><td><button class="action-btn primary" onclick="verifyPharm(this)">Verify</button> <button class="action-btn danger">Reject</button></td></tr>
+                <tr data-status="flagged"><td><strong>HealthNet Plus</strong></td><td>BN-345678</td><td>Garki, Abuja</td><td>Aminu Ibrahim (FA)</td><td><span class="badge flagged">Flagged</span></td><td>08 Apr 2026</td><td><button class="action-btn">Review</button> <button class="action-btn danger">Reject</button></td></tr>
+                <tr data-status="verified"><td><strong>Pharma Direct</strong></td><td>BN-456789</td><td>Lekki, Lagos</td><td>Adeyemi Okafor (FL)</td><td><span class="badge verified">Verified</span></td><td>15 Feb 2026</td><td><button class="action-btn">View</button></td></tr>
+                <tr data-status="pending"><td><strong>QualiCare Pharmacy</strong></td><td>BN-567890</td><td>Wuse, Abuja</td><td>Fatima Aliyu (FA)</td><td><span class="badge pending">Pending</span></td><td>10 Apr 2026</td><td><button class="action-btn primary" onclick="verifyPharm(this)">Verify</button> <button class="action-btn danger">Reject</button></td></tr>
+                <tr data-status="pending"><td><strong>City Pharmacy</strong></td><td>BN-678901</td><td>Onitsha, Anambra</td><td>Nkem Eze (FA)</td><td><span class="badge pending">Pending</span></td><td>11 Apr 2026</td><td><button class="action-btn primary" onclick="verifyPharm(this)">Verify</button> <button class="action-btn danger">Reject</button></td></tr>
+                <tr data-status="verified"><td><strong>PharmaLife</strong></td><td>BN-789012</td><td>Aba, Abia</td><td>Emeka Dike (FA)</td><td><span class="badge verified">Verified</span></td><td>05 Mar 2026</td><td><button class="action-btn">View</button></td></tr>
+                <tr data-status="flagged"><td><strong>MedStore Lagos</strong></td><td>BN-890123</td><td>Surulere, Lagos</td><td>Seun Bello (FR)</td><td><span class="badge flagged">Flagged</span></td><td>09 Apr 2026</td><td><button class="action-btn">Review</button> <button class="action-btn danger">Reject</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMISSIONS -->
+      <div class="admin-view" id="view-commissions">
+        <div class="page-header">
+          <div class="page-title">Commission Report</div>
+          <div class="page-subtitle">April 2026 · Settled transactions only</div>
+        </div>
+        <div class="card" style="margin-bottom:20px;">
+          <div class="commission-summary">
+            <div class="cs-item"><div class="cs-label">Total Network MSV</div><div class="cs-val green">₦87.4M</div></div>
+            <div class="cs-item"><div class="cs-label">Total Commission</div><div class="cs-val green">₦3,218,000</div></div>
+            <div class="cs-item"><div class="cs-label">Onboarding Bonuses</div><div class="cs-val">₦86,000</div></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Promoter</th><th>Level</th><th>Pharmacies</th><th>Monthly MSV</th><th>Rate</th><th>Commission</th><th>Onboarding Bonus</th><th>Total Payout</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Adeyemi Okafor</strong></td><td><span class="badge active" style="font-size:10px;">Field Lead</span></td><td>142</td><td>₦18,400,000</td><td>1%/2%</td><td>₦308,000</td><td>₦4,000</td><td class="font-bold">₦312,000</td></tr>
+                <tr><td><strong>Emeka Dike</strong></td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8;font-size:10px;">Field Agent</span></td><td>38</td><td>₦5,200,000</td><td>1%/2%</td><td>₦84,000</td><td>₦3,600</td><td class="font-bold">₦87,600</td></tr>
+                <tr><td><strong>Blessing Nwosu</strong></td><td><span class="badge active" style="font-size:10px;">Field Lead</span></td><td>89</td><td>₦11,200,000</td><td>1%/2%</td><td>₦184,000</td><td>—</td><td class="font-bold">₦184,000</td></tr>
+                <tr><td><strong>Aminu Ibrahim</strong></td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8;font-size:10px;">Field Agent</span></td><td>24</td><td>₦3,100,000</td><td>1%/2%</td><td>₦52,000</td><td>₦1,800</td><td class="font-bold">₦53,800</td></tr>
+                <tr><td><strong>Tunde Alli</strong></td><td><span class="badge" style="background:#f3e8ff;color:#7c3aed;font-size:10px;">Frontline Rep</span></td><td>12</td><td>₦1,840,000</td><td>1%/2%</td><td>₦26,800</td><td>₦1,800</td><td class="font-bold">₦28,600</td></tr>
+                <tr><td><strong>Nkem Eze</strong></td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8;font-size:10px;">Field Agent</span></td><td>18</td><td>₦2,400,000</td><td>1%</td><td>₦24,000</td><td>—</td><td class="font-bold">₦24,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIT LOG -->
+      <div class="admin-view" id="view-audit">
+        <div class="page-header">
+          <div class="page-title">Audit Log</div>
+          <div class="page-subtitle">All admin and system actions — immutable record</div>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search actions…">
+            </div>
+            <button class="chip active">All</button>
+            <button class="chip">Create</button>
+            <button class="chip">Verify</button>
+            <button class="chip">Suspend</button>
+          </div>
+          <div>
+            <div class="audit-row"><div class="audit-ts">15 Apr 2026 09:41</div><div><div class="audit-actor">Super Admin</div><div class="audit-action">Verified pharmacy <strong>HealthCare Plus</strong> (BN-345678)</div><span class="audit-tag verify">VERIFY</span></div></div>
+            <div class="audit-row"><div class="audit-ts">15 Apr 2026 09:18</div><div><div class="audit-actor">System</div><div class="audit-action">Duplicate CAC detected — <strong>MedPlus Abuja</strong> flagged for review</div><span class="audit-tag suspend">FLAG</span></div></div>
+            <div class="audit-row"><div class="audit-ts">15 Apr 2026 08:54</div><div><div class="audit-actor">System</div><div class="audit-action">April 2026 commission batch completed — 247 promoters processed, ₦3,218,000 total</div><span class="audit-tag commission">COMMISSION</span></div></div>
+            <div class="audit-row"><div class="audit-ts">15 Apr 2026 07:30</div><div><div class="audit-actor">System</div><div class="audit-action">Recruitment attempt blocked — <strong>Tunde Alli</strong> (Frontline Rep) cannot recruit</div><span class="audit-tag suspend">BLOCKED</span></div></div>
+            <div class="audit-row"><div class="audit-ts">14 Apr 2026 16:20</div><div><div class="audit-actor">Super Admin</div><div class="audit-action">Created Field Lead account — <strong>Blessing Nwosu</strong>, Abuja North territory</div><span class="audit-tag create">CREATE</span></div></div>
+            <div class="audit-row"><div class="audit-ts">14 Apr 2026 14:05</div><div><div class="audit-actor">Super Admin</div><div class="audit-action">Suspended promoter <strong>James Uchenna</strong> — commission accrual frozen</div><span class="audit-tag suspend">SUSPEND</span></div></div>
+            <div class="audit-row"><div class="audit-ts">14 Apr 2026 11:32</div><div><div class="audit-actor">System</div><div class="audit-action">Onboarding bonus ₦2,000 triggered — pharmacy <strong>PharmaLife</strong>, first order settled</div><span class="audit-tag commission">BONUS</span></div></div>
+            <div class="audit-row"><div class="audit-ts">13 Apr 2026 09:00</div><div><div class="audit-actor">Super Admin</div><div class="audit-action">Cross-region approval granted — <strong>Chidi Okonkwo</strong> to operate in Imo territory</div><span class="audit-tag create">APPROVE</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROMOTERS -->
+      <div class="admin-view" id="view-promoters">
+        <div class="page-header">
+          <div class="page-title">Promoters</div>
+          <div class="page-subtitle">247 active across 3 levels</div>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <div class="search-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Search by name or barcode…">
+            </div>
+            <button class="action-btn primary" onclick="alert('Open create Field Lead modal')">+ Add Field Lead</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Level</th><th>Parent</th><th>Territory</th><th>Barcode</th><th>Pharmacies</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Adeyemi Okafor</strong></td><td><span class="badge active" style="font-size:10px;">Field Lead</span></td><td>—</td><td>Lagos Central</td><td style="font-family:monospace;font-size:11px;">MSC-FL-001-ADY</td><td>142</td><td><span class="badge verified">Active</span></td><td><button class="action-btn">View</button> <button class="action-btn danger">Suspend</button></td></tr>
+                <tr><td><strong>Emeka Dike</strong></td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8;font-size:10px;">Field Agent</span></td><td>Adeyemi Okafor</td><td>Lagos Central</td><td style="font-family:monospace;font-size:11px;">MSC-FA-001-EMK</td><td>38</td><td><span class="badge verified">Active</span></td><td><button class="action-btn">View</button> <button class="action-btn danger">Suspend</button></td></tr>
+                <tr><td><strong>Blessing Nwosu</strong></td><td><span class="badge active" style="font-size:10px;">Field Lead</span></td><td>—</td><td>Abuja North</td><td style="font-family:monospace;font-size:11px;">MSC-FL-002-BLS</td><td>89</td><td><span class="badge verified">Active</span></td><td><button class="action-btn">View</button> <button class="action-btn danger">Suspend</button></td></tr>
+                <tr><td><strong>Tunde Alli</strong></td><td><span class="badge" style="background:#f3e8ff;color:#7c3aed;font-size:10px;">Frontline Rep</span></td><td>Emeka Dike</td><td>Lagos Central</td><td style="font-family:monospace;font-size:11px;">MSC-FR-001-TND</td><td>12</td><td><span class="badge verified">Active</span></td><td><button class="action-btn">View</button> <button class="action-btn danger">Suspend</button></td></tr>
+                <tr><td><strong>James Uchenna</strong></td><td><span class="badge" style="background:#dbeafe;color:#1d4ed8;font-size:10px;">Field Agent</span></td><td>Chidi Okonkwo</td><td>Port Harcourt</td><td style="font-family:monospace;font-size:11px;">MSC-FA-009-JMU</td><td>0</td><td><span class="badge suspended">Suspended</span></td><td><button class="action-btn">View</button> <button class="action-btn primary">Reinstate</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════ PROMOTER APP ═══════════════ -->
+<div class="surface" id="surface-promoter">
+  <div class="mobile-surface">
+    <div>
+      <div class="mobile-label">Promoter App · Adeyemi Okafor (Field Lead)</div>
+      <div class="phone-frame">
+        <div class="phone-inner">
+          <div class="phone-statusbar">
+            <span class="time">9:41</span>
+            <div class="icons">
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="1" width="3" height="11" rx="1" opacity=".3"/></svg>
+              <svg width="15" height="12" viewBox="0 0 15 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7.5 2C9.9 2 12.1 3.1 13.5 4.9"/><path d="M1.5 4.9C2.9 3.1 5.1 2 7.5 2"/><path d="M10.8 6.5C9.9 5.6 8.8 5 7.5 5 6.2 5 5.1 5.6 4.2 6.5"/><circle cx="7.5" cy="9" r="1.5" fill="currentColor"/></svg>
+              🔋
+            </div>
+          </div>
+          <div class="phone-screen">
+            <!-- HOME -->
+            <div class="app-screen active" id="p-screen-home">
+              <div class="app-header">
+                <div class="app-header-top">
+                  <div>
+                    <div class="app-greeting">Good morning,</div>
+                    <div class="app-name">Adeyemi Okafor</div>
+                  </div>
+                  <div class="notif-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <div class="notif-dot"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-month">April 2026 · MSV</div>
+                <div class="kpi-msv">₦18,400,000</div>
+                <div class="kpi-label">Monthly Sales Value across your network</div>
+                <span class="kpi-tier"><span class="dot"></span> ELITE TIER</span>
+              </div>
+              <div class="mini-stats">
+                <div class="mini-stat">
+                  <div class="mini-stat-val">142</div>
+                  <div class="mini-stat-label">Active Pharmacies</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-val">₦312K</div>
+                  <div class="mini-stat-label">April Commission</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-val">31</div>
+                  <div class="mini-stat-label">Team Members</div>
+                </div>
+                <div class="mini-stat">
+                  <div class="mini-stat-val">8</div>
+                  <div class="mini-stat-label">New This Month</div>
+                </div>
+              </div>
+              <div class="section-title">Recent Pharmacies <a href="#">See all</a></div>
+              <div>
+                <div class="pharmacy-row">
+                  <div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+                  <div class="ph-info"><div class="ph-name">Kingsway Pharmacy</div><div class="ph-meta">Ikeja, Lagos · Verified</div></div>
+                  <div class="ph-amount">₦2.1M</div>
+                </div>
+                <div class="pharmacy-row">
+                  <div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+                  <div class="ph-info"><div class="ph-name">Pharma Direct</div><div class="ph-meta">Lekki, Lagos · Verified</div></div>
+                  <div class="ph-amount">₦1.8M</div>
+                </div>
+                <div class="pharmacy-row">
+                  <div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+                  <div class="ph-info"><div class="ph-name">MedPlus Ikeja</div><div class="ph-meta">Ikeja, Lagos · Pending</div></div>
+                  <div class="ph-amount">—</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BARCODE -->
+            <div class="app-screen" id="p-screen-barcode">
+              <div class="qr-screen">
+                <h2>My Barcode</h2>
+                <p>Show this at pharmacies to register them under your network</p>
+                <div class="qr-box">
+                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- QR code visual pattern -->
+                    <rect width="100" height="100" fill="white"/>
+                    <!-- top-left finder -->
+                    <rect x="5" y="5" width="25" height="25" rx="3" fill="#0f2a1a"/>
+                    <rect x="9" y="9" width="17" height="17" rx="1" fill="white"/>
+                    <rect x="13" y="13" width="9" height="9" fill="#0f2a1a"/>
+                    <!-- top-right finder -->
+                    <rect x="70" y="5" width="25" height="25" rx="3" fill="#0f2a1a"/>
+                    <rect x="74" y="9" width="17" height="17" rx="1" fill="white"/>
+                    <rect x="78" y="13" width="9" height="9" fill="#0f2a1a"/>
+                    <!-- bottom-left finder -->
+                    <rect x="5" y="70" width="25" height="25" rx="3" fill="#0f2a1a"/>
+                    <rect x="9" y="74" width="17" height="17" rx="1" fill="white"/>
+                    <rect x="13" y="78" width="9" height="9" fill="#0f2a1a"/>
+                    <!-- data modules -->
+                    <rect x="36" y="5" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="44" y="5" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="52" y="5" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="36" y="13" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="44" y="9" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="60" y="9" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="36" y="21" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="52" y="17" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="60" y="21" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="36" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="44" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="52" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="60" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="36" y="44" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="52" y="44" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="36" y="52" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="44" y="52" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="60" y="52" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="36" y="60" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="52" y="60" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="44" y="60" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="70" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="78" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="86" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="70" y="44" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="86" y="44" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="78" y="52" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="70" y="60" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="86" y="60" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="5" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="13" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="21" y="36" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="5" y="44" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="21" y="44" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="13" y="52" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="5" y="60" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="21" y="60" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="70" y="70" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="78" y="70" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="86" y="78" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="70" y="86" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="86" y="86" width="4" height="4" fill="#0f2a1a"/>
+                    <rect x="78" y="86" width="4" height="4" fill="#0f2a1a"/>
+                    <!-- MSC logo in center -->
+                    <rect x="42" y="42" width="16" height="16" rx="2" fill="var(--g700,#1a6b3c)"/>
+                    <text x="50" y="54" font-size="8" font-weight="bold" fill="white" text-anchor="middle" font-family="sans-serif">MSC</text>
+                  </svg>
+                </div>
+                <div class="qr-id">MSC-FL-001-ADY</div>
+                <div class="qr-name">Adeyemi Okafor · Field Lead · Lagos Central</div>
+                <button class="qr-share-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                  Share Barcode
+                </button>
+                <div style="margin-top:12px;font-size:11px;color:var(--text3);text-align:center;">Sub-barcodes issued to 8 Field Agents</div>
+              </div>
+            </div>
+
+            <!-- NETWORK -->
+            <div class="app-screen" id="p-screen-network">
+              <div class="network-screen">
+                <h3>My Network</h3>
+                <p>Your full downline hierarchy</p>
+                <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;gap:20px;">
+                  <div style="text-align:center;"><div style="font-size:20px;font-weight:700;">8</div><div style="font-size:10px;color:var(--text3);">Field Agents</div></div>
+                  <div style="width:1px;background:var(--g200);"></div>
+                  <div style="text-align:center;"><div style="font-size:20px;font-weight:700;">23</div><div style="font-size:10px;color:var(--text3);">Frontline Reps</div></div>
+                  <div style="width:1px;background:var(--g200);"></div>
+                  <div style="text-align:center;"><div style="font-size:20px;font-weight:700;">142</div><div style="font-size:10px;color:var(--text3);">Pharmacies</div></div>
+                </div>
+                <div class="mobile-tree-label">Field Agents (8)</div>
+                <div class="mobile-tree-card">
+                  <div class="mtc-avatar fa">ED</div>
+                  <div><div class="mtc-name">Emeka Dike</div><div class="mtc-meta">2 Reps · 38 pharmacies · ₦5.2M MSV</div></div>
+                  <div class="mtc-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+                </div>
+                <div class="mobile-tree-card">
+                  <div class="mtc-avatar fa">NE</div>
+                  <div><div class="mtc-name">Nkem Eze</div><div class="mtc-meta">1 Rep · 18 pharmacies · ₦2.4M MSV</div></div>
+                  <div class="mtc-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+                </div>
+                <div class="mobile-tree-card">
+                  <div class="mtc-avatar fa">AI</div>
+                  <div><div class="mtc-name">Amara Igwe</div><div class="mtc-meta">3 Reps · 22 pharmacies · ₦3.1M MSV</div></div>
+                  <div class="mtc-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- EARNINGS -->
+            <div class="app-screen" id="p-screen-earnings">
+              <div class="earnings-header">
+                <div class="earnings-label">April 2026 · Total Earnings</div>
+                <div class="earnings-total">₦312,000</div>
+              </div>
+              <div class="earnings-chart-wrap">
+                <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text);">Monthly Earnings</div>
+                <canvas id="earningsChart" height="120"></canvas>
+              </div>
+              <div style="padding:0 16px;font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px;">Top Pharmacies by Commission</div>
+              <div class="earnings-breakdown">
+                <div class="breakdown-row"><div><div class="breakdown-ph">Kingsway Pharmacy</div><div class="breakdown-msv">MSV ₦2.1M</div></div><div class="breakdown-amount">₦42,000</div></div>
+                <div class="breakdown-row"><div><div class="breakdown-ph">Pharma Direct</div><div class="breakdown-msv">MSV ₦1.8M</div></div><div class="breakdown-amount">₦36,000</div></div>
+                <div class="breakdown-row"><div><div class="breakdown-ph">PharmaLife</div><div class="breakdown-msv">MSV ₦1.5M</div></div><div class="breakdown-amount">₦30,000</div></div>
+                <div class="breakdown-row"><div><div class="breakdown-ph">CityMed</div><div class="breakdown-msv">MSV ₦1.2M</div></div><div class="breakdown-amount">₦24,000</div></div>
+                <div class="breakdown-row" style="padding-top:8px;border-top:2px solid var(--border);"><div><div class="breakdown-ph" style="font-weight:700;">Onboarding Bonuses</div><div class="breakdown-msv">2 pharmacies × ₦200</div></div><div class="breakdown-amount">₦4,000</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-nav">
+            <button class="phone-nav-item active" id="pnav-home" onclick="showPromoterScreen('home', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              <span>Home</span>
+            </button>
+            <button class="phone-nav-item" id="pnav-barcode" onclick="showPromoterScreen('barcode', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M12 7h.01M17 7h.01M7 12h10M7 17h.01M12 17h.01M17 17h.01"/></svg>
+              <span>Barcode</span>
+            </button>
+            <button class="phone-nav-item" id="pnav-network" onclick="showPromoterScreen('network', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>
+              <span>Network</span>
+            </button>
+            <button class="phone-nav-item" id="pnav-earnings" onclick="showPromoterScreen('earnings', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span>Earnings</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PHARMACY APP ═══════════════ -->
+<div class="surface" id="surface-pharmacy">
+  <div class="mobile-surface">
+    <div>
+      <div class="mobile-label">Pharmacy App · Kingsway Pharmacy</div>
+      <div class="phone-frame">
+        <div class="phone-inner">
+          <div class="phone-statusbar">
+            <span class="time">9:41</span>
+            <div class="icons">
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/></svg>
+              🔋
+            </div>
+          </div>
+          <div class="phone-screen">
+            <!-- SCAN -->
+            <div class="app-screen active" id="ph-screen-scan">
+              <div class="scan-screen" id="scan-idle">
+                <h2 class="scan-title" style="font-family:'DM Serif Display',serif;">Scan Promoter</h2>
+                <p class="scan-sub">Ask your MSC promoter to display their barcode, then tap to scan</p>
+                <div class="scan-viewport">
+                  <div class="scan-corner tl"></div>
+                  <div class="scan-corner tr"></div>
+                  <div class="scan-corner bl"></div>
+                  <div class="scan-corner br"></div>
+                  <div class="scan-line"></div>
+                  <div class="scan-label">Point at barcode</div>
+                </div>
+                <button style="width:100%;padding:14px;background:var(--g700);color:#fff;border:none;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;" onclick="simulateScan()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M12 7h.01M17 7h.01M7 12h10M7 17h.01M12 17h.01M17 17h.01"/></svg>
+                  Simulate Scan
+                </button>
+              </div>
+              <div class="scan-state-success" id="scan-success" style="padding:24px 20px;display:none;">
+                <div style="text-align:center;margin-bottom:16px;">
+                  <div class="success-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px;">Barcode Scanned!</div>
+                  <div style="font-size:12px;color:var(--text3);">Timestamp recorded · 15 Apr 2026, 09:41</div>
+                </div>
+                <div class="promoter-found">
+                  <div class="pf-label">Promoter Identified</div>
+                  <div class="pf-name">Adeyemi Okafor</div>
+                  <div class="pf-id">MSC-FL-001-ADY · Field Lead · Lagos Central</div>
+                </div>
+                <button style="width:100%;padding:14px;background:var(--g700);color:#fff;border:none;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;" onclick="showPharmacyScreen('register',document.getElementById('phnav-register'))">
+                  Continue to Register
+                </button>
+                <button style="width:100%;padding:14px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;" onclick="resetScan()">
+                  Scan Again
+                </button>
+              </div>
+            </div>
+
+            <!-- REGISTER -->
+            <div class="app-screen" id="ph-screen-register">
+              <div class="register-form">
+                <div style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;">Register Pharmacy</div>
+                <div style="font-size:12px;color:var(--text3);margin-bottom:20px;">Fill in your pharmacy details to complete registration</div>
+                <div class="form-group">
+                  <label class="form-label">Pharmacy / Business Name</label>
+                  <input class="form-input" type="text" placeholder="e.g. Kingsway Pharmacy Ltd" value="Kingsway Pharmacy Ltd">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">CAC Registration Number</label>
+                  <input class="form-input" type="text" placeholder="BN-XXXXXX" value="BN-123456">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone Number</label>
+                  <input class="form-input" type="tel" placeholder="+234 800 0000 000" value="+234 802 345 6789">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Street Address</label>
+                  <input class="form-input" type="text" placeholder="Full street address" value="14 Allen Avenue">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">LGA</label>
+                  <input class="form-input" type="text" placeholder="Local Government Area" value="Ikeja">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">State</label>
+                  <input class="form-input" type="text" placeholder="State" value="Lagos">
+                </div>
+                <button class="form-submit" onclick="submitRegistration()">Submit Registration</button>
+              </div>
+            </div>
+
+            <!-- ORDERS -->
+            <div class="app-screen" id="ph-screen-orders">
+              <div class="orders-screen">
+                <div class="orders-header">
+                  <h3>Order History</h3>
+                  <p style="margin-top:2px;">Kingsway Pharmacy · April 2026</p>
+                </div>
+                <div style="display:flex;gap:8px;padding:8px 20px 12px;border-bottom:1px solid var(--border);">
+                  <button class="chip active">All</button>
+                  <button class="chip">Settled</button>
+                  <button class="chip">Processing</button>
+                  <button class="chip">Pending</button>
+                </div>
+                <div class="order-row">
+                  <div class="order-icon settled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <div class="order-info"><div class="order-ref">ORD-2026-04-0892</div><div class="order-meta">14 Apr · Paracetamol, Amoxicillin, Metformin</div></div>
+                  <div class="order-right"><div class="order-amount">₦184,500</div><span class="order-status-badge settled">Settled</span></div>
+                </div>
+                <div class="order-row">
+                  <div class="order-icon processing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                  <div class="order-info"><div class="order-ref">ORD-2026-04-0934</div><div class="order-meta">15 Apr · Insulin, Lisinopril, Atorvastatin</div></div>
+                  <div class="order-right"><div class="order-amount">₦312,000</div><span class="order-status-badge processing">Processing</span></div>
+                </div>
+                <div class="order-row">
+                  <div class="order-icon settled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <div class="order-info"><div class="order-ref">ORD-2026-04-0756</div><div class="order-meta">10 Apr · Ciprofloxacin, ORS, Vitamin C</div></div>
+                  <div class="order-right"><div class="order-amount">₦96,000</div><span class="order-status-badge settled">Settled</span></div>
+                </div>
+                <div class="order-row">
+                  <div class="order-icon pending"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+                  <div class="order-info"><div class="order-ref">ORD-2026-04-0970</div><div class="order-meta">15 Apr · Diazepam, Morphine (controlled)</div></div>
+                  <div class="order-right"><div class="order-amount">₦520,000</div><span class="order-status-badge pending">Pending</span></div>
+                </div>
+                <div class="order-row">
+                  <div class="order-icon settled"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <div class="order-info"><div class="order-ref">ORD-2026-04-0620</div><div class="order-meta">5 Apr · Multivitamins, Analgesics bulk</div></div>
+                  <div class="order-right"><div class="order-amount">₦74,000</div><span class="order-status-badge settled">Settled</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-nav">
+            <button class="phone-nav-item active" id="phnav-scan" onclick="showPharmacyScreen('scan', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M12 7h.01M17 7h.01M7 12h10M7 17h.01M12 17h.01M17 17h.01"/></svg>
+              <span>Scan</span>
+            </button>
+            <button class="phone-nav-item" id="phnav-register" onclick="showPharmacyScreen('register', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              <span>Register</span>
+            </button>
+            <button class="phone-nav-item" id="phnav-orders" onclick="showPharmacyScreen('orders', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span>Orders</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── SURFACE SWITCHING ──
+function switchSurface(name) {
+  document.querySelectorAll('.surface').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.surface-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('surface-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'admin') initAdminCharts();
+  if (name === 'promoter') initPromoterCharts();
+}
+
+// ── ADMIN NAV ──
+function showAdminView(name, btn) {
+  document.querySelectorAll('.admin-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'dashboard') initAdminCharts();
+}
+
+// ── PHARMACY FILTER ──
+function filterPharm(btn, status) {
+  document.querySelectorAll('.toolbar .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = document.querySelectorAll('#pharmacyBody tr');
+  rows.forEach(row => {
+    row.style.display = (status === 'all' || row.dataset.status === status) ? '' : 'none';
+  });
+}
+
+// ── VERIFY PHARMACY ──
+function verifyPharm(btn) {
+  const td = btn.closest('td');
+  const statusTd = btn.closest('tr').querySelector('td:nth-child(5)');
+  statusTd.innerHTML = '<span class="badge verified">Verified</span>';
+  btn.closest('tr').dataset.status = 'verified';
+  td.innerHTML = '<button class="action-btn">View</button>';
+}
+
+// ── PROMOTER APP NAV ──
+function showPromoterScreen(name, btn) {
+  document.querySelectorAll('#surface-promoter .app-screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#surface-promoter .phone-nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('p-screen-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'earnings') setTimeout(initPromoterCharts, 50);
+}
+
+// ── PHARMACY APP NAV ──
+function showPharmacyScreen(name, btn) {
+  document.querySelectorAll('#surface-pharmacy .app-screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#surface-pharmacy .phone-nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('ph-screen-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── SCAN SIMULATION ──
+function simulateScan() {
+  document.getElementById('scan-idle').style.display = 'none';
+  document.getElementById('scan-success').style.display = 'block';
+}
+function resetScan() {
+  document.getElementById('scan-idle').style.display = 'flex';
+  document.getElementById('scan-idle').style.flexDirection = 'column';
+  document.getElementById('scan-idle').style.alignItems = 'center';
+  document.getElementById('scan-success').style.display = 'none';
+}
+
+// ── REGISTRATION SUCCESS ──
+function submitRegistration() {
+  alert('✅ Registration submitted!\n\nPharmacy: Kingsway Pharmacy Ltd\nCAC: BN-123456\nStatus: PENDING VERIFICATION\n\nYou will be notified once verified by MSC Admin.');
+}
+
+// ── CHARTS ──
+let commissionChartInst = null;
+let earningsChartInst = null;
+
+function initAdminCharts() {
+  const ctx = document.getElementById('commissionChart');
+  if (!ctx) return;
+  if (commissionChartInst) commissionChartInst.destroy();
+  commissionChartInst = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26'],
+      datasets: [{
+        label: 'Total Commission (₦)',
+        data: [1840000, 2100000, 2450000, 2780000, 3010000, 3218000],
+        backgroundColor: 'rgba(26,107,60,0.15)',
+        borderColor: '#1a6b3c',
+        borderWidth: 2,
+        borderRadius: 6,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => '₦' + ctx.raw.toLocaleString()
+          }
+        }
+      },
+      scales: {
+        y: {
+          grid: { color: '#f1f5f9' },
+          ticks: {
+            callback: v => '₦' + (v/1000000).toFixed(1) + 'M',
+            font: { size: 10 }
+          }
+        },
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+}
+
+function initPromoterCharts() {
+  const ctx = document.getElementById('earningsChart');
+  if (!ctx) return;
+  if (earningsChartInst) earningsChartInst.destroy();
+  earningsChartInst = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Nov','Dec','Jan','Feb','Mar','Apr'],
+      datasets: [{
+        label: 'Earnings (₦)',
+        data: [198000, 225000, 248000, 271000, 290000, 312000],
+        borderColor: '#1a6b3c',
+        backgroundColor: 'rgba(26,107,60,0.08)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#1a6b3c',
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: { label: ctx => '₦' + ctx.raw.toLocaleString() }
+        }
+      },
+      scales: {
+        y: {
+          grid: { color: '#f1f5f9' },
+          ticks: { callback: v => '₦' + (v/1000).toFixed(0) + 'K', font: { size: 10 } }
+        },
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+}
+
+// Init on load
+window.addEventListener('load', () => {
+  setTimeout(initAdminCharts, 100);
+});
+</script>
+</body>
+</html>
