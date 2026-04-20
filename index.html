@@ -443,6 +443,9 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
     <button class="nav-item" onclick="showView('promoters',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Promoters
     </button>
+    <button class="nav-item" onclick="showView('orders',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Order History
+    </button>
     <button class="nav-item" onclick="showView('commissions',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Commissions
     </button>
@@ -498,39 +501,39 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
         <div class="t-card root"><div class="tc-name" style="color:#fff">MSC Administration</div><div class="tc-meta" style="color:rgba(255,255,255,.45)">System Root · 12 Field Leads</div></div>
         <div class="t-conn"></div>
       </div>
-      <div class="t-row" style="gap:36px">
+      <div class="t-row" style="gap:24px;flex-wrap:wrap">
         <div class="t-branch">
-          <div class="t-card fl" onclick="openPromoterDrawer('pr1')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Adeyemi Okafor</div><div class="tc-meta">Lagos Central · 142 pharmacies · ₦18.4M</div></div>
+          <div class="t-card fl" onclick="openPromoterDrawer('pr1')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Adeyemi Okafor</div><div class="tc-meta">Lagos Central · 62 ph · ₦18.4M</div></div>
           <div class="t-conn"></div>
-          <div class="t-row" style="gap:12px">
-            <div class="t-branch">
-              <div class="t-card fa" onclick="openPromoterDrawer('pr2')"><span class="tc-lbl fa">Agent</span><div class="tc-name" style="margin-top:4px">Emeka Dike</div><div class="tc-meta">38 pharmacies · ₦5.2M</div></div>
-              <div class="t-conn"></div>
-              <div class="t-row" style="gap:8px">
-                <div class="t-card fr" onclick="openPromoterDrawer('pr4')"><span class="tc-lbl fr">Rep</span><div class="tc-name" style="margin-top:4px">Tunde Alli</div><div class="tc-meta">12 pharmacies</div></div>
-                <div class="t-card fr" onclick="openPromoterDrawer('pr9')"><span class="tc-lbl fr">Rep</span><div class="tc-name" style="margin-top:4px">Chioma Obi</div><div class="tc-meta">8 pharmacies</div></div>
-              </div>
-            </div>
-            <div class="t-branch">
-              <div class="t-card fa" onclick="openPromoterDrawer('pr6')"><span class="tc-lbl fa">Agent</span><div class="tc-name" style="margin-top:4px">Nkem Eze</div><div class="tc-meta">18 pharmacies · ₦2.4M</div></div>
-              <div class="t-conn"></div>
-              <div class="t-card fr" onclick="openPromoterDrawer('pr10')"><span class="tc-lbl fr">Rep</span><div class="tc-name" style="margin-top:4px">Seun Bello</div><div class="tc-meta">6 pharmacies</div></div>
-            </div>
+          <div class="t-branch">
+            <div class="t-card fa" onclick="openPromoterDrawer('pr2')"><span class="tc-lbl fa">Field Agent</span><div class="tc-name" style="margin-top:4px">Emeka Dike</div><div class="tc-meta">38 pharmacies · ₦5.2M</div></div>
+            <div class="t-conn"></div>
+            <div class="t-card fr" onclick="openPromoterDrawer('pr9')"><span class="tc-lbl fr">Frontline Rep</span><div class="tc-name" style="margin-top:4px">Chioma Obi</div><div class="tc-meta">8 pharmacies · ₦980K</div></div>
           </div>
         </div>
         <div class="t-branch">
-          <div class="t-card fl" onclick="openPromoterDrawer('pr3')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Blessing Nwosu</div><div class="tc-meta">Abuja North · 89 pharmacies · ₦11.2M</div></div>
+          <div class="t-card fl" onclick="openPromoterDrawer('pr3')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Blessing Nwosu</div><div class="tc-meta">Abuja North · 54 ph · ₦11.2M</div></div>
           <div class="t-conn"></div>
-          <div class="t-row" style="gap:12px">
-            <div class="t-branch">
-              <div class="t-card fa" onclick="openPromoterDrawer('pr7')"><span class="tc-lbl fa">Agent</span><div class="tc-name" style="margin-top:4px">Aminu Ibrahim</div><div class="tc-meta">24 pharmacies · ₦3.1M</div></div>
-            </div>
-            <div class="t-branch">
-              <div class="t-card fa" onclick="openPromoterDrawer('pr8')"><span class="tc-lbl fa">Agent</span><div class="tc-name" style="margin-top:4px">Fatima Aliyu</div><div class="tc-meta">14 pharmacies · ₦1.8M</div></div>
-            </div>
-            <div class="t-branch">
-              <div class="t-card fa" style="border-color:#fca5a5;background:#fef2f2" onclick="openPromoterDrawer('pr5')"><span class="tc-lbl" style="background:var(--red);color:#fff">SUSPENDED</span><div class="tc-name" style="margin-top:4px">James Uchenna</div><div class="tc-meta">0 pharmacies · frozen</div></div>
-            </div>
+          <div class="t-branch">
+            <div class="t-card fa" onclick="openPromoterDrawer('pr7')"><span class="tc-lbl fa">Field Agent</span><div class="tc-name" style="margin-top:4px">Aminu Ibrahim</div><div class="tc-meta">24 pharmacies · ₦3.1M</div></div>
+            <div class="t-conn"></div>
+            <div class="t-card fr" onclick="openPromoterDrawer('pr10')"><span class="tc-lbl fr">Frontline Rep</span><div class="tc-name" style="margin-top:4px">Seun Bello</div><div class="tc-meta">9 pharmacies · ₦860K</div></div>
+          </div>
+        </div>
+        <div class="t-branch">
+          <div class="t-card fl" onclick="openPromoterDrawer('pr6')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Nkem Eze</div><div class="tc-meta">Lagos South · 48 ph · ₦7.8M</div></div>
+          <div class="t-conn"></div>
+          <div class="t-branch">
+            <div class="t-card fa" onclick="openPromoterDrawer('pr4')"><span class="tc-lbl fa">Field Agent</span><div class="tc-name" style="margin-top:4px">Tunde Alli</div><div class="tc-meta">18 pharmacies · ₦2.6M</div></div>
+            <div class="t-conn"></div>
+            <div class="t-card fr" style="border-color:#e2e8f0;background:#f8fafc;opacity:.7"><span class="tc-lbl fr">Frontline Rep</span><div class="tc-name" style="margin-top:4px;color:var(--t3)">Not yet recruited</div><div class="tc-meta">—</div></div>
+          </div>
+        </div>
+        <div class="t-branch">
+          <div class="t-card fl" onclick="openPromoterDrawer('pr8')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Fatima Aliyu</div><div class="tc-meta">Port Harcourt · 38 ph · ₦6.2M</div></div>
+          <div class="t-conn"></div>
+          <div class="t-branch">
+            <div class="t-card fa" style="border-color:#fca5a5;background:#fef2f2" onclick="openPromoterDrawer('pr5')"><span class="tc-lbl" style="background:var(--red);color:#fff">SUSPENDED</span><div class="tc-name" style="margin-top:4px">James Uchenna</div><div class="tc-meta">0 pharmacies · frozen</div></div>
           </div>
         </div>
       </div>
@@ -567,6 +570,42 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
     </div>
     <div class="tw"><table><thead><tr><th>Name</th><th>Level</th><th>Reports To</th><th>Territory</th><th>Barcode</th><th>Pharmacies</th><th>MSV</th><th>Status</th></tr></thead>
     <tbody id="prom-tbody"></tbody></table></div>
+  </div>
+</div>
+
+<!-- ORDER HISTORY -->
+<div class="adm-view" id="view-orders">
+  <div class="pg-hd" style="display:flex;align-items:flex-end;justify-content:space-between">
+    <div><div class="pg-title">Order History</div><div class="pg-sub" id="ord-count-label">All pharmacy orders — network-wide</div></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <select id="ord-pharm-filter" onchange="renderOrders()" style="padding:7px 10px;border:1px solid var(--bd);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none">
+        <option value="all">All Pharmacies</option>
+        <option value="ph1">Kingsway Pharmacy</option>
+        <option value="ph4">Pharma Direct</option>
+        <option value="ph7">PharmaLife</option>
+        <option value="ph9">Greenline Pharmacy</option>
+        <option value="ph10">CareMax Pharmacy</option>
+      </select>
+    </div>
+  </div>
+  <div class="card">
+    <div class="toolbar">
+      <div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search pharmacy, ref, items…" oninput="renderOrders(this.value)"></div>
+      <button class="chip active" id="ordchip-all" onclick="filterOrders('all',this)">All</button>
+      <button class="chip" id="ordchip-settled" onclick="filterOrders('settled',this)">Settled</button>
+      <button class="chip" id="ordchip-processing" onclick="filterOrders('processing',this)">Processing</button>
+      <button class="chip" id="ordchip-pending" onclick="filterOrders('pending',this)">Pending</button>
+    </div>
+    <div class="comm-sum" style="margin-bottom:0;border-bottom:1px solid var(--bd)">
+      <div class="cs-item"><div class="cs-lbl">Total Orders</div><div class="cs-val" id="ord-total-count">14</div></div>
+      <div class="cs-item"><div class="cs-lbl">Settled Value</div><div class="cs-val g" id="ord-settled-val">₦1,906,000</div></div>
+      <div class="cs-item"><div class="cs-lbl">Processing</div><div class="cs-val" id="ord-processing-val">₦812,000</div></div>
+      <div class="cs-item"><div class="cs-lbl">Pending</div><div class="cs-val a" id="ord-pending-val">₦561,000</div></div>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>Order Ref</th><th>Pharmacy</th><th>Location</th><th>Promoter</th><th>Lvl</th><th>Items</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+      <tbody id="orders-tbody"></tbody>
+    </table></div>
   </div>
 </div>
 
@@ -702,8 +741,13 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
             <div class="es-card"><div class="es-lbl">Override Comm.</div><div class="es-val" id="es-override">₦64,000</div></div>
           </div>
           <div style="padding:10px 14px 4px"><canvas id="earnChart" height="120"></canvas></div>
-          <div style="padding:4px 14px 2px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)">Pharmacy Breakdown</div>
+          <div style="padding:4px 14px 2px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)">My Pharmacy Breakdown</div>
           <div id="earn-bdwn"></div>
+          <div style="padding:10px 14px 2px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);display:flex;justify-content:space-between;align-items:center">
+            <span>Downline Override Commission</span>
+            <span style="font-size:10px;color:var(--t3);text-transform:none;letter-spacing:0;font-weight:400">per agent contribution</span>
+          </div>
+          <div id="earn-downline" style="padding:0 0 14px"></div>
         </div>
       </div>
       <div class="p-nav">
@@ -785,22 +829,40 @@ const DB = {
     {id:'ph2',name:'MedPlus Ikeja',cac:'BN-234567',phone:'+234 803 456 7890',address:'22 Opebi Road, Ikeja',city:'Ikeja',lga:'Ikeja',state:'Lagos',promoterId:'pr2',promoterName:'Emeka Dike',promoterLevel:'FA',status:'pending',date:'02 Apr 2026',msv:0},
     {id:'ph3',name:'HealthNet Plus',cac:'BN-345678',phone:'+234 804 567 8901',address:'5 Garki Road, Garki',city:'Garki',lga:'Garki',state:'Abuja',promoterId:'pr7',promoterName:'Aminu Ibrahim',promoterLevel:'FA',status:'flagged',date:'08 Apr 2026',msv:0,flagReason:'Duplicate CAC suspected'},
     {id:'ph4',name:'Pharma Direct',cac:'BN-456789',phone:'+234 805 678 9012',address:'7 Lekki Phase 1, Lekki',city:'Lekki',lga:'Eti-Osa',state:'Lagos',promoterId:'pr1',promoterName:'Adeyemi Okafor',promoterLevel:'FL',status:'verified',date:'15 Feb 2026',msv:1800000,verifiedBy:'Super Admin',verifiedDate:'17 Feb 2026',verificationNote:'Documents verified'},
-    {id:'ph5',name:'QualiCare Pharmacy',cac:'BN-567890',phone:'+234 806 789 0123',address:'12 Wuse Zone 4, Wuse',city:'Wuse',lga:'Wuse',state:'Abuja',promoterId:'pr8',promoterName:'Fatima Aliyu',promoterLevel:'FA',status:'pending',date:'10 Apr 2026',msv:0},
-    {id:'ph6',name:'City Pharmacy',cac:'BN-678901',phone:'+234 807 890 1234',address:'8 Main Market Road, Onitsha',city:'Onitsha',lga:'Onitsha North',state:'Anambra',promoterId:'pr6',promoterName:'Nkem Eze',promoterLevel:'FA',status:'pending',date:'11 Apr 2026',msv:0},
+    {id:'ph5',name:'QualiCare Pharmacy',cac:'BN-567890',phone:'+234 806 789 0123',address:'12 Wuse Zone 4, Wuse',city:'Wuse',lga:'Wuse',state:'Abuja',promoterId:'pr8',promoterName:'Fatima Aliyu',promoterLevel:'FL',status:'pending',date:'10 Apr 2026',msv:0},
+    {id:'ph6',name:'City Pharmacy',cac:'BN-678901',phone:'+234 807 890 1234',address:'8 Main Market Road, Onitsha',city:'Onitsha',lga:'Onitsha North',state:'Anambra',promoterId:'pr6',promoterName:'Nkem Eze',promoterLevel:'FL',status:'pending',date:'11 Apr 2026',msv:0},
     {id:'ph7',name:'PharmaLife',cac:'BN-789012',phone:'+234 808 901 2345',address:'3 Commercial Road, Aba',city:'Aba',lga:'Aba North',state:'Abia',promoterId:'pr2',promoterName:'Emeka Dike',promoterLevel:'FA',status:'verified',date:'05 Mar 2026',msv:1500000,verifiedBy:'Super Admin',verifiedDate:'07 Mar 2026',verificationNote:'Documents verified'},
-    {id:'ph8',name:'MedStore Lagos',cac:'BN-890123',phone:'+234 809 012 3456',address:'15 Bode Thomas St, Surulere',city:'Surulere',lga:'Surulere',state:'Lagos',promoterId:'pr4',promoterName:'Tunde Alli',promoterLevel:'FR',status:'flagged',date:'09 Apr 2026',msv:0,flagReason:'Address unverifiable'},
+    {id:'ph8',name:'MedStore Lagos',cac:'BN-890123',phone:'+234 809 012 3456',address:'15 Bode Thomas St, Surulere',city:'Surulere',lga:'Surulere',state:'Lagos',promoterId:'pr4',promoterName:'Tunde Alli',promoterLevel:'FA',status:'flagged',date:'09 Apr 2026',msv:0,flagReason:'Address unverifiable'},
+    {id:'ph9',name:'Greenline Pharmacy',cac:'BN-901234',phone:'+234 810 123 4567',address:'22 Trans-Amadi Rd, Port Harcourt',city:'Port Harcourt',lga:'Obio-Akpor',state:'Rivers',promoterId:'pr8',promoterName:'Fatima Aliyu',promoterLevel:'FL',status:'verified',date:'12 Mar 2026',msv:1200000,verifiedBy:'Super Admin',verifiedDate:'14 Mar 2026',verificationNote:'Documents confirmed'},
+    {id:'ph10',name:'CareMax Pharmacy',cac:'BN-012345',phone:'+234 811 234 5678',address:'5 Lagos Road, Ibadan',city:'Ibadan',lga:'Ibadan North',state:'Oyo',promoterId:'pr6',promoterName:'Nkem Eze',promoterLevel:'FL',status:'verified',date:'18 Feb 2026',msv:980000,verifiedBy:'Super Admin',verifiedDate:'20 Feb 2026',verificationNote:'Physical visit confirmed'},
   ],
   promoters: [
-    {id:'pr1',name:'Adeyemi Okafor',initials:'AO',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Lagos Central',barcode:'MSC-FL-001-ADY',email:'adeyemi@msc.ng',phone:'+234 801 234 5678',pharmacies:142,status:'active',recruited:'15 Jan 2026',msv:18400000,commission:308000,bonus:4000},
+    {id:'pr1',name:'Adeyemi Okafor',initials:'AO',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Lagos Central',barcode:'MSC-FL-001-ADY',email:'adeyemi@msc.ng',phone:'+234 801 234 5678',pharmacies:62,status:'active',recruited:'15 Jan 2026',msv:18400000,commission:308000,bonus:4000},
     {id:'pr2',name:'Emeka Dike',initials:'ED',level:'FA',levelLabel:'Field Agent',parent:'pr1',parentName:'Adeyemi Okafor',territory:'Lagos Central',barcode:'MSC-FA-001-EMK',email:'emeka@msc.ng',phone:'+234 802 234 5678',pharmacies:38,status:'active',recruited:'20 Jan 2026',msv:5200000,commission:84000,bonus:3600},
-    {id:'pr3',name:'Blessing Nwosu',initials:'BN',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Abuja North',barcode:'MSC-FL-002-BLS',email:'blessing@msc.ng',phone:'+234 803 234 5678',pharmacies:89,status:'active',recruited:'14 Apr 2026',msv:11200000,commission:184000,bonus:0},
-    {id:'pr4',name:'Tunde Alli',initials:'TA',level:'FR',levelLabel:'Frontline Rep',parent:'pr2',parentName:'Emeka Dike',territory:'Lagos Central',barcode:'MSC-FR-001-TND',email:'tunde@msc.ng',phone:'+234 804 234 5678',pharmacies:12,status:'active',recruited:'25 Jan 2026',msv:1840000,commission:26800,bonus:1800},
-    {id:'pr5',name:'James Uchenna',initials:'JU',level:'FA',levelLabel:'Field Agent',parent:'pr3',parentName:'Blessing Nwosu',territory:'Port Harcourt',barcode:'MSC-FA-009-JMU',email:'james@msc.ng',phone:'+234 805 234 5678',pharmacies:0,status:'suspended',suspendReason:'Policy violation — misrepresentation',suspendDate:'14 Apr 2026',recruited:'10 Feb 2026',msv:0,commission:0,bonus:0},
-    {id:'pr6',name:'Nkem Eze',initials:'NE',level:'FA',levelLabel:'Field Agent',parent:'pr1',parentName:'Adeyemi Okafor',territory:'Lagos Central',barcode:'MSC-FA-002-NKE',email:'nkem@msc.ng',phone:'+234 806 234 5678',pharmacies:18,status:'active',recruited:'22 Jan 2026',msv:2400000,commission:24000,bonus:0},
+    {id:'pr3',name:'Blessing Nwosu',initials:'BN',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Abuja North',barcode:'MSC-FL-002-BLS',email:'blessing@msc.ng',phone:'+234 803 234 5678',pharmacies:54,status:'active',recruited:'14 Jan 2026',msv:11200000,commission:184000,bonus:0},
+    {id:'pr4',name:'Tunde Alli',initials:'TA',level:'FA',levelLabel:'Field Agent',parent:'pr6',parentName:'Nkem Eze',territory:'Lagos South',barcode:'MSC-FA-004-TND',email:'tunde@msc.ng',phone:'+234 804 234 5678',pharmacies:18,status:'active',recruited:'25 Jan 2026',msv:2600000,commission:42000,bonus:1800},
+    {id:'pr5',name:'James Uchenna',initials:'JU',level:'FA',levelLabel:'Field Agent',parent:'pr8',parentName:'Fatima Aliyu',territory:'Port Harcourt',barcode:'MSC-FA-009-JMU',email:'james@msc.ng',phone:'+234 805 234 5678',pharmacies:0,status:'suspended',suspendReason:'Policy violation — misrepresentation',suspendDate:'14 Apr 2026',recruited:'10 Feb 2026',msv:0,commission:0,bonus:0},
+    {id:'pr6',name:'Nkem Eze',initials:'NE',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Lagos South',barcode:'MSC-FL-003-NKE',email:'nkem@msc.ng',phone:'+234 806 234 5678',pharmacies:48,status:'active',recruited:'22 Jan 2026',msv:7800000,commission:128000,bonus:2000},
     {id:'pr7',name:'Aminu Ibrahim',initials:'AI',level:'FA',levelLabel:'Field Agent',parent:'pr3',parentName:'Blessing Nwosu',territory:'Abuja North',barcode:'MSC-FA-003-AMI',email:'aminu@msc.ng',phone:'+234 807 234 5678',pharmacies:24,status:'active',recruited:'01 Mar 2026',msv:3100000,commission:52000,bonus:1800},
-    {id:'pr8',name:'Fatima Aliyu',initials:'FA2',level:'FA',levelLabel:'Field Agent',parent:'pr3',parentName:'Blessing Nwosu',territory:'Abuja North',barcode:'MSC-FA-004-FAT',email:'fatima@msc.ng',phone:'+234 808 234 5678',pharmacies:14,status:'active',recruited:'05 Mar 2026',msv:1800000,commission:34000,bonus:1800},
-    {id:'pr9',name:'Chioma Obi',initials:'CO',level:'FR',levelLabel:'Frontline Rep',parent:'pr2',parentName:'Emeka Dike',territory:'Lagos Central',barcode:'MSC-FR-002-CHI',email:'chioma@msc.ng',phone:'+234 809 234 5678',pharmacies:8,status:'active',recruited:'28 Jan 2026',msv:980000,commission:9800,bonus:1800},
-    {id:'pr10',name:'Seun Bello',initials:'SB',level:'FR',levelLabel:'Frontline Rep',parent:'pr6',parentName:'Nkem Eze',territory:'Lagos Central',barcode:'MSC-FR-003-SBL',email:'seun@msc.ng',phone:'+234 810 234 5678',pharmacies:6,status:'active',recruited:'01 Feb 2026',msv:720000,commission:7200,bonus:0},
+    {id:'pr8',name:'Fatima Aliyu',initials:'FA2',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Port Harcourt',barcode:'MSC-FL-004-FAT',email:'fatima@msc.ng',phone:'+234 808 234 5678',pharmacies:38,status:'active',recruited:'05 Feb 2026',msv:6200000,commission:100000,bonus:2000},
+    {id:'pr9',name:'Chioma Obi',initials:'CO',level:'FR',levelLabel:'Frontline Rep',parent:'pr2',parentName:'Emeka Dike',territory:'Lagos Central',barcode:'MSC-FR-001-CHI',email:'chioma@msc.ng',phone:'+234 809 234 5678',pharmacies:8,status:'active',recruited:'28 Jan 2026',msv:980000,commission:9800,bonus:1800},
+    {id:'pr10',name:'Seun Bello',initials:'SB',level:'FR',levelLabel:'Frontline Rep',parent:'pr7',parentName:'Aminu Ibrahim',territory:'Abuja North',barcode:'MSC-FR-002-SBL',email:'seun@msc.ng',phone:'+234 810 234 5678',pharmacies:9,status:'active',recruited:'01 Mar 2026',msv:860000,commission:8600,bonus:0},
+  ],
+  orders: [
+    {id:'or1',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0892',date:'14 Apr 2026',items:'Paracetamol, Amoxicillin',amount:184500,status:'settled'},
+    {id:'or2',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0756',date:'10 Apr 2026',items:'Ciprofloxacin, ORS Sachets',amount:96000,status:'settled'},
+    {id:'or3',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0934',date:'15 Apr 2026',items:'Insulin, Lisinopril',amount:312000,status:'processing'},
+    {id:'or4',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0970',date:'15 Apr 2026',items:'Controlled substances',amount:520000,status:'pending'},
+    {id:'or5',phId:'ph4',phName:'Pharma Direct',phCity:'Lekki, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'FL',ref:'ORD-2026-04-0811',date:'13 Apr 2026',items:'Multivitamins, Antacids',amount:142000,status:'settled'},
+    {id:'or6',phId:'ph4',phName:'Pharma Direct',phCity:'Lekki, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'FL',ref:'ORD-2026-04-0760',date:'09 Apr 2026',items:'Metformin, Atorvastatin',amount:218000,status:'settled'},
+    {id:'or7',phId:'ph7',phName:'PharmaLife',phCity:'Aba, Abia',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0620',date:'05 Apr 2026',items:'Multivitamins bulk',amount:74000,status:'settled'},
+    {id:'or8',phId:'ph7',phName:'PharmaLife',phCity:'Aba, Abia',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0690',date:'07 Apr 2026',items:'Antiretrovirals',amount:380000,status:'processing'},
+    {id:'or9',phId:'ph9',phName:'Greenline Pharmacy',phCity:'Port Harcourt, Rivers',promoterName:'Fatima Aliyu',promoterLevel:'FL',ref:'ORD-2026-04-0543',date:'03 Apr 2026',items:'Doxycycline, Coartem',amount:96500,status:'settled'},
+    {id:'or10',phId:'ph9',phName:'Greenline Pharmacy',phCity:'Port Harcourt, Rivers',promoterName:'Fatima Aliyu',promoterLevel:'FL',ref:'ORD-2026-04-0612',date:'08 Apr 2026',items:'Diclofenac, Omeprazole',amount:54000,status:'settled'},
+    {id:'or11',phId:'ph10',phName:'CareMax Pharmacy',phCity:'Ibadan, Oyo',promoterName:'Nkem Eze',promoterLevel:'FL',ref:'ORD-2026-04-0480',date:'01 Apr 2026',items:'Analgesics, Antihistamines',amount:68000,status:'settled'},
+    {id:'or12',phId:'ph10',phName:'CareMax Pharmacy',phCity:'Ibadan, Oyo',promoterName:'Nkem Eze',promoterLevel:'FL',ref:'ORD-2026-04-0710',date:'11 Apr 2026',items:'Blood pressure meds',amount:132000,status:'processing'},
+    {id:'or13',phId:'ph3',phName:'HealthNet Plus',phCity:'Garki, Abuja',promoterName:'Aminu Ibrahim',promoterLevel:'FA',ref:'ORD-2026-03-0380',date:'28 Mar 2026',items:'Vaccines, Cold chain',amount:420000,status:'settled'},
+    {id:'or14',phId:'ph2',phName:'MedPlus Ikeja',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0901',date:'14 Apr 2026',items:'Aspirin, Vitamin C',amount:41000,status:'pending'},
   ],
   auditLog: [
     {id:'al1',ts:'15 Apr 2026 09:41',actor:'Super Admin',actionType:'verify',entity:'Pharmacy',entityName:'HealthCare Plus',reason:'Documents confirmed via call',tag:'verify',tagLabel:'VERIFY'},
@@ -815,11 +877,44 @@ const DB = {
   batchStatus: { '2026-04': 'pending', '2026-03': 'approved', '2026-02': 'approved' },
   flaggedLines: new Set(),
   earnData: {
-    '2026-04': {total:312000,direct:244000,override:64000,bonus:4000,breakdown:[{ph:'Kingsway Pharmacy',msv:2100000,comm:42000},{ph:'Pharma Direct',msv:1800000,comm:36000},{ph:'PharmaLife',msv:1500000,comm:30000},{ph:'CityMed',msv:1200000,comm:24000},{ph:'MedCare Plus',msv:1100000,comm:22000},{ph:'Bonus',msv:null,comm:4000}]},
-    '2026-03': {total:290000,direct:228000,override:58000,bonus:4000,breakdown:[{ph:'Kingsway Pharmacy',msv:2000000,comm:40000},{ph:'Pharma Direct',msv:1700000,comm:34000},{ph:'PharmaLife',msv:1400000,comm:28000},{ph:'CityMed',msv:1100000,comm:22000},{ph:'Bonus',msv:null,comm:4000}]},
-    '2026-02': {total:271000,direct:213000,override:54000,bonus:4000,breakdown:[{ph:'Kingsway Pharmacy',msv:1900000,comm:38000},{ph:'Pharma Direct',msv:1600000,comm:32000},{ph:'PharmaLife',msv:1300000,comm:26000},{ph:'Bonus',msv:null,comm:4000}]},
-    '2026-01': {total:248000,direct:196000,override:48000,bonus:4000,breakdown:[{ph:'Kingsway Pharmacy',msv:1800000,comm:36000},{ph:'Pharma Direct',msv:1500000,comm:30000},{ph:'Bonus',msv:null,comm:4000}]},
-    '2025-12': {total:225000,direct:180000,override:41000,bonus:4000,breakdown:[{ph:'Kingsway Pharmacy',msv:1600000,comm:32000},{ph:'Pharma Direct',msv:1400000,comm:28000},{ph:'Bonus',msv:null,comm:4000}]},
+    '2026-04': {total:312000,direct:244000,override:64000,bonus:4000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:2100000,comm:42000},{ph:'Pharma Direct',msv:1800000,comm:36000},{ph:'PharmaLife',msv:1500000,comm:30000},{ph:'CityMed',msv:1200000,comm:24000},{ph:'MedCare Plus',msv:1100000,comm:22000},{ph:'Bonus',msv:null,comm:4000}],
+      downline:[{name:'Emeka Dike',level:'FA',pharmacies:38,msv:5200000,override:20800},{name:'Nkem Eze',level:'FA',pharmacies:18,msv:2400000,override:9600},{name:'Tunde Alli',level:'FR',pharmacies:12,msv:1840000,override:7360},{name:'Chioma Obi',level:'FR',pharmacies:8,msv:980000,override:3920},{name:'Seun Bello',level:'FR',pharmacies:6,msv:720000,override:2880}]},
+    '2026-03': {total:290000,direct:228000,override:58000,bonus:4000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:2000000,comm:40000},{ph:'Pharma Direct',msv:1700000,comm:34000},{ph:'PharmaLife',msv:1400000,comm:28000},{ph:'CityMed',msv:1100000,comm:22000},{ph:'Bonus',msv:null,comm:4000}],
+      downline:[{name:'Emeka Dike',level:'FA',pharmacies:36,msv:4800000,override:19200},{name:'Nkem Eze',level:'FA',pharmacies:17,msv:2100000,override:8400},{name:'Tunde Alli',level:'FR',pharmacies:11,msv:1620000,override:6480},{name:'Chioma Obi',level:'FR',pharmacies:8,msv:880000,override:3520},{name:'Seun Bello',level:'FR',pharmacies:5,msv:640000,override:2560}]},
+    '2026-02': {total:271000,direct:213000,override:54000,bonus:4000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:1900000,comm:38000},{ph:'Pharma Direct',msv:1600000,comm:32000},{ph:'PharmaLife',msv:1300000,comm:26000},{ph:'Bonus',msv:null,comm:4000}],
+      downline:[{name:'Emeka Dike',level:'FA',pharmacies:34,msv:4200000,override:16800},{name:'Nkem Eze',level:'FA',pharmacies:16,msv:1800000,override:7200},{name:'Tunde Alli',level:'FR',pharmacies:10,msv:1400000,override:5600},{name:'Chioma Obi',level:'FR',pharmacies:7,msv:760000,override:3040},{name:'Seun Bello',level:'FR',pharmacies:5,msv:520000,override:2080}]},
+    '2026-01': {total:248000,direct:196000,override:48000,bonus:4000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:1800000,comm:36000},{ph:'Pharma Direct',msv:1500000,comm:30000},{ph:'Bonus',msv:null,comm:4000}],
+      downline:[{name:'Emeka Dike',level:'FA',pharmacies:30,msv:3800000,override:15200},{name:'Nkem Eze',level:'FA',pharmacies:14,msv:1500000,override:6000},{name:'Tunde Alli',level:'FR',pharmacies:8,msv:1100000,override:4400},{name:'Chioma Obi',level:'FR',pharmacies:6,msv:640000,override:2560}]},
+    '2025-12': {total:225000,direct:180000,override:41000,bonus:4000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:1600000,comm:32000},{ph:'Pharma Direct',msv:1400000,comm:28000},{ph:'Bonus',msv:null,comm:4000}],
+      downline:[{name:'Emeka Dike',level:'FA',pharmacies:26,msv:3200000,override:12800},{name:'Nkem Eze',level:'FA',pharmacies:12,msv:1200000,override:4800},{name:'Tunde Alli',level:'FR',pharmacies:6,msv:820000,override:3280},{name:'Chioma Obi',level:'FR',pharmacies:4,msv:480000,override:1920}]},
+  },
+  commByMonth: {
+    '2026-04': {
+      pr1:{msv:18400000,comm:308000,bonus:4000}, pr2:{msv:5200000,comm:84000,bonus:3600},
+      pr3:{msv:11200000,comm:184000,bonus:0},    pr4:{msv:2600000,comm:42000,bonus:1800},
+      pr5:{msv:0,comm:0,bonus:0},                pr6:{msv:7800000,comm:128000,bonus:2000},
+      pr7:{msv:3100000,comm:52000,bonus:1800},   pr8:{msv:6200000,comm:100000,bonus:2000},
+      pr9:{msv:980000,comm:9800,bonus:1800},     pr10:{msv:860000,comm:8600,bonus:0},
+    },
+    '2026-03': {
+      pr1:{msv:16800000,comm:286000,bonus:4000}, pr2:{msv:4800000,comm:76000,bonus:0},
+      pr3:{msv:10400000,comm:168000,bonus:0},    pr4:{msv:2200000,comm:34000,bonus:0},
+      pr5:{msv:0,comm:0,bonus:0},                pr6:{msv:6800000,comm:112000,bonus:2000},
+      pr7:{msv:2800000,comm:46000,bonus:0},      pr8:{msv:5600000,comm:92000,bonus:0},
+      pr9:{msv:880000,comm:8800,bonus:0},        pr10:{msv:740000,comm:7400,bonus:0},
+    },
+    '2026-02': {
+      pr1:{msv:14200000,comm:244000,bonus:4000}, pr2:{msv:4200000,comm:64000,bonus:0},
+      pr3:{msv:9200000,comm:144000,bonus:0},     pr4:{msv:1800000,comm:26000,bonus:1800},
+      pr5:{msv:0,comm:0,bonus:0},                pr6:{msv:5400000,comm:88000,bonus:0},
+      pr7:{msv:2400000,comm:38000,bonus:0},      pr8:{msv:4400000,comm:70000,bonus:0},
+      pr9:{msv:760000,comm:7600,bonus:0},        pr10:{msv:620000,comm:6200,bonus:0},
+    },
   }
 };
 
@@ -887,6 +982,7 @@ function showView(name, btn) {
   if(name==='dashboard') setTimeout(initCommChart,80);
   if(name==='pharmacies') renderPharm();
   if(name==='promoters') renderPromoters();
+  if(name==='orders') renderOrders();
   if(name==='commissions') renderCommissions();
   if(name==='audit') renderAudit();
 }
@@ -957,7 +1053,7 @@ function openPharmModal(id) {
   const p = DB.pharmacies.find(x=>x.id===id);
   if(!p) return;
   const statusMap = {verified:'verified',pending:'pending',flagged:'flagged',rejected:'suspended'};
-  const body = `
+  let body = `
     <div class="det-banner ${statusMap[p.status]||'pending'}">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span class="bdg ${statusMap[p.status]||'pending'}">${p.status.charAt(0).toUpperCase()+p.status.slice(1)}</span>
@@ -976,6 +1072,17 @@ function openPharmModal(id) {
       ${p.msv?`<div class="info-item"><div class="lbl">Monthly Sales Value</div><div class="val t-green fw7">₦${p.msv.toLocaleString()}</div></div>`:''}
       ${p.verificationNote?`<div class="info-item" style="grid-column:1/-1"><div class="lbl">Verification Note</div><div class="val">${p.verificationNote}</div></div>`:''}
     </div>`;
+  // Order history section
+  const phOrders = DB.orders.filter(o=>o.phId===id);
+  const stsBdg = {settled:'verified',processing:'pending',pending:'fl'};
+  const stsLbl = {settled:'Settled',processing:'Processing',pending:'Pending'};
+  if(phOrders.length) {
+    const ordTotal = phOrders.reduce((s,o)=>s+o.amount,0);
+    body += `<div class="section-hdg" style="margin-top:10px">Order History (${phOrders.length}) · ₦${ordTotal.toLocaleString()} total</div>
+    <div class="tw" style="max-height:200px;overflow-y:auto"><table><thead><tr><th>Ref</th><th>Date</th><th>Items</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+    ${phOrders.map(o=>`<tr><td class="td-mono" style="font-size:10px">${o.ref}</td><td style="font-size:11px;white-space:nowrap">${o.date}</td><td style="font-size:11px;color:var(--t2)">${o.items}</td><td style="font-weight:700;font-size:12px">₦${o.amount.toLocaleString()}</td><td><span class="bdg ${stsBdg[o.status]}" style="font-size:9px">${stsLbl[o.status]}</span></td></tr>`).join('')}
+    </tbody></table></div>`;
+  }
   const foot = `
     ${p.status==='pending'?`<button class="btn danger" onclick="openRejectModal('${id}');closeModal()">Reject</button><button class="btn primary" onclick="openVerifyModal('${id}');closeModal()">Verify Pharmacy</button>`:''}
     ${p.status==='flagged'?`<button class="btn danger" onclick="openRejectModal('${id}');closeModal()">Reject</button><button class="btn primary" onclick="openVerifyModal('${id}');closeModal()">Verify Anyway</button>`:''}
@@ -1161,6 +1268,49 @@ function confirmCreateFL() {
   addAudit('Super Admin','create','Promoter',name,`New Field Lead — ${territory} territory. Barcode: ${barcode}`,'create','CREATE');
 }
 
+// ══════════ ORDERS ══════════
+let _ordStatusFilter = 'all';
+function filterOrders(status, btn) {
+  _ordStatusFilter = status;
+  document.querySelectorAll('#view-orders .chip').forEach(c=>c.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderOrders();
+}
+function renderOrders(searchVal) {
+  const pharmFilter = document.getElementById('ord-pharm-filter')?.value || 'all';
+  const search = (searchVal !== undefined ? searchVal : '').toLowerCase();
+  const filtered = DB.orders.filter(o => {
+    const matchP = pharmFilter==='all' || o.phId===pharmFilter;
+    const matchS = _ordStatusFilter==='all' || o.status===_ordStatusFilter;
+    const matchQ = !search || o.phName.toLowerCase().includes(search) || o.ref.toLowerCase().includes(search) || o.items.toLowerCase().includes(search);
+    return matchP && matchS && matchQ;
+  });
+  const lvlBdg = {FL:'fl',FA:'fa',FR:'fr'};
+  const stsBdg = {settled:'verified',processing:'pending',pending:'fl'};
+  const stsLabel = {settled:'Settled',processing:'Processing',pending:'Pending'};
+  document.getElementById('orders-tbody').innerHTML = filtered.length ? filtered.map(o => `
+    <tr>
+      <td class="td-mono" style="font-size:11px">${o.ref}</td>
+      <td class="td-name">${o.phName}</td>
+      <td style="font-size:12px;color:var(--t2)">${o.phCity}</td>
+      <td>${o.promoterName}</td>
+      <td><span class="bdg ${lvlBdg[o.promoterLevel]}" style="font-size:9px">${o.promoterLevel}</span></td>
+      <td style="font-size:12px;color:var(--t2);max-width:180px">${o.items}</td>
+      <td style="font-size:12px">${o.date}</td>
+      <td style="font-weight:700">₦${o.amount.toLocaleString()}</td>
+      <td><span class="bdg ${stsBdg[o.status]}">${stsLabel[o.status]}</span></td>
+    </tr>`).join('') : '<tr><td colspan="9" class="empty">No orders match this filter</td></tr>';
+  // update summary stats
+  const settled = DB.orders.filter(o=>o.status==='settled').reduce((s,o)=>s+o.amount,0);
+  const processing = DB.orders.filter(o=>o.status==='processing').reduce((s,o)=>s+o.amount,0);
+  const pending = DB.orders.filter(o=>o.status==='pending').reduce((s,o)=>s+o.amount,0);
+  const tc = document.getElementById('ord-total-count'); if(tc) tc.textContent = DB.orders.length;
+  const sv = document.getElementById('ord-settled-val'); if(sv) sv.textContent = '₦'+settled.toLocaleString();
+  const pv = document.getElementById('ord-processing-val'); if(pv) pv.textContent = '₦'+processing.toLocaleString();
+  const pdv = document.getElementById('ord-pending-val'); if(pdv) pdv.textContent = '₦'+pending.toLocaleString();
+  const lbl = document.getElementById('ord-count-label'); if(lbl) lbl.textContent = `${filtered.length} order${filtered.length===1?'':'s'} · network-wide`;
+}
+
 // ══════════ COMMISSIONS ══════════
 function renderCommissions() {
   const month = document.getElementById('comm-month').value;
@@ -1178,19 +1328,21 @@ function renderCommissions() {
   else { bar.className='batch-bar'; bar.innerHTML=`<span class="batch-msg">⏳ Batch pending approval for ${month}. Review items then approve.</span><button class="btn primary" onclick="approveBatch()">Approve Batch</button>`; }
   const promoters = DB.promoters.filter(p=>level==='all'||p.level===level);
   const lvlBdg = {FL:'fl',FA:'fa',FR:'fr'};
+  const monthComm = DB.commByMonth[month] || DB.commByMonth['2026-04'];
   document.getElementById('comm-tbody').innerHTML = promoters.map(p => {
+    const mc = monthComm[p.id] || {msv:0,comm:0,bonus:0};
     const isFlagged = DB.flaggedLines.has(p.id+month);
-    const rate = p.msv>1000000?'1%/2%':'1%';
+    const rate = mc.msv>1000000?'1%/2%':'1%';
     return `<tr class="${isFlagged?'flagged-row':''}" id="comm-row-${p.id}">
       <td class="td-name">${p.name}</td>
       <td><span class="bdg ${lvlBdg[p.level]}">${p.levelLabel}</span></td>
       <td>${p.territory}</td>
       <td>${p.pharmacies}</td>
-      <td style="font-weight:600">₦${p.msv.toLocaleString()}</td>
+      <td style="font-weight:600">₦${mc.msv.toLocaleString()}</td>
       <td>${rate}</td>
-      <td style="color:var(--g700);font-weight:600">₦${p.commission.toLocaleString()}</td>
-      <td>${p.bonus?`₦${p.bonus.toLocaleString()}`:'—'}</td>
-      <td style="font-weight:700">₦${(p.commission+p.bonus).toLocaleString()}</td>
+      <td style="color:var(--g700);font-weight:600">₦${mc.comm.toLocaleString()}</td>
+      <td>${mc.bonus?`₦${mc.bonus.toLocaleString()}`:'—'}</td>
+      <td style="font-weight:700">₦${(mc.comm+mc.bonus).toLocaleString()}</td>
       <td>${!isBatch?`<button class="btn sm ${isFlagged?'warning':''}" onclick="toggleFlag('${p.id}','${month}')">${isFlagged?'⚑ Flagged':'Flag'}</button>`:''}</td>
     </tr>`;
   }).join('');
@@ -1263,6 +1415,7 @@ function setEarnMonth(month, btn) {
   document.getElementById('es-direct').textContent = '₦'+d.direct.toLocaleString();
   document.getElementById('es-override').textContent = '₦'+d.override.toLocaleString();
   renderEarnBreakdown();
+  renderDownlineComm();
   setTimeout(initEarnChart,50);
 }
 function renderEarnBreakdown() {
@@ -1273,6 +1426,24 @@ function renderEarnBreakdown() {
     <div class="bdwn-row">
       <div><div class="bdwn-nm">${b.ph}</div>${b.msv?`<div class="bdwn-msv">MSV ₦${b.msv.toLocaleString()}</div>`:''}</div>
       <div class="bdwn-amt">₦${b.comm.toLocaleString()}</div>
+    </div>`).join('');
+}
+function renderDownlineComm() {
+  const d = DB.earnData[S.earnMonth]||DB.earnData['2026-04'];
+  const el = document.getElementById('earn-downline');
+  if(!el) return;
+  if(!d.downline || !d.downline.length) { el.innerHTML='<div style="padding:10px 14px;font-size:12px;color:var(--t3)">No downline data for this period</div>'; return; }
+  const lvlBdg = {FL:'fl',FA:'fa',FR:'fr'};
+  el.innerHTML = d.downline.map(r => `
+    <div class="bdwn-row">
+      <div>
+        <div class="bdwn-nm" style="display:flex;align-items:center;gap:5px">${r.name} <span class="bdg ${lvlBdg[r.level]}" style="font-size:9px;padding:1px 5px">${r.level}</span></div>
+        <div class="bdwn-msv">${r.pharmacies} pharmacies · Network MSV ₦${r.msv.toLocaleString()}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="bdwn-amt" style="color:var(--g700)">+₦${r.override.toLocaleString()}</div>
+        <div style="font-size:10px;color:var(--t3)">override</div>
+      </div>
     </div>`).join('');
 }
 
@@ -1390,6 +1561,7 @@ window.addEventListener('load', () => {
   renderAudit();
   renderActivityFeed();
   renderEarnBreakdown();
+  renderDownlineComm();
   setTimeout(initCommChart, 120);
 });
 </script>
