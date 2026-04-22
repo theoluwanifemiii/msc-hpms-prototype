@@ -449,6 +449,12 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
     <button class="nav-item" onclick="showView('commissions',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Commissions
     </button>
+    <button class="nav-item" onclick="showView('comm-config',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Commission Config
+    </button>
+    <button class="nav-item" onclick="showView('reports',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Reports <span style="margin-left:auto;background:var(--amber);color:#000;font-size:10px;font-weight:700;padding:1px 6px;border-radius:100px">2</span>
+    </button>
     <button class="nav-item" onclick="showView('audit',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Audit Log
     </button>
@@ -637,6 +643,94 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 </div>
 
 <!-- AUDIT LOG -->
+<div class="adm-view" id="view-reports">
+  <div class="pg-hd"><div class="pg-title">Downline Reports</div><div class="pg-sub">Issues and updates filed by Field Leads and their downline</div></div>
+  <div class="card">
+    <div class="toolbar">
+      <div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search reports…"></div>
+      <button class="chip active">All</button>
+      <button class="chip">Pending</button>
+      <button class="chip">Resolved</button>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>Subject</th><th>Type</th><th>Filed By</th><th>Level</th><th>Date</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Commission shortfall — April batch</strong><div style="font-size:11px;color:var(--t3);margin-top:2px">Expected ₦312K but received ₦290K in payout</div></td>
+          <td><span class="bdg pending" style="font-size:10px">Payment</span></td>
+          <td>Adeyemi Okafor</td>
+          <td><span class="bdg verified" style="font-size:10px">Field Lead</span></td>
+          <td>14 Apr 2026</td>
+          <td><span class="bdg pending" id="rpt-status-1">Pending</span></td>
+          <td style="white-space:nowrap"><button class="btn sm" onclick="viewReport('rpt1')">View</button> <button class="btn sm primary" id="rpt-resolve-1" onclick="resolveReport('rpt1')">Resolve</button></td>
+        </tr>
+        <tr>
+          <td><strong>MedPlus Ikeja verification delay</strong><div style="font-size:11px;color:var(--t3);margin-top:2px">Pharmacy submitted docs 2 weeks ago, still pending</div></td>
+          <td><span class="bdg" style="font-size:10px;background:#dbeafe;color:#1d4ed8">Pharmacy</span></td>
+          <td>Emeka Dike</td>
+          <td><span class="bdg" style="font-size:10px;background:#dbeafe;color:#1d4ed8">Field Agent</span></td>
+          <td>10 Apr 2026</td>
+          <td><span class="bdg verified" id="rpt-status-2">Resolved</span></td>
+          <td><button class="btn sm" onclick="viewReport('rpt2')">View</button></td>
+        </tr>
+        <tr>
+          <td><strong>Network sync error on barcode scan</strong><div style="font-size:11px;color:var(--t3);margin-top:2px">Scan sometimes fails to register pharmacy correctly</div></td>
+          <td><span class="bdg suspended" style="font-size:10px">Network</span></td>
+          <td>Fatima Aliyu</td>
+          <td><span class="bdg" style="font-size:10px;background:#dbeafe;color:#1d4ed8">Field Agent</span></td>
+          <td>09 Apr 2026</td>
+          <td><span class="bdg pending" id="rpt-status-3">Pending</span></td>
+          <td style="white-space:nowrap"><button class="btn sm" onclick="viewReport('rpt3')">View</button> <button class="btn sm primary" id="rpt-resolve-3" onclick="resolveReport('rpt3')">Resolve</button></td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<div class="adm-view" id="view-comm-config">
+  <div class="pg-hd"><div class="pg-title">Commission Configure</div><div class="pg-sub">Set commission rates and onboarding bonus amounts per promoter tier</div></div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-hd"><span class="card-title">Commission Rates by Tier</span><span style="font-size:11px;color:var(--t3)">Applied monthly on settled MSV</span></div>
+    <div class="card-body" style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:4px">
+        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:12px">Field Lead</div>
+          <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 1 Rate (MSV &lt; ₦10M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="1" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+          <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 2 Rate (MSV ≥ ₦10M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="2" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+        </div>
+        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#1d4ed8;margin-bottom:12px">Field Agent</div>
+          <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 1 Rate (MSV &lt; ₦5M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="1" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+          <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 2 Rate (MSV ≥ ₦5M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="2" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+        </div>
+        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;margin-bottom:12px">Frontline Rep</div>
+          <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 1 Rate (MSV &lt; ₦2M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="1" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+          <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 2 Rate (MSV ≥ ₦2M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="2" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-hd"><span class="card-title">Onboarding Bonus Settings</span><span style="font-size:11px;color:var(--t3)">Triggered on first settled order per pharmacy</span></div>
+    <div class="card-body" style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
+        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:10px">Field Lead Bonus</div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Amount per pharmacy</label><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--t2);font-size:13px">₦</span><input type="number" value="500" min="0" style="width:100px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"></div></div>
+        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#1d4ed8;margin-bottom:10px">Field Agent Bonus</div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Amount per pharmacy</label><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--t2);font-size:13px">₦</span><input type="number" value="300" min="0" style="width:100px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"></div></div>
+        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;margin-bottom:10px">Frontline Rep Bonus</div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Amount per pharmacy</label><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--t2);font-size:13px">₦</span><input type="number" value="200" min="0" style="width:100px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"></div></div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e"><strong>Note:</strong> Changes apply to the next commission cycle. Already-settled bonuses will not be retroactively adjusted.</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;justify-content:flex-end">
+    <button class="btn" onclick="showView('commissions',document.querySelector('.nav-item[onclick*=commissions]'))">Discard</button>
+    <button class="btn primary" onclick="alert('Commission configuration saved successfully.')">Save Configuration</button>
+  </div>
+</div>
+
 <div class="adm-view" id="view-audit">
   <div class="pg-hd"><div class="pg-title">Audit Log</div><div class="pg-sub">Immutable record — read-only, retained 12 months</div></div>
   <div class="card">
@@ -647,6 +741,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
       <button class="chip" onclick="filterAudit('suspend',null,this)">Suspend</button>
       <button class="chip" onclick="filterAudit('commission',null,this)">Commission</button>
       <button class="chip" onclick="filterAudit('create',null,this)">Create</button>
+      <button class="btn sm" style="margin-left:auto;display:flex;align-items:center;gap:5px" onclick="alert('Audit log exported as CSV.')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
     </div>
     <div id="audit-body"></div>
   </div>
@@ -749,12 +844,95 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
           </div>
           <div id="earn-downline" style="padding:0 0 14px"></div>
         </div>
-      </div>
+
+        <!-- REPORT SCREEN — inside phone container -->
+        <div class="app-scr" id="p-report" style="overflow-y:auto">
+          <div style="padding:14px 14px 80px">
+            <div style="font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:2px">File a Report</div>
+            <p style="font-size:11px;color:var(--t2);margin-bottom:14px">Submit an issue or suspension request to Admin</p>
+
+            <!-- Report Type -->
+            <div style="margin-bottom:11px">
+              <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px">Report Type</label>
+              <select id="rpt-type" onchange="toggleSuspendFields()" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:#fff">
+                <option value="pharmacy">Pharmacy Issue</option>
+                <option value="payment">Payment Discrepancy</option>
+                <option value="network">Network Problem</option>
+                <option value="suspend">Request Downline Suspension</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Suspension-specific fields (shown when suspend is selected) -->
+            <div id="suspend-fields" style="display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px;margin-bottom:11px">
+              <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">⚠ Suspension Request</div>
+              <div style="margin-bottom:10px">
+                <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px">Select Downline Member</label>
+                <select id="suspend-member" style="width:100%;padding:8px 10px;border:1px solid #fecaca;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:#fff">
+                  <option value="">— Choose member —</option>
+                  <option value="emeka-dike">Emeka Dike (Field Agent · Lagos)</option>
+                  <option value="nkem-eze">Nkem Eze (Field Agent · Lagos South)</option>
+                  <option value="tunde-alli">Tunde Alli (Frontline Rep · Lagos)</option>
+                  <option value="chioma-obi">Chioma Obi (Frontline Rep · Lagos)</option>
+                  <option value="seun-bello">Seun Bello (Frontline Rep · Abuja)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px">Reason for Suspension</label>
+                <select id="suspend-reason" style="width:100%;padding:8px 10px;border:1px solid #fecaca;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:#fff">
+                  <option value="">— Select reason —</option>
+                  <option>Policy violation</option>
+                  <option>Fraudulent pharmacy registration</option>
+                  <option>Misrepresentation of addresses</option>
+                  <option>Inactivity (3+ months)</option>
+                  <option>Customer complaints</option>
+                  <option>Other misconduct</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Subject -->
+            <div style="margin-bottom:11px">
+              <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px">Subject</label>
+              <input id="rpt-subject" type="text" placeholder="Brief subject…" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text)">
+            </div>
+
+            <!-- Details -->
+            <div style="margin-bottom:13px">
+              <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px">Details</label>
+              <textarea id="rpt-details" rows="3" placeholder="Describe the issue in detail…" style="width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);resize:none"></textarea>
+            </div>
+
+            <button style="width:100%;padding:11px;background:var(--g700);color:#fff;border:none;border-radius:11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer" onclick="submitReport()">Submit Report</button>
+
+            <!-- Recent Reports -->
+            <div style="margin-top:14px">
+              <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:7px">Recent Reports</div>
+              <div style="border:1px solid var(--bd);border-radius:9px;overflow:hidden">
+                <div style="padding:9px 11px;border-bottom:1px solid var(--bd2)">
+                  <div style="font-size:11px;font-weight:600">Commission shortfall — April batch</div>
+                  <div style="font-size:10px;color:var(--t3);margin-top:1px">14 Apr 2026 · <span style="color:var(--amber);font-weight:600">Pending</span></div>
+                </div>
+                <div style="padding:9px 11px;border-bottom:1px solid var(--bd2)">
+                  <div style="font-size:11px;font-weight:600">Suspension request — Tunde Alli</div>
+                  <div style="font-size:10px;color:var(--t3);margin-top:1px">12 Apr 2026 · <span style="color:var(--red);font-weight:600">Under Review</span></div>
+                </div>
+                <div style="padding:9px 11px">
+                  <div style="font-size:11px;font-weight:600">MedPlus Ikeja verification delay</div>
+                  <div style="font-size:10px;color:var(--t3);margin-top:1px">10 Apr 2026 · <span style="color:var(--g700);font-weight:600">Resolved</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /p-screen -->
       <div class="p-nav">
         <button class="p-nav-item active" id="pnav-home" onclick="pNav('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></button>
         <button class="p-nav-item" id="pnav-barcode" onclick="pNav('barcode')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M12 7h.01M17 7h.01M7 12h10M7 17h.01M12 17h.01M17 17h.01"/></svg><span>Barcode</span></button>
         <button class="p-nav-item" id="pnav-network" onclick="pNav('network')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg><span>Network</span></button>
         <button class="p-nav-item" id="pnav-earnings" onclick="pNav('earnings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Earnings</span></button>
+        <button class="p-nav-item" id="pnav-report" onclick="pNav('report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Report</span></button>
       </div>
     </div>
   </div>
@@ -1023,7 +1201,7 @@ function renderPharm() {
       <td><span class="bdg ${stsBdg[p.status]}">${p.status.charAt(0).toUpperCase()+p.status.slice(1)}</span></td>
       <td>${p.date}</td>
       <td onclick="event.stopPropagation()" style="white-space:nowrap">
-        ${p.status==='pending'?`<button class="btn sm primary" onclick="openVerifyModal('${p.id}')">Verify</button> <button class="btn sm danger" onclick="openRejectModal('${p.id}')">Reject</button>`:''}
+        ${p.status==='pending'?`<button class="btn sm primary" disabled style="opacity:0.38;cursor:not-allowed;" title="Verification is view-only">Verify</button> <button class="btn sm danger" onclick="openRejectModal('${p.id}')">Reject</button>`:''}
         ${p.status==='flagged'?`<button class="btn sm warning" onclick="openPharmModal('${p.id}')">Review</button> <button class="btn sm danger" onclick="openRejectModal('${p.id}')">Reject</button>`:''}
         ${p.status==='verified'?`<button class="btn sm" onclick="openPharmModal('${p.id}')">View</button>`:''}
       </td>
@@ -1084,8 +1262,8 @@ function openPharmModal(id) {
     </tbody></table></div>`;
   }
   const foot = `
-    ${p.status==='pending'?`<button class="btn danger" onclick="openRejectModal('${id}');closeModal()">Reject</button><button class="btn primary" onclick="openVerifyModal('${id}');closeModal()">Verify Pharmacy</button>`:''}
-    ${p.status==='flagged'?`<button class="btn danger" onclick="openRejectModal('${id}');closeModal()">Reject</button><button class="btn primary" onclick="openVerifyModal('${id}');closeModal()">Verify Anyway</button>`:''}
+    ${p.status==='pending'?`<button class="btn danger" onclick="openRejectModal('${id}');closeModal()">Reject</button><button class="btn primary" disabled style="opacity:0.38;cursor:not-allowed;" title="Verification is view-only">Verify Pharmacy</button>`:''}
+    ${p.status==='flagged'?`<button class="btn danger" onclick="openRejectModal('${id}');closeModal()">Reject</button><button class="btn primary" disabled style="opacity:0.38;cursor:not-allowed;" title="Verification is view-only">Verify Anyway</button>`:''}
     ${p.status==='verified'?`<button class="btn" onclick="closeModal()">Close</button>`:''}`;
   openModal(p.name, body, foot);
 }
@@ -1564,6 +1742,120 @@ window.addEventListener('load', () => {
   renderDownlineComm();
   setTimeout(initCommChart, 120);
 });
+
+// ── ADMIN REPORTS ──
+const reportData = {
+  rpt1: {
+    subject: 'Commission shortfall — April batch',
+    detail: 'Expected ₦312K but received ₦290K in payout. The shortfall of ₦22,000 appears to relate to 11 pharmacies whose MSV was not counted in the batch. Please review and correct.',
+    type: 'Payment Discrepancy', filedBy: 'Adeyemi Okafor', level: 'Field Lead',
+    date: '14 Apr 2026', status: 'pending'
+  },
+  rpt2: {
+    subject: 'MedPlus Ikeja verification delay',
+    detail: 'MedPlus Ikeja submitted all required documents (CAC, address proof, phone verification) over 2 weeks ago on 26 Mar 2026. The pharmacy is still showing as Pending, which is preventing commission accrual.',
+    type: 'Pharmacy Issue', filedBy: 'Emeka Dike', level: 'Field Agent',
+    date: '10 Apr 2026', status: 'resolved', resolvedNote: 'Pharmacy verified and activated on 11 Apr 2026.'
+  },
+  rpt3: {
+    subject: 'Network sync error on barcode scan',
+    detail: 'When a pharmacy scans my barcode, the registration sometimes goes through but the pharmacy does not appear in my network list for up to 24 hours. This has affected 3 pharmacies this month.',
+    type: 'Network Problem', filedBy: 'Fatima Aliyu', level: 'Field Agent',
+    date: '09 Apr 2026', status: 'pending'
+  }
+};
+
+function viewReport(id) {
+  const r = reportData[id];
+  if (!r) return;
+  const isPending = r.status === 'pending';
+  const statusBadge = isPending
+    ? `<span class="bdg pending">Pending</span>`
+    : `<span class="bdg verified">Resolved</span>`;
+
+  const body = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div style="background:var(--bg);border-radius:8px;padding:11px">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">Filed By</div>
+        <div style="font-size:13px;font-weight:600">${r.filedBy}</div>
+        <div style="font-size:11px;color:var(--t2)">${r.level}</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:11px">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">Type</div>
+        <div style="font-size:13px;font-weight:600">${r.type}</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:11px">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">Date Filed</div>
+        <div style="font-size:13px;font-weight:600">${r.date}</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:11px">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">Status</div>
+        <div style="margin-top:2px">${statusBadge}</div>
+      </div>
+    </div>
+    <div style="margin-bottom:${r.resolvedNote ? 12 : 0}px">
+      <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Details</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6;background:var(--bg);border-radius:8px;padding:12px">${r.detail}</div>
+    </div>
+    ${r.resolvedNote ? `<div style="background:#f0faf4;border:1px solid var(--g200);border-radius:8px;padding:11px;font-size:12px;color:var(--g700)"><strong>Resolution note:</strong> ${r.resolvedNote}</div>` : ''}
+  `;
+
+  const foot = isPending
+    ? `<button class="btn" onclick="closeModal()">Close</button>
+       <button class="btn primary" onclick="resolveReport('${id}');closeModal()">Mark as Resolved</button>`
+    : `<button class="btn" onclick="closeModal()">Close</button>`;
+
+  openModal(r.subject, body, foot);
+}
+
+function resolveReport(id) {
+  reportData[id].status = 'resolved';
+  const statusEl = document.getElementById('rpt-status-' + id.replace('rpt',''));
+  if (statusEl) { statusEl.textContent = 'Resolved'; statusEl.className = 'bdg verified'; }
+  const resolveBtn = document.getElementById('rpt-resolve-' + id.replace('rpt',''));
+  if (resolveBtn) resolveBtn.remove();
+}
+
+// ── REPORT FORM ──
+function toggleSuspendFields() {
+  const type = document.getElementById('rpt-type').value;
+  const fields = document.getElementById('suspend-fields');
+  fields.style.display = type === 'suspend' ? 'block' : 'none';
+  if (type === 'suspend') {
+    document.getElementById('rpt-subject').placeholder = 'e.g. Request suspension of Tunde Alli';
+  } else {
+    document.getElementById('rpt-subject').placeholder = 'Brief subject…';
+  }
+}
+
+function submitReport() {
+  const type = document.getElementById('rpt-type').value;
+  const subject = document.getElementById('rpt-subject').value.trim();
+  const details = document.getElementById('rpt-details').value.trim();
+
+  if (type === 'suspend') {
+    const member = document.getElementById('suspend-member').value;
+    const reason = document.getElementById('suspend-reason').value;
+    if (!member || !reason) {
+      alert('Please select a downline member and suspension reason.');
+      return;
+    }
+    const memberName = document.getElementById('suspend-member').options[document.getElementById('suspend-member').selectedIndex].text;
+    alert('✅ Suspension request submitted to Admin.\n\nMember: ' + memberName + '\nReason: ' + reason + '\n\nAdmin will review and act within 24 hours.');
+  } else {
+    if (!subject) {
+      alert('Please enter a subject for your report.');
+      return;
+    }
+    alert('✅ Report submitted to Admin successfully.\n\nSubject: ' + subject + '\n\nYou will be notified when Admin responds.');
+  }
+
+  // Reset form
+  document.getElementById('rpt-type').value = 'pharmacy';
+  document.getElementById('rpt-subject').value = '';
+  document.getElementById('rpt-details').value = '';
+  document.getElementById('suspend-fields').style.display = 'none';
+}
 </script>
 </body>
 </html>
