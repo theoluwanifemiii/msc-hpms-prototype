@@ -77,6 +77,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .bdg.flagged{background:var(--red-bg);color:#991b1b}
 .bdg.suspended{background:#f1f5f9;color:#475569}
 .bdg.active{background:var(--g50);color:var(--g700)}
+.bdg.inviter{background:var(--g50);color:var(--g700)}
+.bdg.invitee{background:var(--blue-bg);color:#1d4ed8}
 .bdg.fl{background:var(--g50);color:var(--g700)}
 .bdg.fa{background:var(--blue-bg);color:#1d4ed8}
 .bdg.fr{background:#f3e8ff;color:#7c3aed}
@@ -124,6 +126,8 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 .t-card .tc-name{font-weight:700;font-size:12px}
 .t-card .tc-meta{font-size:10px;color:var(--t3);margin-top:1px}
 .t-card .tc-lbl{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px;white-space:nowrap}
+.tc-lbl.inviter{background:var(--g700);color:#fff}
+.tc-lbl.invitee{background:var(--blue);color:#fff}
 .tc-lbl.fl{background:var(--g700);color:#fff}
 .tc-lbl.fa{background:var(--blue);color:#fff}
 .tc-lbl.fr{background:var(--violet);color:#fff}
@@ -150,6 +154,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 .atag.suspend,.atag.block{background:var(--red-bg);color:var(--red)}
 .atag.commission,.atag.bonus{background:var(--amb-bg);color:#92400e}
 .atag.create,.atag.approve{background:var(--blue-bg);color:var(--blue)}
+.atag.rate_change{background:#f3e8ff;color:#7c3aed}
 
 /* COMMISSION */
 .comm-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid var(--bd)}
@@ -159,8 +164,12 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 .cs-val{font-size:20px;font-weight:700}
 .cs-val.g{color:var(--g700)}
 .batch-bar{padding:12px 18px;background:var(--amb-bg);border-bottom:1px solid var(--amb-bd);display:flex;align-items:center;gap:10px}
+.batch-bar.calculated{background:#eff6ff;border-color:#bfdbfe}
 .batch-bar.approved{background:var(--g50);border-color:var(--g200)}
+.batch-bar.paid{background:#f0fdf4;border-color:#bbf7d0}
 .batch-msg{font-size:13px;font-weight:500;flex:1}
+.bdg.calculated{background:#dbeafe;color:#1d4ed8}
+.bdg.paid{background:#dcfce7;color:#15803d}
 .flagged-row td{background:#fffbeb!important}
 
 /* MODAL */
@@ -324,6 +333,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 .net-card{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:all .12s}
 .net-card:hover{border-color:var(--g600);background:#fff}
 .nc-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.nc-av.invitee{background:var(--blue-bg);color:var(--blue)}
 .nc-av.fa{background:var(--blue-bg);color:var(--blue)}
 .nc-av.fr{background:#f3e8ff;color:var(--violet)}
 .nc-nm{font-size:12px;font-weight:700}
@@ -400,7 +410,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>Become a Promoter
     </button>
   </div>
-  <div class="tb-right">v2.5 · Hybrid</div>
+  <div class="tb-right">v3.0 · Inviter/Invitee Model</div>
 </div>
 
 <!-- MODAL -->
@@ -444,7 +454,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
       <span class="nav-cnt" id="nav-pending-cnt">18</span>
     </button>
     <button class="nav-item" onclick="showView('promoters',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Promoters
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Inviters
     </button>
     <button class="nav-item" onclick="showView('orders',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Order History
@@ -456,7 +466,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Commission Config
     </button>
     <button class="nav-item" onclick="showView('reports',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Reports <span style="margin-left:auto;background:var(--amber);color:#000;font-size:10px;font-weight:700;padding:1px 6px;border-radius:100px">2</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>Reports
     </button>
     <button class="nav-item" onclick="showView('audit',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Audit Log
@@ -476,74 +486,94 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 <div class="adm-view active" id="view-dashboard">
   <div class="pg-hd"><div class="pg-title">Dashboard</div><div class="pg-sub">April 2026 · Network overview</div></div>
   <div class="sg">
-    <div class="sc g"><div class="sc-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="sc-lbl">Total Promoters</div><div class="sc-val" id="stat-promoters">247</div><div class="sc-sub">12 Leads · 84 Agents · 151 Reps</div></div>
+    <div class="sc g"><div class="sc-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="sc-lbl">Active Inviters</div><div class="sc-val" id="stat-promoters">247</div><div class="sc-sub">Pharmacies + field promoters</div></div>
     <div class="sc g"><div class="sc-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div class="sc-lbl">Active Pharmacies</div><div class="sc-val" id="stat-pharmacies">1,284</div><div class="sc-sub">+43 this month</div></div>
     <div class="sc a"><div class="sc-ico a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="sc-lbl">Pending Verification</div><div class="sc-val" id="stat-pending">18</div><div class="sc-sub" id="stat-pending-sub">3 flagged for review</div></div>
-    <div class="sc g"><div class="sc-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="sc-lbl">MTD Commission</div><div class="sc-val">₦3.2M</div><div class="sc-sub">247 promoters</div></div>
+    <div class="sc g"><div class="sc-ico g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="sc-lbl">MTD Commission</div><div class="sc-val">₦3.2M</div><div class="sc-sub">247 active Inviters</div></div>
   </div>
   <div class="two-col">
     <div class="card"><div class="card-hd"><span class="card-title">Monthly Commission Payouts</span><span style="font-size:11px;color:var(--t3)">Nov 2025 – Apr 2026</span></div><div class="card-body" style="padding:14px"><canvas id="commChart" height="200"></canvas></div></div>
     <div class="card"><div class="card-hd"><span class="card-title">Recent Activity</span></div><div class="card-body" style="padding:10px 14px" id="activity-feed"></div></div>
   </div>
-  <div class="card"><div class="card-hd"><span class="card-title">Top Field Leads — April 2026</span></div>
-    <div class="tw"><table><thead><tr><th>Field Lead</th><th>Region</th><th>Agents</th><th>Pharmacies</th><th>MSV</th><th>Commission</th><th>Tier</th></tr></thead>
-    <tbody><tr><td class="td-name">Adeyemi Okafor</td><td>Lagos Central</td><td>8</td><td>142</td><td>₦18.4M</td><td>₦308,000</td><td><span class="bdg active">Elite</span></td></tr>
-    <tr><td class="td-name">Blessing Nwosu</td><td>Abuja North</td><td>5</td><td>89</td><td>₦11.2M</td><td>₦184,000</td><td><span class="bdg active">Strong</span></td></tr>
-    <tr><td class="td-name">Chidi Okonkwo</td><td>Port Harcourt</td><td>4</td><td>67</td><td>₦8.6M</td><td>₦136,000</td><td><span class="bdg active">Strong</span></td></tr>
-    <tr><td class="td-name">Fatima Suleiman</td><td>Kano</td><td>3</td><td>45</td><td>₦5.1M</td><td>₦76,000</td><td><span class="bdg pending">Minimum</span></td></tr>
+  <div class="card"><div class="card-hd"><span class="card-title">Top Inviters — April 2026</span><span style="font-size:11px;color:var(--t3)">Ranked by commission earned</span></div>
+    <div class="tw"><table><thead><tr><th>Inviter</th><th>Region</th><th>Direct Invitees</th><th>Pharmacies</th><th>Invitee MSV</th><th>Commission</th></tr></thead>
+    <tbody><tr><td class="td-name">Adeyemi Okafor</td><td>Lagos Central</td><td>8</td><td>142</td><td>₦18.4M</td><td>₦308,000</td></tr>
+    <tr><td class="td-name">Blessing Nwosu</td><td>Abuja North</td><td>5</td><td>89</td><td>₦11.2M</td><td>₦184,000</td></tr>
+    <tr><td class="td-name">Chidi Okonkwo</td><td>Port Harcourt</td><td>4</td><td>67</td><td>₦8.6M</td><td>₦136,000</td></tr>
+    <tr><td class="td-name">Fatima Suleiman</td><td>Kano</td><td>3</td><td>45</td><td>₦5.1M</td><td>₦76,000</td></tr>
     </tbody></table></div>
   </div>
 </div>
 
 <!-- NETWORK -->
 <div class="adm-view" id="view-network">
-  <div class="pg-hd"><div class="pg-title">Network Tree</div><div class="pg-sub">3-level hierarchy — click any node to view profile</div></div>
+  <div class="pg-hd"><div class="pg-title">Referral Network</div><div class="pg-sub">Inviter/Invitee chain — unlimited depth · single-level commission attribution · click any node to view profile</div></div>
   <div class="card">
-    <div class="toolbar"><div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search promoter…" oninput="filterTree(this.value)"></div>
+    <div class="toolbar"><div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search Inviter or Invitee…" oninput="filterTree(this.value)"></div>
     <button class="chip active" onclick="filterTreeLevel('all',this)">All</button>
     <button class="chip" onclick="filterTreeLevel('Lagos',this)">Lagos</button>
     <button class="chip" onclick="filterTreeLevel('Abuja',this)">Abuja</button>
     <button class="chip" onclick="filterTreeLevel('PH',this)">Port Harcourt</button>
     </div>
+    <!-- Commission attribution legend -->
+    <div style="display:flex;align-items:center;gap:16px;padding:10px 18px;background:var(--bg);border-bottom:1px solid var(--bd);font-size:11px;color:var(--t2)">
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:var(--g700);display:inline-block"></span>Inviter — earns commission on direct Invitee settled orders only</span>
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:var(--blue);display:inline-block"></span>Invitee — also an Inviter to anyone they recruit</span>
+      <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#7c3aed;display:inline-block"></span><span style="background:#f3e8ff;color:#7c3aed;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px">FIELD</span> In-house field promoter — earns commission through the same engine · tag is for operational reporting only</span>
+      <span style="display:flex;align-items:center;gap:5px"><span style="font-size:10px;font-weight:700;color:var(--t3)">↓</span> Commission flows one level only — no cascading</span>
+    </div>
     <div class="tree-wrap">
-      <div class="t-node">
-        <div class="t-card root"><div class="tc-name" style="color:#fff">MSC Administration</div><div class="tc-meta" style="color:rgba(255,255,255,.45)">System Root · 12 Field Leads</div></div>
-        <div class="t-conn"></div>
-      </div>
-      <div class="t-row" style="gap:24px;flex-wrap:wrap">
-        <div class="t-branch">
-          <div class="t-card fl" onclick="openPromoterDrawer('pr1')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Adeyemi Okafor</div><div class="tc-meta">Lagos Central · 62 ph · ₦18.4M</div></div>
+      <!-- Chain: Adeyemi (A) → Emeka (B) → Chioma (C) → [new node D] -->
+      <div style="margin-bottom:28px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:14px">Example chain · A → B → C → D · each node earns only from node directly below</div>
+        <div class="t-node">
+          <div class="t-card root"><div class="tc-name" style="color:#fff">MSC Platform</div><div class="tc-meta" style="color:rgba(255,255,255,.45)">System Root · 247 active Inviters</div></div>
           <div class="t-conn"></div>
-          <div class="t-branch">
-            <div class="t-card fa" onclick="openPromoterDrawer('pr2')"><span class="tc-lbl fa">Field Agent</span><div class="tc-name" style="margin-top:4px">Emeka Dike</div><div class="tc-meta">38 pharmacies · ₦5.2M</div></div>
-            <div class="t-conn"></div>
-            <div class="t-card fr" onclick="openPromoterDrawer('pr9')"><span class="tc-lbl fr">Frontline Rep</span><div class="tc-name" style="margin-top:4px">Chioma Obi</div><div class="tc-meta">8 pharmacies · ₦980K</div></div>
-          </div>
         </div>
-        <div class="t-branch">
-          <div class="t-card fl" onclick="openPromoterDrawer('pr3')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Blessing Nwosu</div><div class="tc-meta">Abuja North · 54 ph · ₦11.2M</div></div>
-          <div class="t-conn"></div>
+        <div class="t-row" style="gap:24px;flex-wrap:wrap;align-items:flex-start">
+
+          <!-- Chain 1: Adeyemi → Emeka → Chioma → Dayo (new) -->
           <div class="t-branch">
-            <div class="t-card fa" onclick="openPromoterDrawer('pr7')"><span class="tc-lbl fa">Field Agent</span><div class="tc-name" style="margin-top:4px">Aminu Ibrahim</div><div class="tc-meta">24 pharmacies · ₦3.1M</div></div>
+            <div style="position:relative">
+              <div class="t-card inviter" onclick="openPromoterDrawer('pr1')"><span class="tc-lbl inviter">Inviter (A)</span><span style="position:absolute;top:7px;right:7px;background:#f3e8ff;color:#7c3aed;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px">FIELD</span><div class="tc-name" style="margin-top:4px">Adeyemi Okafor</div><div class="tc-meta">Lagos Central · 62 ph · ₦18.4M</div><div style="font-size:9px;color:var(--g700);margin-top:3px;font-weight:600">earns from B's orders ↓</div></div>
+            </div>
             <div class="t-conn"></div>
-            <div class="t-card fr" onclick="openPromoterDrawer('pr10')"><span class="tc-lbl fr">Frontline Rep</span><div class="tc-name" style="margin-top:4px">Seun Bello</div><div class="tc-meta">9 pharmacies · ₦860K</div></div>
+            <div class="t-branch">
+              <div class="t-card invitee" onclick="openPromoterDrawer('pr2')"><span class="tc-lbl invitee">Invitee of A · Inviter (B)</span><div class="tc-name" style="margin-top:4px">MedPlus Lagos</div><div class="tc-meta">38 pharmacies · ₦5.2M</div><div style="font-size:9px;color:var(--blue);margin-top:3px;font-weight:600">earns from C's orders ↓</div></div>
+              <div class="t-conn"></div>
+              <div class="t-branch">
+                <div class="t-card invitee" onclick="openPromoterDrawer('pr9')"><span class="tc-lbl invitee">Invitee of B · Inviter (C)</span><div class="tc-name" style="margin-top:4px">CityPharm Ikeja</div><div class="tc-meta">8 pharmacies · ₦980K</div><div style="font-size:9px;color:var(--blue);margin-top:3px;font-weight:600">earns from D's orders ↓</div></div>
+                <div class="t-conn"></div>
+                <div class="t-card invitee" style="opacity:.7"><span class="tc-lbl invitee">Invitee of C (D)</span><div class="tc-name" style="margin-top:4px;color:var(--t3)">Pending registration…</div><div class="tc-meta">Chain continues</div></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="t-branch">
-          <div class="t-card fl" onclick="openPromoterDrawer('pr6')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Nkem Eze</div><div class="tc-meta">Lagos South · 48 ph · ₦7.8M</div></div>
-          <div class="t-conn"></div>
+
+          <!-- Chain 2: Blessing → Aminu → Seun -->
           <div class="t-branch">
-            <div class="t-card fa" onclick="openPromoterDrawer('pr4')"><span class="tc-lbl fa">Field Agent</span><div class="tc-name" style="margin-top:4px">Tunde Alli</div><div class="tc-meta">18 pharmacies · ₦2.6M</div></div>
+            <div class="t-card inviter" style="position:relative" onclick="openPromoterDrawer('pr3')"><span class="tc-lbl inviter">Inviter (A)</span><span style="position:absolute;top:7px;right:7px;background:#f3e8ff;color:#7c3aed;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px">FIELD</span><div class="tc-name" style="margin-top:4px">Blessing Nwosu</div><div class="tc-meta">Abuja North · 54 ph · ₦11.2M</div><div style="font-size:9px;color:var(--g700);margin-top:3px;font-weight:600">earns from B's orders ↓</div></div>
             <div class="t-conn"></div>
-            <div class="t-card fr" style="border-color:#e2e8f0;background:#f8fafc;opacity:.7"><span class="tc-lbl fr">Frontline Rep</span><div class="tc-name" style="margin-top:4px;color:var(--t3)">Not yet recruited</div><div class="tc-meta">—</div></div>
+            <div class="t-branch">
+              <div class="t-card invitee" onclick="openPromoterDrawer('pr7')"><span class="tc-lbl invitee">Invitee of A · Inviter (B)</span><div class="tc-name" style="margin-top:4px">Lifeline Pharmacy</div><div class="tc-meta">24 pharmacies · ₦3.1M</div><div style="font-size:9px;color:var(--blue);margin-top:3px;font-weight:600">earns from C's orders ↓</div></div>
+              <div class="t-conn"></div>
+              <div class="t-card invitee" onclick="openPromoterDrawer('pr10')"><span class="tc-lbl invitee">Invitee of B (C)</span><div class="tc-name" style="margin-top:4px">WellCare Pharmacy</div><div class="tc-meta">9 pharmacies · ₦860K</div></div>
+            </div>
           </div>
-        </div>
-        <div class="t-branch">
-          <div class="t-card fl" onclick="openPromoterDrawer('pr8')"><span class="tc-lbl fl">Field Lead</span><div class="tc-name" style="margin-top:4px">Fatima Aliyu</div><div class="tc-meta">Port Harcourt · 38 ph · ₦6.2M</div></div>
-          <div class="t-conn"></div>
+
+          <!-- Chain 3: Nkem → Tunde -->
           <div class="t-branch">
-            <div class="t-card fa" style="border-color:#fca5a5;background:#fef2f2" onclick="openPromoterDrawer('pr5')"><span class="tc-lbl" style="background:var(--red);color:#fff">SUSPENDED</span><div class="tc-name" style="margin-top:4px">James Uchenna</div><div class="tc-meta">0 pharmacies · frozen</div></div>
+            <div class="t-card inviter" onclick="openPromoterDrawer('pr6')"><span class="tc-lbl inviter">Inviter (A)</span><div class="tc-name" style="margin-top:4px">Prime Health Pharmacy</div><div class="tc-meta">Lagos South · 48 ph · ₦7.8M</div><div style="font-size:9px;color:var(--g700);margin-top:3px;font-weight:600">earns from B's orders ↓</div></div>
+            <div class="t-conn"></div>
+            <div class="t-card invitee" onclick="openPromoterDrawer('pr4')"><span class="tc-lbl invitee">Invitee of A (B)</span><div class="tc-name" style="margin-top:4px">QualiCare Pharmacy</div><div class="tc-meta">18 pharmacies · ₦2.6M</div></div>
           </div>
+
+          <!-- Chain 4: Fatima → James (suspended) -->
+          <div class="t-branch">
+            <div class="t-card inviter" style="position:relative" onclick="openPromoterDrawer('pr8')"><span class="tc-lbl inviter">Inviter (A)</span><span style="position:absolute;top:7px;right:7px;background:#f3e8ff;color:#7c3aed;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px">FIELD</span><div class="tc-name" style="margin-top:4px">Fatima Aliyu</div><div class="tc-meta">Port Harcourt · 38 ph · ₦6.2M</div><div style="font-size:9px;color:var(--g700);margin-top:3px;font-weight:600">earns from B's orders ↓</div></div>
+            <div class="t-conn"></div>
+            <div class="t-card invitee" style="border-color:#fca5a5;background:#fef2f2" onclick="openPromoterDrawer('pr5')"><span class="tc-lbl" style="background:var(--red);color:#fff">SUSPENDED</span><div class="tc-name" style="margin-top:4px">James Uchenna</div><div class="tc-meta">0 pharmacies · QR/code deactivated</div></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -561,23 +591,29 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
       <button class="chip" onclick="filterPharm('pending',this)">Pending</button>
       <button class="chip" onclick="filterPharm('flagged',this)">Flagged</button>
     </div>
-    <div class="tw"><table><thead><tr><th>Pharmacy</th><th>CAC No.</th><th>City</th><th>Promoter</th><th>Status</th><th>Registered</th><th>Actions</th></tr></thead>
+    <div class="tw"><table><thead><tr><th>Pharmacy</th><th>CAC No.</th><th>City</th><th>Promoter</th><th>Referred By</th><th>Invitees</th><th>Status</th><th>Registered</th><th>Actions</th></tr></thead>
     <tbody id="pharm-tbody"></tbody></table></div>
   </div>
 </div>
 
-<!-- PROMOTERS -->
+<!-- INVITERS -->
 <div class="adm-view" id="view-promoters">
-  <div class="pg-hd" style="display:flex;align-items:flex-end;justify-content:space-between"><div><div class="pg-title">Promoters</div><div class="pg-sub">All levels · Click row to view profile</div></div><button class="btn primary" onclick="openCreateFieldLeadModal()">+ Add Field Lead</button></div>
+  <div class="pg-hd" style="display:flex;align-items:flex-end;justify-content:space-between">
+    <div>
+      <div class="pg-title">Inviters</div>
+      <div class="pg-sub">Registered pharmacies and in-house field promoters · Both earn commission · <span style="background:#f3e8ff;color:#7c3aed;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">FIELD_PROMOTER</span> tag = for operational reporting only</div>
+    </div>
+    <button class="btn primary" onclick="openCreateFieldLeadModal()" style="display:flex;align-items:center;gap:5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Field Promoter</button>
+  </div>
   <div class="card">
     <div class="toolbar">
-      <div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search name, barcode…" oninput="filterPromoters(null,null,this.value)"></div>
+      <div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search name, invite code…" oninput="filterPromoters(null,null,this.value)"></div>
       <button class="chip active" onclick="filterPromoters('all',this)">All</button>
-      <button class="chip" onclick="filterPromoters('FL',this)">Field Lead</button>
-      <button class="chip" onclick="filterPromoters('FA',this)">Field Agent</button>
-      <button class="chip" onclick="filterPromoters('FR',this)">Frontline Rep</button>
+      <button class="chip" onclick="filterPromoters('active',this)">Active</button>
+      <button class="chip" onclick="filterPromoters('suspended',this)">Suspended</button>
+      <button class="chip" onclick="filterPromoters('field',this)" style="background:#f3e8ff;color:#7c3aed;border-color:#e9d5ff">Field Promoters</button>
     </div>
-    <div class="tw"><table><thead><tr><th>Name</th><th>Level</th><th>Reports To</th><th>Territory</th><th>Barcode</th><th>Pharmacies</th><th>MSV</th><th>Status</th></tr></thead>
+    <div class="tw"><table><thead><tr><th>Name</th><th>Invited By</th><th>Direct Invitees</th><th>Territory</th><th>Invite Code</th><th>Pharmacies</th><th>Invitee MSV</th><th>Status</th></tr></thead>
     <tbody id="prom-tbody"></tbody></table></div>
   </div>
 </div>
@@ -621,48 +657,56 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 <!-- COMMISSIONS -->
 <div class="adm-view" id="view-commissions">
   <div class="pg-hd" style="display:flex;align-items:flex-end;justify-content:space-between">
-    <div><div class="pg-title">Commission Report</div><div class="pg-sub" id="comm-batch-sub">April 2026 · Settled transactions only · Batch pending approval</div></div>
+    <div><div class="pg-title">Commission Report</div><div class="pg-sub" id="comm-batch-sub">April 2026 · Settled Invitee orders only · Single-level attribution</div></div>
     <div style="display:flex;gap:8px">
       <select id="comm-month" onchange="renderCommissions()" style="padding:7px 10px;border:1px solid var(--bd);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none">
         <option value="2026-04">April 2026</option>
         <option value="2026-03">March 2026</option>
         <option value="2026-02">February 2026</option>
       </select>
-      <select id="comm-level" onchange="renderCommissions()" style="padding:7px 10px;border:1px solid var(--bd);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none">
-        <option value="all">All Levels</option>
-        <option value="FL">Field Lead</option>
-        <option value="FA">Field Agent</option>
-        <option value="FR">Frontline Rep</option>
-      </select>
-      <button class="btn primary" onclick="runBatch()">▶ Run Batch</button>
+      <button class="btn sm" style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--t3)" title="xxl-job auto-triggers on 1st of month at 02:00">⏱ xxl-job: 1st/month 02:00</button>
     </div>
   </div>
   <div class="card">
     <div id="batch-bar" class="batch-bar"><span class="batch-msg">⏳ Batch not yet approved for April 2026. Review line items then approve.</span><button class="btn primary" onclick="approveBatch()">Approve Batch</button></div>
-    <div class="comm-sum"><div class="cs-item"><div class="cs-lbl">Network MSV</div><div class="cs-val g" id="cs-msv">₦87.4M</div></div><div class="cs-item"><div class="cs-lbl">Total Commission</div><div class="cs-val g" id="cs-comm">₦3,218,000</div></div><div class="cs-item"><div class="cs-lbl">Onboarding Bonuses</div><div class="cs-val" id="cs-bonus">₦86,000</div></div><div class="cs-item"><div class="cs-lbl">Promoters Paid</div><div class="cs-val" id="cs-count">247</div></div></div>
-    <div class="tw"><table><thead><tr><th>Promoter</th><th>Level</th><th>Territory</th><th>Pharmacies</th><th>MSV</th><th>Rate</th><th>Commission</th><th>Bonus</th><th>Total</th><th></th></tr></thead>
+    <div class="comm-sum"><div class="cs-item"><div class="cs-lbl">Invitee MSV (Settled)</div><div class="cs-val g" id="cs-msv">₦87.4M</div></div><div class="cs-item"><div class="cs-lbl">Total Commission</div><div class="cs-val g" id="cs-comm">₦3,218,000</div></div><div class="cs-item"><div class="cs-lbl">Active Invitees</div><div class="cs-val" id="cs-bonus">1,284</div></div><div class="cs-item"><div class="cs-lbl">Inviters Paid</div><div class="cs-val" id="cs-count">247</div></div></div>
+    <div class="tw"><table><thead><tr><th>Inviter</th><th>Invited By</th><th>Territory</th><th>Direct Invitees</th><th>Invitee MSV</th><th>Rate</th><th>Commission</th><th></th></tr></thead>
     <tbody id="comm-tbody"></tbody></table></div>
   </div>
 </div>
 
-<!-- AUDIT LOG -->
+<!-- REPORTS -->
 <div class="adm-view" id="view-reports">
-  <div class="pg-hd"><div class="pg-title">Downline Reports</div><div class="pg-sub">Issues and updates filed by Field Leads and their downline</div></div>
+  <div class="pg-hd" style="display:flex;align-items:flex-end;justify-content:space-between">
+    <div><div class="pg-title">Commission Reports</div><div class="pg-sub">Network-wide commission summary by billing month — exportable for Finance</div></div>
+    <button class="btn" style="display:flex;align-items:center;gap:5px" onclick="toast('Report exported','success','Full commission report CSV downloaded.')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-hd"><span class="card-title">Monthly Summary</span></div>
+    <div class="tw"><table>
+      <thead><tr><th>Billing Month</th><th>Total Inviters</th><th>Total Invitees</th><th>Invitee MSV</th><th>Commission Paid</th><th>Batch Status</th><th></th></tr></thead>
+      <tbody>
+        <tr><td><strong>April 2026</strong></td><td>247</td><td>1,284</td><td>₦87.4M</td><td style="font-weight:700;color:var(--g700)">₦3,218,000</td><td><span class="bdg calculated">Calculated</span></td><td><button class="btn sm" onclick="showView('commissions',document.querySelector('.nav-item[onclick*=commissions]'))">View Details</button></td></tr>
+        <tr><td><strong>March 2026</strong></td><td>247</td><td>1,240</td><td>₦76.2M</td><td style="font-weight:700;color:var(--g700)">₦3,010,000</td><td><span class="bdg paid">Paid</span></td><td><button class="btn sm" onclick="showView('commissions',document.querySelector('.nav-item[onclick*=commissions]'))">View Details</button></td></tr>
+        <tr><td><strong>February 2026</strong></td><td>243</td><td>1,196</td><td>₦68.4M</td><td style="font-weight:700;color:var(--g700)">₦2,780,000</td><td><span class="bdg paid">Paid</span></td><td><button class="btn sm" onclick="showView('commissions',document.querySelector('.nav-item[onclick*=commissions]'))">View Details</button></td></tr>
+      </tbody>
+    </table></div>
+  </div>
   <div class="card">
+    <div class="card-hd"><span class="card-title">Payout Disputes</span><span style="font-size:11px;color:var(--t3)">Commission discrepancy reports filed by Inviters</span></div>
     <div class="toolbar">
-      <div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search reports…"></div>
+      <div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Search disputes…"></div>
       <button class="chip active">All</button>
       <button class="chip">Pending</button>
       <button class="chip">Resolved</button>
     </div>
     <div class="tw"><table>
-      <thead><tr><th>Subject</th><th>Type</th><th>Filed By</th><th>Level</th><th>Date</th><th>Status</th><th></th></tr></thead>
+      <thead><tr><th>Subject</th><th>Type</th><th>Filed By</th><th>Date</th><th>Status</th><th></th></tr></thead>
       <tbody>
         <tr>
           <td><strong>Commission shortfall — April batch</strong><div style="font-size:11px;color:var(--t3);margin-top:2px">Expected ₦312K but received ₦290K in payout</div></td>
           <td><span class="bdg pending" style="font-size:10px">Payment</span></td>
-          <td>Adeyemi Okafor</td>
-          <td><span class="bdg verified" style="font-size:10px">Field Lead</span></td>
+          <td>Adeyemi Okafor <span class="bdg inviter" style="font-size:9px;margin-left:3px">Inviter</span></td>
           <td>14 Apr 2026</td>
           <td><span class="bdg pending" id="rpt-status-1">Pending</span></td>
           <td style="white-space:nowrap"><button class="btn sm" onclick="viewReport('rpt1')">View</button> <button class="btn sm primary" id="rpt-resolve-1" onclick="resolveReport('rpt1')">Resolve</button></td>
@@ -670,17 +714,15 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
         <tr>
           <td><strong>MedPlus Ikeja verification delay</strong><div style="font-size:11px;color:var(--t3);margin-top:2px">Pharmacy submitted docs 2 weeks ago, still pending</div></td>
           <td><span class="bdg" style="font-size:10px;background:#dbeafe;color:#1d4ed8">Pharmacy</span></td>
-          <td>Emeka Dike</td>
-          <td><span class="bdg" style="font-size:10px;background:#dbeafe;color:#1d4ed8">Field Agent</span></td>
+          <td>MedPlus Lagos <span class="bdg inviter" style="font-size:9px;margin-left:3px">Inviter</span></td>
           <td>10 Apr 2026</td>
           <td><span class="bdg verified" id="rpt-status-2">Resolved</span></td>
           <td><button class="btn sm" onclick="viewReport('rpt2')">View</button></td>
         </tr>
         <tr>
-          <td><strong>Network sync error on barcode scan</strong><div style="font-size:11px;color:var(--t3);margin-top:2px">Scan sometimes fails to register pharmacy correctly</div></td>
+          <td><strong>QR code scan not registering invite code</strong><div style="font-size:11px;color:var(--t3);margin-top:2px">Pharmacy registered but invite binding not recorded</div></td>
           <td><span class="bdg suspended" style="font-size:10px">Network</span></td>
-          <td>Fatima Aliyu</td>
-          <td><span class="bdg" style="font-size:10px;background:#dbeafe;color:#1d4ed8">Field Agent</span></td>
+          <td>Fatima Aliyu <span class="bdg inviter" style="font-size:9px;margin-left:3px">Inviter</span></td>
           <td>09 Apr 2026</td>
           <td><span class="bdg pending" id="rpt-status-3">Pending</span></td>
           <td style="white-space:nowrap"><button class="btn sm" onclick="viewReport('rpt3')">View</button> <button class="btn sm primary" id="rpt-resolve-3" onclick="resolveReport('rpt3')">Resolve</button></td>
@@ -691,46 +733,72 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 </div>
 
 <div class="adm-view" id="view-comm-config">
-  <div class="pg-hd"><div class="pg-title">Commission Configure</div><div class="pg-sub">Set commission rates and onboarding bonus amounts per promoter tier</div></div>
+  <div class="pg-hd"><div class="pg-title">Commission Rate Configuration</div><div class="pg-sub">Unified rate for all Inviters — changes apply next billing cycle · no code deployment required</div></div>
+
+  <!-- Current active rates banner -->
+  <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:24px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-right:4px">Active Rates</div>
+    <div style="display:flex;gap:20px;flex:1">
+      <div><div style="font-size:10px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Tier 1 Threshold</div><div style="font-size:17px;font-weight:700;color:var(--text)">₦1,000,000</div><div style="font-size:10px;color:var(--t3)">per Invitee per month</div></div>
+      <div><div style="font-size:10px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Tier 1 Rate</div><div style="font-size:17px;font-weight:700;color:var(--g700)">100 BP <span style="font-size:13px;font-weight:500;color:var(--t2)">(1%)</span></div><div style="font-size:10px;color:var(--t3)">settled orders ≤ threshold</div></div>
+      <div><div style="font-size:10px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em">Tier 2 Rate</div><div style="font-size:17px;font-weight:700;color:var(--g700)">200 BP <span style="font-size:13px;font-weight:500;color:var(--t2)">(2%)</span></div><div style="font-size:10px;color:var(--t3)">settled orders &gt; threshold</div></div>
+    </div>
+    <span style="font-size:11px;color:var(--t3)">Effective since 01 Mar 2026</span>
+  </div>
 
   <div class="card" style="margin-bottom:18px">
-    <div class="card-hd"><span class="card-title">Commission Rates by Tier</span><span style="font-size:11px;color:var(--t3)">Applied monthly on settled MSV</span></div>
+    <div class="card-hd"><span class="card-title">Update Commission Rates</span><span style="font-size:11px;color:var(--t3)">Applied uniformly to all Inviters — no tier distinction</span></div>
     <div class="card-body" style="padding:20px">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:4px">
-        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:12px">Field Lead</div>
-          <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 1 Rate (MSV &lt; ₦10M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="1" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
-          <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 2 Rate (MSV ≥ ₦10M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="2" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;font-size:12px;color:#1e3a5f;margin-bottom:14px">
+        <strong>Commission Formula</strong><br>
+        <code style="font-size:11px;display:block;margin-top:4px;line-height:1.7;font-family:'DM Mono',monospace">
+          commission = (tier1_rate_bp × min(sales, tier1_threshold) / 10000)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + (tier2_rate_bp × max(sales − tier1_threshold, 0) / 10000)
+        </code>
+        <span style="font-size:10px;color:#3b82f6;margin-top:4px;display:block">Rates stored as INT basis points — 100 BP = 1%. Rounded to 2 decimal places.</span>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e;margin-bottom:18px"><strong>Note:</strong> Rate changes take effect from the <strong>next billing cycle</strong> only. The rate active at batch start is snapshotted into the batch record for full reproducibility.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px">
+        <div style="border:1.5px solid var(--bd);border-radius:10px;padding:16px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:4px">Tier 1 Threshold</div>
+          <div style="font-size:10px;color:var(--t3);margin-bottom:10px">Monthly settled amount per Invitee below which Tier 1 rate applies</div>
+          <div style="display:flex;align-items:center;gap:6px"><span style="color:var(--t2);font-size:13px">₦</span><input id="cfg-threshold" type="number" value="1000000" min="0" step="50000" style="flex:1;padding:8px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:700"></div>
         </div>
-        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#1d4ed8;margin-bottom:12px">Field Agent</div>
-          <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 1 Rate (MSV &lt; ₦5M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="1" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
-          <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 2 Rate (MSV ≥ ₦5M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="2" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+        <div style="border:1.5px solid var(--bd);border-radius:10px;padding:16px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:4px">Tier 1 Rate (Basis Points)</div>
+          <div style="font-size:10px;color:var(--t3);margin-bottom:10px">Applied to settled orders ≤ threshold. 100 BP = 1%.</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input id="cfg-rate1-bp" type="number" value="100" min="0" max="2000" step="10" oninput="document.getElementById('cfg-rate1-pct').textContent=(this.value/100).toFixed(2)+'%'" style="width:80px;padding:8px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:700">
+            <span style="font-size:13px;color:var(--t2)">BP</span>
+            <span id="cfg-rate1-pct" style="font-size:12px;color:var(--g700);font-weight:700;margin-left:4px">1.00%</span>
+          </div>
         </div>
-        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;margin-bottom:12px">Frontline Rep</div>
-          <div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 1 Rate (MSV &lt; ₦2M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="1" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
-          <div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Tier 2 Rate (MSV ≥ ₦2M)</label><div style="display:flex;align-items:center;gap:6px"><input type="number" value="2" min="0" max="10" step=".1" style="width:70px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"><span style="font-size:13px;color:var(--t2)">%</span></div></div>
+        <div style="border:1.5px solid var(--bd);border-radius:10px;padding:16px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:4px">Tier 2 Rate (Basis Points)</div>
+          <div style="font-size:10px;color:var(--t3);margin-bottom:10px">Applied to settled orders &gt; threshold. 100 BP = 1%.</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input id="cfg-rate2-bp" type="number" value="200" min="0" max="2000" step="10" oninput="document.getElementById('cfg-rate2-pct').textContent=(this.value/100).toFixed(2)+'%'" style="width:80px;padding:8px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:700">
+            <span style="font-size:13px;color:var(--t2)">BP</span>
+            <span id="cfg-rate2-pct" style="font-size:12px;color:var(--g700);font-weight:700;margin-left:4px">2.00%</span>
+          </div>
         </div>
       </div>
+      <div class="field"><label>Reason for Change (required — logged to audit trail)</label><textarea id="cfg-reason" placeholder="e.g. Increased rate for Q2 growth drive — approved by GM on 01 May 2026"></textarea></div>
     </div>
   </div>
 
   <div class="card" style="margin-bottom:18px">
-    <div class="card-hd"><span class="card-title">Onboarding Bonus Settings</span><span style="font-size:11px;color:var(--t3)">Triggered on first settled order per pharmacy</span></div>
-    <div class="card-body" style="padding:20px">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
-        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:10px">Field Lead Bonus</div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Amount per pharmacy</label><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--t2);font-size:13px">₦</span><input type="number" value="500" min="0" style="width:100px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"></div></div>
-        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#1d4ed8;margin-bottom:10px">Field Agent Bonus</div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Amount per pharmacy</label><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--t2);font-size:13px">₦</span><input type="number" value="300" min="0" style="width:100px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"></div></div>
-        <div style="border:1px solid var(--bd);border-radius:10px;padding:16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#7c3aed;margin-bottom:10px">Frontline Rep Bonus</div><label style="font-size:11px;font-weight:600;color:var(--t2);display:block;margin-bottom:4px">Amount per pharmacy</label><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--t2);font-size:13px">₦</span><input type="number" value="200" min="0" style="width:100px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;font-family:'DM Sans',sans-serif"></div></div>
-      </div>
-      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e"><strong>Note:</strong> Changes apply to the next commission cycle. Already-settled bonuses will not be retroactively adjusted.</div>
-    </div>
+    <div class="card-hd"><span class="card-title">Rate Change History</span><span style="font-size:11px;color:var(--t3)">Immutable audit trail</span></div>
+    <div class="tw"><table><thead><tr><th>Effective Date</th><th>Changed By</th><th>Threshold</th><th>Tier 1 (BP)</th><th>Tier 1 (%)</th><th>Tier 2 (BP)</th><th>Tier 2 (%)</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td style="font-size:12px">01 Mar 2026</td><td>Super Admin</td><td>₦1,000,000</td><td>100</td><td>1.00%</td><td>200</td><td>2.00%</td><td style="font-size:11px;color:var(--t2)">Launch defaults — approved by GM</td></tr>
+      <tr id="cfg-new-row" style="display:none"><td style="font-size:12px" id="cfg-new-date"></td><td id="cfg-new-actor"></td><td id="cfg-new-thresh"></td><td id="cfg-new-r1-bp"></td><td id="cfg-new-r1-pct"></td><td id="cfg-new-r2-bp"></td><td id="cfg-new-r2-pct"></td><td id="cfg-new-reason" style="font-size:11px;color:var(--t2)"></td></tr>
+    </tbody></table></div>
   </div>
 
   <div style="display:flex;gap:10px;justify-content:flex-end">
     <button class="btn" onclick="showView('commissions',document.querySelector('.nav-item[onclick*=commissions]'))">Discard</button>
-    <button class="btn primary" onclick="alert('Commission configuration saved successfully.')">Save Configuration</button>
+    <button class="btn primary" onclick="saveCommConfig()">Save Configuration</button>
   </div>
 </div>
 
@@ -744,6 +812,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
       <button class="chip" onclick="filterAudit('suspend',null,this)">Suspend</button>
       <button class="chip" onclick="filterAudit('commission',null,this)">Commission</button>
       <button class="chip" onclick="filterAudit('create',null,this)">Create</button>
+      <button class="chip" onclick="filterAudit('rate_change',null,this)">Rate Changes</button>
       <button class="btn sm" style="margin-left:auto;display:flex;align-items:center;gap:5px" onclick="alert('Audit log exported as CSV.')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export CSV</button>
     </div>
     <div id="audit-body"></div>
@@ -758,7 +827,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 <div class="surface" id="surface-promoter">
 <div class="mob-surface">
 <div>
-  <div class="mob-lbl">Promoter App · Adeyemi Okafor (Field Lead)</div>
+  <div class="mob-lbl">Inviter App · Adeyemi Okafor</div>
   <div class="phone">
     <div class="phone-in">
       <div class="p-status"><span class="time">9:41</span><div class="icons">📶 🔋</div></div>
@@ -766,92 +835,52 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
         <!-- HOME -->
         <div class="app-scr active" id="p-home">
           <div class="app-hdr"><div class="app-hdr-top"><div><div class="app-greeting">Good morning,</div><div class="app-name">Adeyemi Okafor</div></div><div class="notif-btn" onclick="openNotifModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="notif-dot"></div></div></div></div>
-          <div class="kpi-card"><div class="kpi-mo">April 2026 · MSV</div><div class="kpi-msv">₦18,400,000</div><div class="kpi-lbl">Monthly Sales Value across your network</div><span class="kpi-tier"><span class="dot"></span>STRONG TIER → ELITE</span></div>
-          <div class="tier-bar-wrap">
-            <div class="tier-bar-lbl"><span>MSV Progress</span><span style="color:var(--amber);font-weight:700">₦1.6M to Elite</span></div>
-            <div class="tier-track">
-              <div class="tier-fill" style="width:92%"></div>
-              <div class="tier-notch" style="left:25%"></div>
-              <div class="tier-notch" style="left:50%"></div>
-            </div>
-            <div class="tier-markers">
-              <div class="tier-mk hit">₦0</div>
-              <div class="tier-mk hit">₦5M<br>Min ✓</div>
-              <div class="tier-mk hit">₦10M<br>Strong ✓</div>
-              <div class="tier-mk current">₦18.4M<br>← You</div>
-              <div class="tier-mk">₦20M<br>Elite</div>
-            </div>
-          </div>
+          <div class="kpi-card"><div class="kpi-mo">April 2026 · Commission Earnings</div><div class="kpi-msv">₦308,000</div><div class="kpi-lbl">From direct Invitees' settled orders this month</div><span class="kpi-tier"><span class="dot"></span>1% / 2% unified rate active</span></div>
           <div class="mini-stats">
             <div class="ms-card"><div class="ms-val">142</div><div class="ms-lbl">Active Pharmacies</div></div>
-            <div class="ms-card"><div class="ms-val">₦312K</div><div class="ms-lbl">April Commission</div></div>
-            <div class="ms-card"><div class="ms-val">31</div><div class="ms-lbl">Team Members</div></div>
-            <div class="ms-card"><div class="ms-val">8</div><div class="ms-lbl">New This Month</div></div>
-          </div>
-          <!-- INVITER CARD — v3.0 Inviter/Invitee model -->
-          <div style="margin:0 14px 10px;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:10px">
-            <div style="width:32px;height:32px;border-radius:50%;background:var(--g50);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div style="flex:1">
-              <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:1px">Invited by (Your Inviter)</div>
-              <div style="font-size:12px;font-weight:700;color:var(--text)">Amara Osei · National Director</div>
-            </div>
-            <span style="font-size:9px;font-weight:600;background:var(--g50);color:var(--g700);padding:2px 7px;border-radius:100px;border:1px solid var(--g200)">Inviter</span>
+            <div class="ms-card"><div class="ms-val">₦308K</div><div class="ms-lbl">April Commission</div></div>
+            <div class="ms-card"><div class="ms-val">8</div><div class="ms-lbl">Direct Invitees</div></div>
+            <div class="ms-card"><div class="ms-val">3</div><div class="ms-lbl">New Invitees</div></div>
           </div>
           <div class="sec-title">Recent Pharmacies <a href="#" onclick="pNav('network')">See network</a></div>
           <div class="ph-row" onclick="openPharmDetailMobile('ph1')"><div class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div><div class="ph-nm">Kingsway Pharmacy</div><div class="ph-mt">Ikeja, Lagos · Verified</div></div><div class="ph-amt">₦2.1M</div></div>
           <div class="ph-row" onclick="openPharmDetailMobile('ph4')"><div class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div><div class="ph-nm">Pharma Direct</div><div class="ph-mt">Lekki, Lagos · Verified</div></div><div class="ph-amt">₦1.8M</div></div>
           <div class="ph-row" onclick="openPharmDetailMobile('ph7')"><div class="ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div><div class="ph-nm">PharmaLife</div><div class="ph-mt">Aba, Abia · Verified</div></div><div class="ph-amt">₦1.5M</div></div>
         </div>
-        <!-- BARCODE -->
+        <!-- QR CODE / INVITE CODE -->
         <div class="app-scr" id="p-barcode">
           <div class="qr-scr">
-            <h2>My Barcode</h2>
-            <p>Show this at pharmacies to register them under your network</p>
+            <h2>My Invite QR Code</h2>
+            <p>Share with other pharmacies — they scan to register with your code pre-filled</p>
             <div class="qr-box">
               <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="white"/><rect x="5" y="5" width="25" height="25" rx="3" fill="#0f2a1a"/><rect x="9" y="9" width="17" height="17" rx="1" fill="white"/><rect x="13" y="13" width="9" height="9" fill="#0f2a1a"/><rect x="70" y="5" width="25" height="25" rx="3" fill="#0f2a1a"/><rect x="74" y="9" width="17" height="17" rx="1" fill="white"/><rect x="78" y="13" width="9" height="9" fill="#0f2a1a"/><rect x="5" y="70" width="25" height="25" rx="3" fill="#0f2a1a"/><rect x="9" y="74" width="17" height="17" rx="1" fill="white"/><rect x="13" y="78" width="9" height="9" fill="#0f2a1a"/><rect x="36" y="5" width="4" height="4" fill="#0f2a1a"/><rect x="44" y="5" width="4" height="4" fill="#0f2a1a"/><rect x="52" y="5" width="4" height="4" fill="#0f2a1a"/><rect x="36" y="13" width="4" height="4" fill="#0f2a1a"/><rect x="44" y="9" width="4" height="4" fill="#0f2a1a"/><rect x="60" y="9" width="4" height="4" fill="#0f2a1a"/><rect x="36" y="21" width="4" height="4" fill="#0f2a1a"/><rect x="52" y="17" width="4" height="4" fill="#0f2a1a"/><rect x="60" y="21" width="4" height="4" fill="#0f2a1a"/><rect x="36" y="36" width="4" height="4" fill="#0f2a1a"/><rect x="44" y="36" width="4" height="4" fill="#0f2a1a"/><rect x="52" y="36" width="4" height="4" fill="#0f2a1a"/><rect x="60" y="36" width="4" height="4" fill="#0f2a1a"/><rect x="36" y="44" width="4" height="4" fill="#0f2a1a"/><rect x="52" y="44" width="4" height="4" fill="#0f2a1a"/><rect x="36" y="52" width="4" height="4" fill="#0f2a1a"/><rect x="44" y="52" width="4" height="4" fill="#0f2a1a"/><rect x="60" y="52" width="4" height="4" fill="#0f2a1a"/><rect x="70" y="36" width="4" height="4" fill="#0f2a1a"/><rect x="78" y="36" width="4" height="4" fill="#0f2a1a"/><rect x="86" y="36" width="4" height="4" fill="#0f2a1a"/><rect x="70" y="44" width="4" height="4" fill="#0f2a1a"/><rect x="86" y="44" width="4" height="4" fill="#0f2a1a"/><rect x="78" y="52" width="4" height="4" fill="#0f2a1a"/><rect x="70" y="60" width="4" height="4" fill="#0f2a1a"/><rect x="86" y="60" width="4" height="4" fill="#0f2a1a"/><rect x="42" y="42" width="16" height="16" rx="2" fill="#1a6b3c"/><text x="50" y="54" font-size="8" font-weight="bold" fill="white" text-anchor="middle" font-family="sans-serif">MSC</text></svg>
             </div>
-            <div class="qr-id">MSC-FL-001-ADY</div>
-            <div class="qr-nm">Adeyemi Okafor · Field Lead · Lagos Central</div>
-            <button class="qr-share" onclick="toast('Barcode shared!','success','Barcode image copied to clipboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share Barcode</button>
-            <div style="margin-top:10px;font-size:11px;color:var(--t3);text-align:center">8 sub-barcodes issued to Field Agents</div>
-            <button class="btn" style="margin-top:10px;width:100%;justify-content:center" onclick="openInviteAgent()">+ Recruit New Agent</button>
-
-            <!-- INVITE LINK — v3.0 Inviter model -->
-            <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--bd);width:100%">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);text-align:center;margin-bottom:8px">Your Personal Invite Link</div>
-              <div style="background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:6px;margin-bottom:8px">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                <span style="font-size:10px;color:var(--t2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">msc.ng/join/ADY-FL001</span>
-                <button onclick="toast('Link copied!','success','Invite link copied to clipboard')" style="font-size:10px;font-weight:700;color:var(--g700);background:none;border:none;cursor:pointer;font-family:inherit;flex-shrink:0">Copy</button>
-              </div>
-              <button class="qr-share" style="background:var(--g800)" onclick="toast('Invite shared!','success','Your personal invite link has been shared.')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share Invite Link
-              </button>
-              <div style="font-size:10px;color:var(--t3);text-align:center;margin-top:6px">Anyone who joins using your link becomes your Invitee</div>
+            <div class="qr-id">ADY-INV001</div>
+            <div class="qr-nm">Adeyemi Okafor · Inviter</div>
+            <!-- Invitation code display -->
+            <div style="width:100%;background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:10px 14px;margin:10px 0;display:flex;align-items:center;justify-content:space-between">
+              <div><div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:2px">Invitation Code</div><div style="font-size:18px;font-weight:700;letter-spacing:.12em;color:var(--text)">ADY-INV001</div></div>
+              <button style="background:var(--g700);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit" onclick="toast('Code copied!','success','Invitation code copied to clipboard')">Copy</button>
             </div>
+            <button class="qr-share" onclick="toast('QR code shared!','success','QR image and invite link copied to clipboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share QR Code</button>
+            <div style="margin-top:10px;font-size:10px;color:var(--t3);text-align:center;line-height:1.5">Share via WhatsApp, SMS, or in person. Registered pharmacies are permanently bound to you as their Inviter.</div>
           </div>
         </div>
         <!-- NETWORK -->
         <div class="app-scr" id="p-network">
           <div class="net-scr">
             <h3>My Network</h3>
-            <div class="sub">Your Invitees &amp; their downlines · tap to view</div>
+            <div class="sub">Your direct Invitees · tap to view details</div>
             <div class="net-summary">
-              <div class="ns-item"><div class="ns-val">8</div><div class="ns-lbl">Invitees</div></div>
-              <div class="ns-item"><div class="ns-val">23</div><div class="ns-lbl">Their Invitees</div></div>
+              <div class="ns-item"><div class="ns-val">8</div><div class="ns-lbl">Direct Invitees</div></div>
+              <div class="ns-item"><div class="ns-val">₦308K</div><div class="ns-lbl">Commission (Apr)</div></div>
               <div class="ns-item"><div class="ns-val">142</div><div class="ns-lbl">Pharmacies</div></div>
             </div>
-            <!-- Inviter/Invitee model label -->
-            <div style="background:var(--g50);border:1px solid var(--g200);border-radius:9px;padding:8px 11px;margin-bottom:10px;font-size:11px;color:var(--g700);display:flex;align-items:center;gap:6px">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/></svg>
-              <span><strong>You are the Inviter</strong> · Anyone you recruit is your direct Invitee</span>
-            </div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:8px">My Invitees · Field Agents (8)</div>
-            <div class="net-card" onclick="openAgentDetail('pr2')"><div class="nc-av fa">ED</div><div><div class="nc-nm">Emeka Dike</div><div class="nc-mt">2 Invitees · 38 pharmacies · ₦5.2M</div></div><div class="nc-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-            <div class="net-card" onclick="openAgentDetail('pr6')"><div class="nc-av fa">NE</div><div><div class="nc-nm">Nkem Eze</div><div class="nc-mt">1 Invitee · 18 pharmacies · ₦2.4M</div></div><div class="nc-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
-            <div class="net-card" onclick="openAgentDetail('pr7')"><div class="nc-av fa">AI</div><div><div class="nc-nm">Aminu Ibrahim</div><div class="nc-mt">0 Invitees · 24 pharmacies · ₦3.1M</div></div><div class="nc-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+            <div style="background:var(--g50);border:1px solid var(--g200);border-radius:9px;padding:9px 12px;margin-bottom:10px;font-size:11px;color:var(--t2);line-height:1.5"><strong style="color:var(--g700)">Commission note:</strong> You earn only on your direct Invitees' settled orders. Your Invitees also earn on their own Invitees — the chain extends independently.</div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:8px">Direct Invitees (8)</div>
+            <div class="net-card" onclick="openAgentDetail('pr2')"><div class="nc-av invitee">ML</div><div><div class="nc-nm">MedPlus Lagos</div><div class="nc-mt">Invitee · 38 pharmacies · ₦5.2M MSV</div></div><div class="nc-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+            <div class="net-card" onclick="openAgentDetail('pr6')"><div class="nc-av invitee">PH</div><div><div class="nc-nm">Prime Health Pharmacy</div><div class="nc-mt">Invitee · 18 pharmacies · ₦2.4M MSV</div></div><div class="nc-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+            <div class="net-card" onclick="openAgentDetail('pr7')"><div class="nc-av invitee">LP</div><div><div class="nc-nm">Lifeline Pharmacy</div><div class="nc-mt">Invitee · 24 pharmacies · ₦3.1M MSV</div></div><div class="nc-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
           </div>
         </div>
         <!-- EARNINGS -->
@@ -865,16 +894,13 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
             <button class="mo-chip" onclick="setEarnMonth('2025-12',this)">Dec 2025</button>
           </div>
           <div class="earn-split">
-            <div class="es-card"><div class="es-lbl">Direct Pharma</div><div class="es-val" id="es-direct">₦244,000</div></div>
-            <div class="es-card"><div class="es-lbl">Override Comm.</div><div class="es-val" id="es-override">₦64,000</div></div>
+            <div class="es-card"><div class="es-lbl">Commission</div><div class="es-val" id="es-direct">₦308,000</div></div>
+            <div class="es-card"><div class="es-lbl">Invitees Paid On</div><div class="es-val" id="es-override" style="font-size:14px;padding-top:3px">8 Invitees</div></div>
           </div>
           <div style="padding:10px 14px 4px"><canvas id="earnChart" height="120"></canvas></div>
-          <div style="padding:4px 14px 2px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)">My Pharmacy Breakdown</div>
+          <div style="background:var(--g50);border-top:1px solid var(--g200);border-bottom:1px solid var(--g200);padding:8px 14px;font-size:10px;color:var(--t2);margin-bottom:4px">1% on Invitee settled MSV up to ₦1M · 2% above ₦1M. No override or cascading.</div>
+          <div style="padding:4px 14px 2px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)">Commission by Invitee</div>
           <div id="earn-bdwn"></div>
-          <div style="padding:10px 14px 2px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);display:flex;justify-content:space-between;align-items:center">
-            <span>Downline Override Commission</span>
-            <span style="font-size:10px;color:var(--t3);text-transform:none;letter-spacing:0;font-weight:400">per agent contribution</span>
-          </div>
           <div id="earn-downline" style="padding:0 0 14px"></div>
         </div>
 
@@ -903,11 +929,11 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
                 <label style="font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px">Select Downline Member</label>
                 <select id="suspend-member" style="width:100%;padding:8px 10px;border:1px solid #fecaca;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:#fff">
                   <option value="">— Choose member —</option>
-                  <option value="emeka-dike">Emeka Dike (Field Agent · Lagos)</option>
-                  <option value="nkem-eze">Nkem Eze (Field Agent · Lagos South)</option>
-                  <option value="tunde-alli">Tunde Alli (Frontline Rep · Lagos)</option>
-                  <option value="chioma-obi">Chioma Obi (Frontline Rep · Lagos)</option>
-                  <option value="seun-bello">Seun Bello (Frontline Rep · Abuja)</option>
+                  <option value="medplus-lagos">MedPlus Lagos (Invitee · Lagos)</option>
+                  <option value="prime-health">Prime Health Pharmacy (Invitee · Lagos South)</option>
+                  <option value="qualicare">QualiCare Pharmacy (Invitee · Lagos)</option>
+                  <option value="citypharm">CityPharm Ikeja (Invitee · Lagos)</option>
+                  <option value="wellcare">WellCare Pharmacy (Invitee · Abuja)</option>
                 </select>
               </div>
               <div>
@@ -947,7 +973,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
                   <div style="font-size:10px;color:var(--t3);margin-top:1px">14 Apr 2026 · <span style="color:var(--amber);font-weight:600">Pending</span></div>
                 </div>
                 <div style="padding:9px 11px;border-bottom:1px solid var(--bd2)">
-                  <div style="font-size:11px;font-weight:600">Suspension request — Tunde Alli</div>
+                  <div style="font-size:11px;font-weight:600">Suspension request — QualiCare Pharmacy</div>
                   <div style="font-size:10px;color:var(--t3);margin-top:1px">12 Apr 2026 · <span style="color:var(--red);font-weight:600">Under Review</span></div>
                 </div>
                 <div style="padding:9px 11px">
@@ -993,7 +1019,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
             <div class="scs-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:3px">Barcode Scanned!</div>
             <div style="font-size:11px;color:var(--t3);margin-bottom:14px">15 Apr 2026, 09:41 · Timestamp recorded</div>
-            <div class="prom-found"><div class="pf-lbl">Promoter Identified</div><div class="pf-nm">Adeyemi Okafor</div><div class="pf-id">MSC-FL-001-ADY · Field Lead · Lagos Central</div></div>
+            <div class="prom-found"><div class="pf-lbl">Inviter Identified</div><div class="pf-nm">Adeyemi Okafor</div><div class="pf-id">Invite Code: ADY-INV001 · Lagos Central</div></div>
             <button class="scan-btn" style="margin-bottom:8px" onclick="phNav('register',document.getElementById('phnav-register'))">Continue to Register →</button>
             <button class="btn" style="width:100%;justify-content:center" onclick="resetScan()">Scan Again</button>
           </div>
@@ -1008,7 +1034,41 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
             <div class="form-group"><label>Street Address</label><input type="text" value="14 Allen Avenue, Ikeja"></div>
             <div class="form-group"><label>LGA</label><input type="text" value="Ikeja"></div>
             <div class="form-group"><label>State</label><input type="text" value="Lagos"></div>
+            <div class="form-group"><label>Invite Code <span style="font-weight:400;color:var(--t3)">(optional)</span></label><input type="text" id="reg-invite-code" placeholder="e.g. ADY-INV001" style="font-family:'DM Mono',monospace"></div>
+            <div style="font-size:10px;color:var(--t3);margin-top:-6px;margin-bottom:8px;padding:0 1px">If you were referred by another pharmacy, enter their invite code. This binding is permanent once set.</div>
             <button class="form-submit" onclick="submitReg()">Submit Registration</button>
+          </div>
+        </div>
+        <div class="app-scr" id="ph-refer">
+          <div style="padding:14px 18px 8px 18px"><div style="font-family:'DM Serif Display',serif;font-size:20px">Refer a Pharmacy</div><div style="font-size:11px;color:var(--t3)">Earn ₦500 for every pharmacy you invite</div></div>
+          <!-- Referral code card -->
+          <div style="margin:0 14px 14px;background:linear-gradient(135deg,var(--g800),var(--g600));border-radius:14px;padding:16px;color:#fff">
+            <div style="font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Your Referral Code</div>
+            <div style="font-size:22px;font-weight:800;font-family:'DM Serif Display',serif;letter-spacing:.04em;margin-bottom:10px">KWY-PH001</div>
+            <div style="font-size:10px;opacity:.65;margin-bottom:10px;word-break:break-all">msc.ng/refer/KWY-PH001</div>
+            <button style="background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit" onclick="toast('Link copied!','success','Referral link copied to clipboard.')">📋 Copy Link</button>
+          </div>
+          <!-- Earn info -->
+          <div style="margin:0 14px 14px;background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:12px 14px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g700);margin-bottom:8px">How it works</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:18px;height:18px;border-radius:50%;background:var(--g700);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div style="font-size:11px;color:var(--t1)">Share your referral code with another pharmacy</div></div>
+              <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:18px;height:18px;border-radius:50%;background:var(--g700);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div style="font-size:11px;color:var(--t1)">They register using your code and get verified</div></div>
+              <div style="display:flex;align-items:flex-start;gap:8px"><div style="width:18px;height:18px;border-radius:50%;background:var(--g700);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div style="font-size:11px;color:var(--t1)">You earn <strong>₦500 bonus</strong> when they place their first order</div></div>
+            </div>
+          </div>
+          <!-- Referred by section (if this pharmacy was itself referred) -->
+          <div style="margin:0 14px 14px;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:12px 14px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:8px">Your Inviter</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+              <div><div style="font-size:12px;font-weight:700">Not referred by anyone</div><div style="font-size:10px;color:var(--t3)">You joined MSC directly</div></div>
+            </div>
+          </div>
+          <!-- Pharmacies you referred -->
+          <div style="padding:0 14px 80px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:8px">Pharmacies You Referred (0)</div>
+            <div style="text-align:center;padding:20px 0;color:var(--t3);font-size:11px">No pharmacies referred yet.<br>Share your code to get started.</div>
           </div>
         </div>
         <div class="app-scr" id="ph-orders">
@@ -1025,6 +1085,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
         <button class="p-nav-item active" id="phnav-scan" onclick="phNav('scan',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M12 7h.01M17 7h.01M7 12h10"/></svg><span>Scan</span></button>
         <button class="p-nav-item" id="phnav-register" onclick="phNav('register',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg><span>Register</span></button>
         <button class="p-nav-item" id="phnav-orders" onclick="phNav('orders',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>Orders</span></button>
+        <button class="p-nav-item" id="phnav-refer" onclick="phNav('refer',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg><span>Refer</span></button>
       </div>
     </div>
   </div>
@@ -1058,7 +1119,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
               <div style="width:38px;height:38px;border-radius:50%;background:var(--g700);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0">AO</div>
               <div>
                 <div style="font-size:13px;font-weight:700">Adeyemi Okafor</div>
-                <div style="font-size:11px;color:var(--t2)">Field Lead · Lagos Central</div>
+                <div style="font-size:11px;color:var(--t2)">Inviter · Lagos Central</div>
                 <div style="font-size:10px;color:var(--g700);margin-top:2px;font-weight:600">142 pharmacies · ₦18.4M MSV</div>
               </div>
             </div>
@@ -1087,12 +1148,12 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
               <button style="width:100%;padding:13px;background:var(--g700);color:#fff;border:none;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer" onclick="joinNav('form')">
                 Join as Promoter →
               </button>
-              <div style="font-size:10px;color:var(--t3);text-align:center;margin-top:7px">Invite code: <strong>ADY-FL001</strong> · Pre-filled automatically</div>
+              <div style="font-size:10px;color:var(--t3);text-align:center;margin-top:7px">Invite code: <strong>ADY-INV001</strong> · Pre-filled automatically</div>
             </div>
           </div>
 
           <!-- REGISTRATION FORM -->
-          <div class="app-scr" id="join-form" style="overflow-y:auto">
+          <div class="app-scr" id="join-form" style="display:none;overflow-y:auto">
             <div style="padding:16px 16px 80px">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
                 <button onclick="joinNav('landing')" style="background:none;border:none;cursor:pointer;color:var(--t2);padding:0;font-family:inherit">
@@ -1104,7 +1165,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
               <!-- Invite code locked -->
               <div style="background:var(--g50);border:1px solid var(--g200);border-radius:9px;padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <div style="flex:1"><div style="font-size:10px;font-weight:700;color:var(--g700)">Invite Code (pre-filled)</div><div style="font-size:12px;font-weight:700;color:var(--text)">ADY-FL001 · via Adeyemi Okafor</div></div>
+                <div style="flex:1"><div style="font-size:10px;font-weight:700;color:var(--g700)">Invite Code (pre-filled)</div><div style="font-size:12px;font-weight:700;color:var(--text)">ADY-INV001 · via Adeyemi Okafor</div></div>
               </div>
 
               <div style="display:flex;flex-direction:column;gap:10px">
@@ -1142,7 +1203,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
           </div>
 
           <!-- SUCCESS STATE -->
-          <div class="app-scr" id="join-success" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center">
+          <div class="app-scr" id="join-success" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center">
             <div style="width:60px;height:60px;background:var(--g50);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
@@ -1188,7 +1249,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
         <tbody>
           <tr style="border-bottom:1px solid var(--bd2)" id="app-row-1">
             <td style="padding:11px 16px"><div style="font-weight:700">Chidi Okeke</div><div style="font-size:10px;color:var(--t3)">chidi@example.com · +234 801 …</div></td>
-            <td style="padding:11px 16px"><div style="font-weight:600">Adeyemi Okafor</div><div style="font-size:10px;color:var(--t3)">Field Lead · ADY-FL001</div></td>
+            <td style="padding:11px 16px"><div style="font-weight:600">Adeyemi Okafor</div><div style="font-size:10px;color:var(--t3)">Inviter · ADY-INV001</div></td>
             <td style="padding:11px 16px">Lagos</td>
             <td style="padding:11px 16px"><span class="bdg verified">Passed</span></td>
             <td style="padding:11px 16px;color:var(--t3)">15 Apr 2026</td>
@@ -1199,7 +1260,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
           </tr>
           <tr style="border-bottom:1px solid var(--bd2)" id="app-row-2">
             <td style="padding:11px 16px"><div style="font-weight:700">Nneka Agu</div><div style="font-size:10px;color:var(--t3)">nneka@gmail.com · +234 802 …</div></td>
-            <td style="padding:11px 16px"><div style="font-weight:600">Emeka Dike</div><div style="font-size:10px;color:var(--t3)">Field Agent · EMK-FA001</div></td>
+            <td style="padding:11px 16px"><div style="font-weight:600">MedPlus Lagos</div><div style="font-size:10px;color:var(--t3)">Inviter · MED-INV001</div></td>
             <td style="padding:11px 16px">Enugu</td>
             <td style="padding:11px 16px"><span class="bdg pending">Pending</span></td>
             <td style="padding:11px 16px;color:var(--t3)">15 Apr 2026</td>
@@ -1210,7 +1271,7 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
           </tr>
           <tr id="app-row-3">
             <td style="padding:11px 16px"><div style="font-weight:700">Musa Garba</div><div style="font-size:10px;color:var(--t3)">musa.g@yahoo.com · +234 803 …</div></td>
-            <td style="padding:11px 16px"><div style="font-weight:600">Fatima Aliyu</div><div style="font-size:10px;color:var(--t3)">Field Lead · FAT-FL004</div></td>
+            <td style="padding:11px 16px"><div style="font-weight:600">Fatima Aliyu</div><div style="font-size:10px;color:var(--t3)">Inviter · FAT-INV001</div></td>
             <td style="padding:11px 16px">Kano</td>
             <td style="padding:11px 16px"><span class="bdg verified">Passed</span></td>
             <td style="padding:11px 16px;color:var(--t3)">14 Apr 2026</td>
@@ -1234,73 +1295,74 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 // ══════════ DATA STORE ══════════
 const DB = {
   pharmacies: [
-    {id:'ph1',name:'Kingsway Pharmacy',cac:'BN-123456',phone:'+234 802 345 6789',address:'14 Allen Avenue, Ikeja',city:'Ikeja',lga:'Ikeja',state:'Lagos',promoterId:'pr1',promoterName:'Adeyemi Okafor',promoterLevel:'FL',status:'verified',date:'12 Mar 2026',msv:2100000,verifiedBy:'Super Admin',verifiedDate:'14 Mar 2026',verificationNote:'Physical visit confirmed'},
-    {id:'ph2',name:'MedPlus Ikeja',cac:'BN-234567',phone:'+234 803 456 7890',address:'22 Opebi Road, Ikeja',city:'Ikeja',lga:'Ikeja',state:'Lagos',promoterId:'pr2',promoterName:'Emeka Dike',promoterLevel:'FA',status:'pending',date:'02 Apr 2026',msv:0},
-    {id:'ph3',name:'HealthNet Plus',cac:'BN-345678',phone:'+234 804 567 8901',address:'5 Garki Road, Garki',city:'Garki',lga:'Garki',state:'Abuja',promoterId:'pr7',promoterName:'Aminu Ibrahim',promoterLevel:'FA',status:'flagged',date:'08 Apr 2026',msv:0,flagReason:'Duplicate CAC suspected'},
-    {id:'ph4',name:'Pharma Direct',cac:'BN-456789',phone:'+234 805 678 9012',address:'7 Lekki Phase 1, Lekki',city:'Lekki',lga:'Eti-Osa',state:'Lagos',promoterId:'pr1',promoterName:'Adeyemi Okafor',promoterLevel:'FL',status:'verified',date:'15 Feb 2026',msv:1800000,verifiedBy:'Super Admin',verifiedDate:'17 Feb 2026',verificationNote:'Documents verified'},
-    {id:'ph5',name:'QualiCare Pharmacy',cac:'BN-567890',phone:'+234 806 789 0123',address:'12 Wuse Zone 4, Wuse',city:'Wuse',lga:'Wuse',state:'Abuja',promoterId:'pr8',promoterName:'Fatima Aliyu',promoterLevel:'FL',status:'pending',date:'10 Apr 2026',msv:0},
-    {id:'ph6',name:'City Pharmacy',cac:'BN-678901',phone:'+234 807 890 1234',address:'8 Main Market Road, Onitsha',city:'Onitsha',lga:'Onitsha North',state:'Anambra',promoterId:'pr6',promoterName:'Nkem Eze',promoterLevel:'FL',status:'pending',date:'11 Apr 2026',msv:0},
-    {id:'ph7',name:'PharmaLife',cac:'BN-789012',phone:'+234 808 901 2345',address:'3 Commercial Road, Aba',city:'Aba',lga:'Aba North',state:'Abia',promoterId:'pr2',promoterName:'Emeka Dike',promoterLevel:'FA',status:'verified',date:'05 Mar 2026',msv:1500000,verifiedBy:'Super Admin',verifiedDate:'07 Mar 2026',verificationNote:'Documents verified'},
-    {id:'ph8',name:'MedStore Lagos',cac:'BN-890123',phone:'+234 809 012 3456',address:'15 Bode Thomas St, Surulere',city:'Surulere',lga:'Surulere',state:'Lagos',promoterId:'pr4',promoterName:'Tunde Alli',promoterLevel:'FA',status:'flagged',date:'09 Apr 2026',msv:0,flagReason:'Address unverifiable'},
-    {id:'ph9',name:'Greenline Pharmacy',cac:'BN-901234',phone:'+234 810 123 4567',address:'22 Trans-Amadi Rd, Port Harcourt',city:'Port Harcourt',lga:'Obio-Akpor',state:'Rivers',promoterId:'pr8',promoterName:'Fatima Aliyu',promoterLevel:'FL',status:'verified',date:'12 Mar 2026',msv:1200000,verifiedBy:'Super Admin',verifiedDate:'14 Mar 2026',verificationNote:'Documents confirmed'},
-    {id:'ph10',name:'CareMax Pharmacy',cac:'BN-012345',phone:'+234 811 234 5678',address:'5 Lagos Road, Ibadan',city:'Ibadan',lga:'Ibadan North',state:'Oyo',promoterId:'pr6',promoterName:'Nkem Eze',promoterLevel:'FL',status:'verified',date:'18 Feb 2026',msv:980000,verifiedBy:'Super Admin',verifiedDate:'20 Feb 2026',verificationNote:'Physical visit confirmed'},
+    {id:'ph1',name:'Kingsway Pharmacy',cac:'BN-123456',phone:'+234 802 345 6789',address:'14 Allen Avenue, Ikeja',city:'Ikeja',lga:'Ikeja',state:'Lagos',promoterId:'pr1',promoterName:'Adeyemi Okafor',promoterLevel:'PR',status:'verified',date:'12 Mar 2026',msv:2100000,verifiedBy:'Super Admin',verifiedDate:'14 Mar 2026',verificationNote:'Physical visit confirmed'},
+    {id:'ph2',name:'MedPlus Ikeja',cac:'BN-234567',phone:'+234 803 456 7890',address:'22 Opebi Road, Ikeja',city:'Ikeja',lga:'Ikeja',state:'Lagos',promoterId:'pr2',promoterName:'MedPlus Lagos',promoterLevel:'PR',status:'pending',date:'02 Apr 2026',msv:0,inviterId:'pr2',inviterName:'MedPlus Lagos'},
+    {id:'ph3',name:'HealthNet Plus',cac:'BN-345678',phone:'+234 804 567 8901',address:'5 Garki Road, Garki',city:'Garki',lga:'Garki',state:'Abuja',promoterId:'pr7',promoterName:'Lifeline Pharmacy',promoterLevel:'PR',status:'flagged',date:'08 Apr 2026',msv:0,flagReason:'Duplicate CAC suspected'},
+    {id:'ph4',name:'Pharma Direct',cac:'BN-456789',phone:'+234 805 678 9012',address:'7 Lekki Phase 1, Lekki',city:'Lekki',lga:'Eti-Osa',state:'Lagos',promoterId:'pr1',promoterName:'Adeyemi Okafor',promoterLevel:'PR',status:'verified',date:'15 Feb 2026',msv:1800000,verifiedBy:'Super Admin',verifiedDate:'17 Feb 2026',verificationNote:'Documents verified',inviterId:'pr1',inviterName:'Adeyemi Okafor'},
+    {id:'ph5',name:'QualiCare Pharmacy',cac:'BN-567890',phone:'+234 806 789 0123',address:'12 Wuse Zone 4, Wuse',city:'Wuse',lga:'Wuse',state:'Abuja',promoterId:'pr8',promoterName:'Fatima Aliyu',promoterLevel:'PR',status:'pending',date:'10 Apr 2026',msv:0},
+    {id:'ph6',name:'City Pharmacy',cac:'BN-678901',phone:'+234 807 890 1234',address:'8 Main Market Road, Onitsha',city:'Onitsha',lga:'Onitsha North',state:'Anambra',promoterId:'pr6',promoterName:'Prime Health Pharmacy',promoterLevel:'PR',status:'pending',date:'11 Apr 2026',msv:0},
+    {id:'ph7',name:'PharmaLife',cac:'BN-789012',phone:'+234 808 901 2345',address:'3 Commercial Road, Aba',city:'Aba',lga:'Aba North',state:'Abia',promoterId:'pr2',promoterName:'MedPlus Lagos',promoterLevel:'PR',status:'verified',date:'05 Mar 2026',msv:1500000,verifiedBy:'Super Admin',verifiedDate:'07 Mar 2026',verificationNote:'Documents verified',inviterId:'pr2',inviterName:'MedPlus Lagos'},
+    {id:'ph8',name:'MedStore Lagos',cac:'BN-890123',phone:'+234 809 012 3456',address:'15 Bode Thomas St, Surulere',city:'Surulere',lga:'Surulere',state:'Lagos',promoterId:'pr4',promoterName:'QualiCare Pharmacy',promoterLevel:'PR',status:'flagged',date:'09 Apr 2026',msv:0,flagReason:'Address unverifiable'},
+    {id:'ph9',name:'Greenline Pharmacy',cac:'BN-901234',phone:'+234 810 123 4567',address:'22 Trans-Amadi Rd, Port Harcourt',city:'Port Harcourt',lga:'Obio-Akpor',state:'Rivers',promoterId:'pr8',promoterName:'Fatima Aliyu',promoterLevel:'PR',status:'verified',date:'12 Mar 2026',msv:1200000,verifiedBy:'Super Admin',verifiedDate:'14 Mar 2026',verificationNote:'Documents confirmed',inviterId:'ph10',inviterName:'CareMax Pharmacy'},
+    {id:'ph10',name:'CareMax Pharmacy',cac:'BN-012345',phone:'+234 811 234 5678',address:'5 Lagos Road, Ibadan',city:'Ibadan',lga:'Ibadan North',state:'Oyo',promoterId:'pr6',promoterName:'Prime Health Pharmacy',promoterLevel:'PR',status:'verified',date:'18 Feb 2026',msv:980000,verifiedBy:'Super Admin',verifiedDate:'20 Feb 2026',verificationNote:'Physical visit confirmed'},
   ],
   promoters: [
-    {id:'pr1',name:'Adeyemi Okafor',initials:'AO',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Lagos Central',barcode:'MSC-FL-001-ADY',email:'adeyemi@msc.ng',phone:'+234 801 234 5678',pharmacies:62,status:'active',recruited:'15 Jan 2026',msv:18400000,commission:308000,bonus:4000},
-    {id:'pr2',name:'Emeka Dike',initials:'ED',level:'FA',levelLabel:'Field Agent',parent:'pr1',parentName:'Adeyemi Okafor',territory:'Lagos Central',barcode:'MSC-FA-001-EMK',email:'emeka@msc.ng',phone:'+234 802 234 5678',pharmacies:38,status:'active',recruited:'20 Jan 2026',msv:5200000,commission:84000,bonus:3600},
-    {id:'pr3',name:'Blessing Nwosu',initials:'BN',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Abuja North',barcode:'MSC-FL-002-BLS',email:'blessing@msc.ng',phone:'+234 803 234 5678',pharmacies:54,status:'active',recruited:'14 Jan 2026',msv:11200000,commission:184000,bonus:0},
-    {id:'pr4',name:'Tunde Alli',initials:'TA',level:'FA',levelLabel:'Field Agent',parent:'pr6',parentName:'Nkem Eze',territory:'Lagos South',barcode:'MSC-FA-004-TND',email:'tunde@msc.ng',phone:'+234 804 234 5678',pharmacies:18,status:'active',recruited:'25 Jan 2026',msv:2600000,commission:42000,bonus:1800},
-    {id:'pr5',name:'James Uchenna',initials:'JU',level:'FA',levelLabel:'Field Agent',parent:'pr8',parentName:'Fatima Aliyu',territory:'Port Harcourt',barcode:'MSC-FA-009-JMU',email:'james@msc.ng',phone:'+234 805 234 5678',pharmacies:0,status:'suspended',suspendReason:'Policy violation — misrepresentation',suspendDate:'14 Apr 2026',recruited:'10 Feb 2026',msv:0,commission:0,bonus:0},
-    {id:'pr6',name:'Nkem Eze',initials:'NE',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Lagos South',barcode:'MSC-FL-003-NKE',email:'nkem@msc.ng',phone:'+234 806 234 5678',pharmacies:48,status:'active',recruited:'22 Jan 2026',msv:7800000,commission:128000,bonus:2000},
-    {id:'pr7',name:'Aminu Ibrahim',initials:'AI',level:'FA',levelLabel:'Field Agent',parent:'pr3',parentName:'Blessing Nwosu',territory:'Abuja North',barcode:'MSC-FA-003-AMI',email:'aminu@msc.ng',phone:'+234 807 234 5678',pharmacies:24,status:'active',recruited:'01 Mar 2026',msv:3100000,commission:52000,bonus:1800},
-    {id:'pr8',name:'Fatima Aliyu',initials:'FA2',level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory:'Port Harcourt',barcode:'MSC-FL-004-FAT',email:'fatima@msc.ng',phone:'+234 808 234 5678',pharmacies:38,status:'active',recruited:'05 Feb 2026',msv:6200000,commission:100000,bonus:2000},
-    {id:'pr9',name:'Chioma Obi',initials:'CO',level:'FR',levelLabel:'Frontline Rep',parent:'pr2',parentName:'Emeka Dike',territory:'Lagos Central',barcode:'MSC-FR-001-CHI',email:'chioma@msc.ng',phone:'+234 809 234 5678',pharmacies:8,status:'active',recruited:'28 Jan 2026',msv:980000,commission:9800,bonus:1800},
-    {id:'pr10',name:'Seun Bello',initials:'SB',level:'FR',levelLabel:'Frontline Rep',parent:'pr7',parentName:'Aminu Ibrahim',territory:'Abuja North',barcode:'MSC-FR-002-SBL',email:'seun@msc.ng',phone:'+234 810 234 5678',pharmacies:9,status:'active',recruited:'01 Mar 2026',msv:860000,commission:8600,bonus:0},
+    {id:'pr1',name:'Adeyemi Okafor',initials:'AO',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Lagos Central',barcode:'ADY-INV001',email:'adeyemi@msc.ng',phone:'+234 801 234 5678',pharmacies:62,status:'active',recruited:'15 Jan 2026',msv:18400000,commission:308000,bonus:0,fieldPromoter:true},
+    {id:'pr2',name:'MedPlus Lagos',initials:'ML',level:'PR',levelLabel:'Inviter',parent:'pr1',parentName:'Adeyemi Okafor',territory:'Lagos Central',barcode:'MED-INV001',email:'medplus@msc.ng',phone:'+234 802 234 5678',pharmacies:38,status:'active',recruited:'20 Jan 2026',msv:5200000,commission:84000,bonus:0,fieldPromoter:false},
+    {id:'pr3',name:'Blessing Nwosu',initials:'BN',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Abuja North',barcode:'BLS-INV001',email:'blessing@msc.ng',phone:'+234 803 234 5678',pharmacies:54,status:'active',recruited:'14 Jan 2026',msv:11200000,commission:184000,bonus:0,fieldPromoter:true},
+    {id:'pr4',name:'QualiCare Pharmacy',initials:'QC',level:'PR',levelLabel:'Inviter',parent:'pr6',parentName:'Prime Health Pharmacy',territory:'Lagos South',barcode:'QLC-INV001',email:'qualicare@msc.ng',phone:'+234 804 234 5678',pharmacies:18,status:'active',recruited:'25 Jan 2026',msv:2600000,commission:42000,bonus:0,fieldPromoter:false},
+    {id:'pr5',name:'Sunrise Pharmacy',initials:'SP',level:'PR',levelLabel:'Inviter',parent:'pr8',parentName:'Fatima Aliyu',territory:'Port Harcourt',barcode:'SUN-INV001',email:'sunrise@msc.ng',phone:'+234 805 234 5678',pharmacies:0,status:'suspended',suspendReason:'Policy violation — misrepresentation',suspendDate:'14 Apr 2026',recruited:'10 Feb 2026',msv:0,commission:0,bonus:0,fieldPromoter:false},
+    {id:'pr6',name:'Prime Health Pharmacy',initials:'PH',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Lagos South',barcode:'PRM-INV001',email:'primehealth@msc.ng',phone:'+234 806 234 5678',pharmacies:48,status:'active',recruited:'22 Jan 2026',msv:7800000,commission:128000,bonus:0,fieldPromoter:false},
+    {id:'pr7',name:'Lifeline Pharmacy',initials:'LP',level:'PR',levelLabel:'Inviter',parent:'pr3',parentName:'Blessing Nwosu',territory:'Abuja North',barcode:'LIF-INV001',email:'lifeline@msc.ng',phone:'+234 807 234 5678',pharmacies:24,status:'active',recruited:'01 Mar 2026',msv:3100000,commission:52000,bonus:0,fieldPromoter:false},
+    {id:'pr8',name:'Fatima Aliyu',initials:'FA',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Port Harcourt',barcode:'FAT-INV001',email:'fatima@msc.ng',phone:'+234 808 234 5678',pharmacies:38,status:'active',recruited:'05 Feb 2026',msv:6200000,commission:100000,bonus:0,fieldPromoter:true},
+    {id:'pr9',name:'CityPharm Ikeja',initials:'CI',level:'PR',levelLabel:'Inviter',parent:'pr2',parentName:'MedPlus Lagos',territory:'Lagos Central',barcode:'CTY-INV001',email:'citypharm@msc.ng',phone:'+234 809 234 5678',pharmacies:8,status:'active',recruited:'28 Jan 2026',msv:980000,commission:9800,bonus:0,fieldPromoter:false},
+    {id:'pr10',name:'WellCare Pharmacy',initials:'WC',level:'PR',levelLabel:'Inviter',parent:'pr7',parentName:'Lifeline Pharmacy',territory:'Abuja North',barcode:'WLC-INV001',email:'wellcare@msc.ng',phone:'+234 810 234 5678',pharmacies:9,status:'active',recruited:'01 Mar 2026',msv:860000,commission:8600,bonus:0,fieldPromoter:false},
   ],
   orders: [
-    {id:'or1',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0892',date:'14 Apr 2026',items:'Paracetamol, Amoxicillin',amount:184500,status:'settled'},
-    {id:'or2',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0756',date:'10 Apr 2026',items:'Ciprofloxacin, ORS Sachets',amount:96000,status:'settled'},
-    {id:'or3',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0934',date:'15 Apr 2026',items:'Insulin, Lisinopril',amount:312000,status:'processing'},
-    {id:'or4',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0970',date:'15 Apr 2026',items:'Controlled substances',amount:520000,status:'pending'},
-    {id:'or5',phId:'ph4',phName:'Pharma Direct',phCity:'Lekki, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'FL',ref:'ORD-2026-04-0811',date:'13 Apr 2026',items:'Multivitamins, Antacids',amount:142000,status:'settled'},
-    {id:'or6',phId:'ph4',phName:'Pharma Direct',phCity:'Lekki, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'FL',ref:'ORD-2026-04-0760',date:'09 Apr 2026',items:'Metformin, Atorvastatin',amount:218000,status:'settled'},
-    {id:'or7',phId:'ph7',phName:'PharmaLife',phCity:'Aba, Abia',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0620',date:'05 Apr 2026',items:'Multivitamins bulk',amount:74000,status:'settled'},
-    {id:'or8',phId:'ph7',phName:'PharmaLife',phCity:'Aba, Abia',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0690',date:'07 Apr 2026',items:'Antiretrovirals',amount:380000,status:'processing'},
-    {id:'or9',phId:'ph9',phName:'Greenline Pharmacy',phCity:'Port Harcourt, Rivers',promoterName:'Fatima Aliyu',promoterLevel:'FL',ref:'ORD-2026-04-0543',date:'03 Apr 2026',items:'Doxycycline, Coartem',amount:96500,status:'settled'},
-    {id:'or10',phId:'ph9',phName:'Greenline Pharmacy',phCity:'Port Harcourt, Rivers',promoterName:'Fatima Aliyu',promoterLevel:'FL',ref:'ORD-2026-04-0612',date:'08 Apr 2026',items:'Diclofenac, Omeprazole',amount:54000,status:'settled'},
-    {id:'or11',phId:'ph10',phName:'CareMax Pharmacy',phCity:'Ibadan, Oyo',promoterName:'Nkem Eze',promoterLevel:'FL',ref:'ORD-2026-04-0480',date:'01 Apr 2026',items:'Analgesics, Antihistamines',amount:68000,status:'settled'},
-    {id:'or12',phId:'ph10',phName:'CareMax Pharmacy',phCity:'Ibadan, Oyo',promoterName:'Nkem Eze',promoterLevel:'FL',ref:'ORD-2026-04-0710',date:'11 Apr 2026',items:'Blood pressure meds',amount:132000,status:'processing'},
-    {id:'or13',phId:'ph3',phName:'HealthNet Plus',phCity:'Garki, Abuja',promoterName:'Aminu Ibrahim',promoterLevel:'FA',ref:'ORD-2026-03-0380',date:'28 Mar 2026',items:'Vaccines, Cold chain',amount:420000,status:'settled'},
-    {id:'or14',phId:'ph2',phName:'MedPlus Ikeja',phCity:'Ikeja, Lagos',promoterName:'Emeka Dike',promoterLevel:'FA',ref:'ORD-2026-04-0901',date:'14 Apr 2026',items:'Aspirin, Vitamin C',amount:41000,status:'pending'},
+    {id:'or1',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'PR',ref:'ORD-2026-04-0892',date:'14 Apr 2026',items:'Paracetamol, Amoxicillin',amount:184500,status:'settled'},
+    {id:'or2',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'PR',ref:'ORD-2026-04-0756',date:'10 Apr 2026',items:'Ciprofloxacin, ORS Sachets',amount:96000,status:'settled'},
+    {id:'or3',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'PR',ref:'ORD-2026-04-0934',date:'15 Apr 2026',items:'Insulin, Lisinopril',amount:312000,status:'processing'},
+    {id:'or4',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'PR',ref:'ORD-2026-04-0970',date:'15 Apr 2026',items:'Controlled substances',amount:520000,status:'pending'},
+    {id:'or5',phId:'ph4',phName:'Pharma Direct',phCity:'Lekki, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'PR',ref:'ORD-2026-04-0811',date:'13 Apr 2026',items:'Multivitamins, Antacids',amount:142000,status:'settled'},
+    {id:'or6',phId:'ph4',phName:'Pharma Direct',phCity:'Lekki, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'PR',ref:'ORD-2026-04-0760',date:'09 Apr 2026',items:'Metformin, Atorvastatin',amount:218000,status:'settled'},
+    {id:'or7',phId:'ph7',phName:'PharmaLife',phCity:'Aba, Abia',promoterName:'MedPlus Lagos',promoterLevel:'PR',ref:'ORD-2026-04-0620',date:'05 Apr 2026',items:'Multivitamins bulk',amount:74000,status:'settled'},
+    {id:'or8',phId:'ph7',phName:'PharmaLife',phCity:'Aba, Abia',promoterName:'MedPlus Lagos',promoterLevel:'PR',ref:'ORD-2026-04-0690',date:'07 Apr 2026',items:'Antiretrovirals',amount:380000,status:'processing'},
+    {id:'or9',phId:'ph9',phName:'Greenline Pharmacy',phCity:'Port Harcourt, Rivers',promoterName:'Fatima Aliyu',promoterLevel:'PR',ref:'ORD-2026-04-0543',date:'03 Apr 2026',items:'Doxycycline, Coartem',amount:96500,status:'settled'},
+    {id:'or10',phId:'ph9',phName:'Greenline Pharmacy',phCity:'Port Harcourt, Rivers',promoterName:'Fatima Aliyu',promoterLevel:'PR',ref:'ORD-2026-04-0612',date:'08 Apr 2026',items:'Diclofenac, Omeprazole',amount:54000,status:'settled'},
+    {id:'or11',phId:'ph10',phName:'CareMax Pharmacy',phCity:'Ibadan, Oyo',promoterName:'Prime Health Pharmacy',promoterLevel:'PR',ref:'ORD-2026-04-0480',date:'01 Apr 2026',items:'Analgesics, Antihistamines',amount:68000,status:'settled'},
+    {id:'or12',phId:'ph10',phName:'CareMax Pharmacy',phCity:'Ibadan, Oyo',promoterName:'Prime Health Pharmacy',promoterLevel:'PR',ref:'ORD-2026-04-0710',date:'11 Apr 2026',items:'Blood pressure meds',amount:132000,status:'processing'},
+    {id:'or13',phId:'ph3',phName:'HealthNet Plus',phCity:'Garki, Abuja',promoterName:'Lifeline Pharmacy',promoterLevel:'PR',ref:'ORD-2026-03-0380',date:'28 Mar 2026',items:'Vaccines, Cold chain',amount:420000,status:'settled'},
+    {id:'or14',phId:'ph2',phName:'MedPlus Ikeja',phCity:'Ikeja, Lagos',promoterName:'MedPlus Lagos',promoterLevel:'PR',ref:'ORD-2026-04-0901',date:'14 Apr 2026',items:'Aspirin, Vitamin C',amount:41000,status:'pending'},
   ],
   auditLog: [
+    {id:'al0',ts:'01 Mar 2026 10:00',actor:'Super Admin',actionType:'commission',entity:'Commission Rates',entityName:'Rate Configuration',reason:'Launch defaults set — Threshold: ₦1,000,000 · Tier 1: 1% · Tier 2: 2% — approved by GM',tag:'commission',tagLabel:'RATE CHANGE'},
     {id:'al1',ts:'15 Apr 2026 09:41',actor:'Super Admin',actionType:'verify',entity:'Pharmacy',entityName:'HealthCare Plus',reason:'Documents confirmed via call',tag:'verify',tagLabel:'VERIFY'},
     {id:'al2',ts:'15 Apr 2026 09:18',actor:'System',actionType:'flag',entity:'Pharmacy',entityName:'MedPlus Abuja',reason:'Duplicate CAC number detected automatically',tag:'suspend',tagLabel:'FLAG'},
-    {id:'al3',ts:'15 Apr 2026 08:54',actor:'System',actionType:'commission',entity:'Batch',entityName:'April 2026 Commission',reason:'Monthly batch — 247 promoters processed, ₦3,218,000 total',tag:'commission',tagLabel:'COMMISSION'},
-    {id:'al4',ts:'15 Apr 2026 07:30',actor:'System',actionType:'block',entity:'Promoter',entityName:'Tunde Alli',reason:'Frontline Rep attempted to recruit — blocked by system rule',tag:'suspend',tagLabel:'BLOCKED'},
-    {id:'al5',ts:'14 Apr 2026 16:20',actor:'Super Admin',actionType:'create',entity:'Promoter',entityName:'Blessing Nwosu',reason:'New Field Lead created — Abuja North territory',tag:'create',tagLabel:'CREATE'},
-    {id:'al6',ts:'14 Apr 2026 14:05',actor:'Super Admin',actionType:'suspend',entity:'Promoter',entityName:'James Uchenna',reason:'Policy violation — misrepresentation of pharmacy addresses',tag:'suspend',tagLabel:'SUSPEND'},
-    {id:'al7',ts:'14 Apr 2026 11:32',actor:'System',actionType:'bonus',entity:'Pharmacy',entityName:'PharmaLife',reason:'First settled order received — ₦2,000 onboarding bonus triggered',tag:'commission',tagLabel:'BONUS'},
-    {id:'al8',ts:'13 Apr 2026 09:00',actor:'Super Admin',actionType:'approve',entity:'Territory',entityName:'Chidi Okonkwo',reason:'Cross-region approval granted — Imo territory extension',tag:'create',tagLabel:'APPROVE'},
+    {id:'al3',ts:'15 Apr 2026 08:54',actor:'System',actionType:'commission',entity:'Batch',entityName:'April 2026 Commission',reason:'Monthly batch — 247 Inviters processed, ₦3,218,000 total · single-level attribution',tag:'commission',tagLabel:'COMMISSION'},
+    {id:'al5',ts:'14 Apr 2026 16:20',actor:'Super Admin',actionType:'create',entity:'Inviter',entityName:'Blessing Nwosu',reason:'Pharmacy registered and auto-qualified as Inviter — Abuja North',tag:'create',tagLabel:'CREATE'},
+    {id:'al6',ts:'14 Apr 2026 14:05',actor:'Super Admin',actionType:'suspend',entity:'Inviter',entityName:'James Uchenna',reason:'Policy violation — misrepresentation of pharmacy addresses · QR code and invite code deactivated',tag:'suspend',tagLabel:'SUSPEND'},
+    {id:'al7',ts:'14 Apr 2026 11:32',actor:'System',actionType:'commission',entity:'Commission',entityName:'Adeyemi Okafor',reason:'Commission triggered — PharmaLife (Invitee) settled order ORD-2026-04-0620 · ₦740 @ 1% rate',tag:'commission',tagLabel:'COMMISSION'},
+    {id:'al8',ts:'13 Apr 2026 09:00',actor:'System',actionType:'verify',entity:'Invitee Binding',entityName:'Pharma Direct',reason:'Binding confirmed — Inviter: Kingsway Pharmacy · permanent and immutable',tag:'verify',tagLabel:'BINDING'},
   ],
-  batchStatus: { '2026-04': 'pending', '2026-03': 'approved', '2026-02': 'approved' },
+  batchStatus: { '2026-04': 'calculated', '2026-03': 'paid', '2026-02': 'paid' },
+  rateSnapshot: 'Tier 1: 100 BP (1.00%) · Tier 2: 200 BP (2.00%) · Threshold: ₦1,000,000',
   flaggedLines: new Set(),
   earnData: {
-    '2026-04': {total:312000,direct:244000,override:64000,bonus:4000,
-      breakdown:[{ph:'Kingsway Pharmacy',msv:2100000,comm:42000},{ph:'Pharma Direct',msv:1800000,comm:36000},{ph:'PharmaLife',msv:1500000,comm:30000},{ph:'CityMed',msv:1200000,comm:24000},{ph:'MedCare Plus',msv:1100000,comm:22000},{ph:'Bonus',msv:null,comm:4000}],
-      downline:[{name:'Emeka Dike',level:'FA',pharmacies:38,msv:5200000,override:20800},{name:'Nkem Eze',level:'FA',pharmacies:18,msv:2400000,override:9600},{name:'Tunde Alli',level:'FR',pharmacies:12,msv:1840000,override:7360},{name:'Chioma Obi',level:'FR',pharmacies:8,msv:980000,override:3920},{name:'Seun Bello',level:'FR',pharmacies:6,msv:720000,override:2880}]},
-    '2026-03': {total:290000,direct:228000,override:58000,bonus:4000,
-      breakdown:[{ph:'Kingsway Pharmacy',msv:2000000,comm:40000},{ph:'Pharma Direct',msv:1700000,comm:34000},{ph:'PharmaLife',msv:1400000,comm:28000},{ph:'CityMed',msv:1100000,comm:22000},{ph:'Bonus',msv:null,comm:4000}],
-      downline:[{name:'Emeka Dike',level:'FA',pharmacies:36,msv:4800000,override:19200},{name:'Nkem Eze',level:'FA',pharmacies:17,msv:2100000,override:8400},{name:'Tunde Alli',level:'FR',pharmacies:11,msv:1620000,override:6480},{name:'Chioma Obi',level:'FR',pharmacies:8,msv:880000,override:3520},{name:'Seun Bello',level:'FR',pharmacies:5,msv:640000,override:2560}]},
-    '2026-02': {total:271000,direct:213000,override:54000,bonus:4000,
-      breakdown:[{ph:'Kingsway Pharmacy',msv:1900000,comm:38000},{ph:'Pharma Direct',msv:1600000,comm:32000},{ph:'PharmaLife',msv:1300000,comm:26000},{ph:'Bonus',msv:null,comm:4000}],
-      downline:[{name:'Emeka Dike',level:'FA',pharmacies:34,msv:4200000,override:16800},{name:'Nkem Eze',level:'FA',pharmacies:16,msv:1800000,override:7200},{name:'Tunde Alli',level:'FR',pharmacies:10,msv:1400000,override:5600},{name:'Chioma Obi',level:'FR',pharmacies:7,msv:760000,override:3040},{name:'Seun Bello',level:'FR',pharmacies:5,msv:520000,override:2080}]},
-    '2026-01': {total:248000,direct:196000,override:48000,bonus:4000,
-      breakdown:[{ph:'Kingsway Pharmacy',msv:1800000,comm:36000},{ph:'Pharma Direct',msv:1500000,comm:30000},{ph:'Bonus',msv:null,comm:4000}],
-      downline:[{name:'Emeka Dike',level:'FA',pharmacies:30,msv:3800000,override:15200},{name:'Nkem Eze',level:'FA',pharmacies:14,msv:1500000,override:6000},{name:'Tunde Alli',level:'FR',pharmacies:8,msv:1100000,override:4400},{name:'Chioma Obi',level:'FR',pharmacies:6,msv:640000,override:2560}]},
-    '2025-12': {total:225000,direct:180000,override:41000,bonus:4000,
-      breakdown:[{ph:'Kingsway Pharmacy',msv:1600000,comm:32000},{ph:'Pharma Direct',msv:1400000,comm:28000},{ph:'Bonus',msv:null,comm:4000}],
-      downline:[{name:'Emeka Dike',level:'FA',pharmacies:26,msv:3200000,override:12800},{name:'Nkem Eze',level:'FA',pharmacies:12,msv:1200000,override:4800},{name:'Tunde Alli',level:'FR',pharmacies:6,msv:820000,override:3280},{name:'Chioma Obi',level:'FR',pharmacies:4,msv:480000,override:1920}]},
+    '2026-04': {total:312000,direct:244000,inviteeComm:64000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:2100000,comm:42000},{ph:'Pharma Direct',msv:1800000,comm:36000},{ph:'PharmaLife',msv:1500000,comm:30000},{ph:'CityMed',msv:1200000,comm:24000},{ph:'MedCare Plus',msv:1100000,comm:22000}],
+      downline:[{name:'MedPlus Lagos',level:'PR',pharmacies:38,msv:5200000,commission:20800},{name:'Prime Health Pharmacy',level:'PR',pharmacies:18,msv:2400000,commission:9600},{name:'QualiCare Pharmacy',level:'PR',pharmacies:12,msv:1840000,commission:7360},{name:'CityPharm Ikeja',level:'PR',pharmacies:8,msv:980000,commission:3920},{name:'WellCare Pharmacy',level:'PR',pharmacies:6,msv:720000,commission:2880}]},
+    '2026-03': {total:290000,direct:228000,inviteeComm:58000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:2000000,comm:40000},{ph:'Pharma Direct',msv:1700000,comm:34000},{ph:'PharmaLife',msv:1400000,comm:28000},{ph:'CityMed',msv:1100000,comm:22000}],
+      downline:[{name:'MedPlus Lagos',level:'PR',pharmacies:36,msv:4800000,commission:19200},{name:'Prime Health Pharmacy',level:'PR',pharmacies:17,msv:2100000,commission:8400},{name:'QualiCare Pharmacy',level:'PR',pharmacies:11,msv:1620000,commission:6480},{name:'CityPharm Ikeja',level:'PR',pharmacies:8,msv:880000,commission:3520},{name:'WellCare Pharmacy',level:'PR',pharmacies:5,msv:640000,commission:2560}]},
+    '2026-02': {total:271000,direct:213000,inviteeComm:54000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:1900000,comm:38000},{ph:'Pharma Direct',msv:1600000,comm:32000},{ph:'PharmaLife',msv:1300000,comm:26000}],
+      downline:[{name:'MedPlus Lagos',level:'PR',pharmacies:34,msv:4200000,commission:16800},{name:'Prime Health Pharmacy',level:'PR',pharmacies:16,msv:1800000,commission:7200},{name:'QualiCare Pharmacy',level:'PR',pharmacies:10,msv:1400000,commission:5600},{name:'CityPharm Ikeja',level:'PR',pharmacies:7,msv:760000,commission:3040},{name:'WellCare Pharmacy',level:'PR',pharmacies:5,msv:520000,commission:2080}]},
+    '2026-01': {total:248000,direct:196000,inviteeComm:48000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:1800000,comm:36000},{ph:'Pharma Direct',msv:1500000,comm:30000}],
+      downline:[{name:'MedPlus Lagos',level:'PR',pharmacies:30,msv:3800000,commission:15200},{name:'Prime Health Pharmacy',level:'PR',pharmacies:14,msv:1500000,commission:6000},{name:'QualiCare Pharmacy',level:'PR',pharmacies:8,msv:1100000,commission:4400},{name:'CityPharm Ikeja',level:'PR',pharmacies:6,msv:640000,commission:2560}]},
+    '2025-12': {total:225000,direct:180000,inviteeComm:41000,
+      breakdown:[{ph:'Kingsway Pharmacy',msv:1600000,comm:32000},{ph:'Pharma Direct',msv:1400000,comm:28000}],
+      downline:[{name:'MedPlus Lagos',level:'PR',pharmacies:26,msv:3200000,commission:12800},{name:'Prime Health Pharmacy',level:'PR',pharmacies:12,msv:1200000,commission:4800},{name:'QualiCare Pharmacy',level:'PR',pharmacies:6,msv:820000,commission:3280},{name:'CityPharm Ikeja',level:'PR',pharmacies:4,msv:480000,commission:1920}]},
   },
   commByMonth: {
     '2026-04': {
@@ -1423,12 +1485,16 @@ function renderPharm() {
   const lvlBdg = {FL:'fl',FA:'fa',FR:'fr'};
   const stsBdg = {verified:'verified',pending:'pending',flagged:'flagged'};
   const tbody = document.getElementById('pharm-tbody');
-  tbody.innerHTML = filtered.length ? filtered.map(p => `
+  tbody.innerHTML = filtered.length ? filtered.map(p => {
+    const invitees = DB.pharmacies.filter(x=>x.inviterId===p.id);
+    return `
     <tr class="clickable" onclick="openPharmModal('${p.id}')">
       <td class="td-name">${p.name}${p.flagReason?` <span style="font-size:10px;color:var(--red)">⚠</span>`:''}</td>
       <td class="td-mono">${p.cac}</td>
       <td>${p.city}, ${p.state}</td>
       <td>${p.promoterName} <span class="bdg ${lvlBdg[p.promoterLevel]}" style="font-size:9px">${p.promoterLevel}</span></td>
+      <td>${p.inviterName?`<span style="font-size:11px">${p.inviterName}</span>`:`<span style="color:var(--t3)">—</span>`}</td>
+      <td>${invitees.length?`<span style="font-size:12px;font-weight:600;color:var(--g700)">${invitees.length}</span>`:`<span style="color:var(--t3)">—</span>`}</td>
       <td><span class="bdg ${stsBdg[p.status]}">${p.status.charAt(0).toUpperCase()+p.status.slice(1)}</span></td>
       <td>${p.date}</td>
       <td onclick="event.stopPropagation()" style="white-space:nowrap">
@@ -1436,7 +1502,7 @@ function renderPharm() {
         ${p.status==='flagged'?`<button class="btn sm warning" onclick="openPharmModal('${p.id}')">Review</button> <button class="btn sm danger" onclick="openRejectModal('${p.id}')">Reject</button>`:''}
         ${p.status==='verified'?`<button class="btn sm" onclick="openPharmModal('${p.id}')">View</button>`:''}
       </td>
-    </tr>`).join('') : '<tr><td colspan="7" class="empty">No pharmacies match this filter</td></tr>';
+    </tr>`;}).join('') : '<tr><td colspan="9" class="empty">No pharmacies match this filter</td></tr>';
   const pending = DB.pharmacies.filter(p=>p.status==='pending').length;
   const flagged = DB.pharmacies.filter(p=>p.status==='flagged').length;
   const el = document.getElementById('ph-count-label');
@@ -1480,7 +1546,22 @@ function openPharmModal(id) {
       <div class="info-item"><div class="lbl">Promoter Level</div><div class="val">${p.promoterLevel}</div></div>
       ${p.msv?`<div class="info-item"><div class="lbl">Monthly Sales Value</div><div class="val t-green fw7">₦${p.msv.toLocaleString()}</div></div>`:''}
       ${p.verificationNote?`<div class="info-item" style="grid-column:1/-1"><div class="lbl">Verification Note</div><div class="val">${p.verificationNote}</div></div>`:''}
+      ${p.inviterName?`<div class="info-item" style="grid-column:1/-1"><div class="lbl">Referred By (Inviter)</div><div class="val" style="display:flex;align-items:center;gap:8px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>${p.inviterName}</span><span style="font-size:10px;padding:2px 6px;background:var(--g50);border:1px solid var(--g200);border-radius:20px;color:var(--g700);font-weight:600">Inviter</span></div></div>`:''}
     </div>`;
+  // Invitees section — pharmacies this one has referred
+  const invitees = DB.pharmacies.filter(x=>x.inviterId===id);
+  if(invitees.length) {
+    body += `<div class="section-hdg" style="margin-top:10px">Pharmacies Referred (${invitees.length})</div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+    ${invitees.map(inv=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--g50);border:1px solid var(--bd);border-radius:9px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--g700)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <div><div style="font-size:12px;font-weight:600">${inv.name}</div><div style="font-size:10px;color:var(--t2)">${inv.city}, ${inv.state} · Registered ${inv.date}</div></div>
+      </div>
+      <span class="bdg ${inv.status==='verified'?'verified':inv.status==='pending'?'pending':'flagged'}" style="font-size:9px">${inv.status.charAt(0).toUpperCase()+inv.status.slice(1)}</span>
+    </div>`).join('')}
+    </div>`;
+  }
   // Order history section
   const phOrders = DB.orders.filter(o=>o.phId===id);
   const stsBdg = {settled:'verified',processing:'pending',pending:'fl'};
@@ -1552,25 +1633,25 @@ function confirmLogCall() {
   addAudit('Super Admin','call','Pharmacy',ph,`Outcome: ${outcome}. ${notes}`,'verify','CALL LOG');
 }
 
-// ══════════ RENDER PROMOTERS ══════════
+// ══════════ RENDER INVITERS ══════════
 function renderPromoters() {
-  const lvlBdg = {FL:'fl',FA:'fa',FR:'fr'};
   const filtered = DB.promoters.filter(p => {
-    const matchL = S.promFilter==='all' || p.level===S.promFilter;
+    const matchL = S.promFilter==='all' || p.status===S.promFilter || (S.promFilter==='field' && p.fieldPromoter);
     const matchS = !S.promSearch || p.name.toLowerCase().includes(S.promSearch.toLowerCase()) || p.barcode.toLowerCase().includes(S.promSearch.toLowerCase());
     return matchL && matchS;
   });
+  const inviteeCount = (id) => DB.promoters.filter(x=>x.parent===id).length;
   document.getElementById('prom-tbody').innerHTML = filtered.length ? filtered.map(p => `
     <tr class="clickable" onclick="openPromoterDrawer('${p.id}')">
-      <td class="td-name">${p.name}</td>
-      <td><span class="bdg ${lvlBdg[p.level]}">${p.levelLabel}</span></td>
-      <td>${p.parentName||'<span style="color:var(--t3)">—</span>'}</td>
+      <td class="td-name">${p.name}${p.fieldPromoter?`<span style="margin-left:5px;background:#f3e8ff;color:#7c3aed;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px">FIELD</span>`:''}</td>
+      <td>${p.parentName?`<span style="font-size:12px">${p.parentName}</span>`:`<span style="color:var(--t3);font-size:11px">— (joined directly)</span>`}</td>
+      <td style="font-weight:600;color:var(--g700)">${inviteeCount(p.id)||'—'}</td>
       <td>${p.territory}</td>
-      <td class="td-mono">${p.barcode}</td>
+      <td class="td-mono">${p.barcode}${p.status==='suspended'?`<span class="bdg" style="margin-left:4px;background:#fee2e2;color:#b91c1c;font-size:9px">REVOKED</span>`:''}</td>
       <td>${p.pharmacies}</td>
-      <td style="font-weight:600;color:var(--g700)">₦${(p.msv/1000000).toFixed(1)}M</td>
+      <td style="font-weight:600;color:var(--g700)">${p.msv?'₦'+(p.msv/1000000).toFixed(1)+'M':'—'}</td>
       <td><span class="bdg ${p.status==='active'?'verified':'suspended'}">${p.status.charAt(0).toUpperCase()+p.status.slice(1)}</span></td>
-    </tr>`).join('') : '<tr><td colspan="8" class="empty">No promoters match this filter</td></tr>';
+    </tr>`).join('') : '<tr><td colspan="8" class="empty">No Inviters match this filter</td></tr>';
 }
 function filterPromoters(level, btn, search) {
   if(level!==null && level!==undefined) { S.promFilter=level; document.querySelectorAll('#view-promoters .chip').forEach(c=>c.classList.remove('active')); if(btn)btn.classList.add('active'); }
@@ -1578,49 +1659,62 @@ function filterPromoters(level, btn, search) {
   renderPromoters();
 }
 
-// ══════════ PROMOTER DRAWER ══════════
+// ══════════ INVITER DRAWER ══════════
 function openPromoterDrawer(id) {
   const p = DB.promoters.find(x=>x.id===id);
   if(!p) return;
-  const lvlClass = {FL:'fl',FA:'fa',FR:'fr'};
   const phList = DB.pharmacies.filter(x=>x.promoterId===id).slice(0,5);
-  const children = DB.promoters.filter(x=>x.parent===id);
+  const invitees = DB.promoters.filter(x=>x.parent===id);
   const isSus = p.status==='suspended';
   const body = `
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
-      <div class="drawer-av ${isSus?'sus':lvlClass[p.level]}">${p.initials}</div>
+      <div class="drawer-av ${isSus?'sus':'fl'}">${p.initials}</div>
       <div>
         <div style="font-weight:700;font-size:16px">${p.name}</div>
         <div class="p-meta-row">
-          <span class="bdg ${lvlClass[p.level]}">${p.levelLabel}</span>
+          <span class="bdg inviter">Inviter</span>
+          ${p.fieldPromoter?`<span style="background:#f3e8ff;color:#7c3aed;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px">FIELD_PROMOTER</span>`:''}
           <span class="bdg ${isSus?'suspended':'verified'}">${p.status}</span>
+          ${p.parentName?`<span style="font-size:11px;color:var(--t3)">Invited by ${p.parentName}</span>`:''}
         </div>
       </div>
     </div>
-    ${isSus?`<div class="det-banner suspended"><div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:4px">⚠ Suspended — Commission Frozen</div><div style="font-size:12px;color:var(--t2)">${p.suspendReason||''}</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Since ${p.suspendDate||''}</div></div>`:''}
+    ${isSus?`<div class="det-banner suspended"><div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:4px">⚠ Suspended — Commission & Invite Code REVOKED (ucenter_inviter_code.status = REVOKED)</div><div style="font-size:12px;color:var(--t2)">${p.suspendReason||''}</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Since ${p.suspendDate||''} · Pre-existing Invitee bindings remain intact</div></div>`:''}
     <div class="info-grid" style="margin-bottom:14px">
       <div class="info-item"><div class="lbl">Territory</div><div class="val">${p.territory}</div></div>
-      <div class="info-item"><div class="lbl">Barcode</div><div class="val mono">${p.barcode}</div></div>
+      <div class="info-item"><div class="lbl">Invite Code</div><div class="val mono">${p.barcode} ${isSus?`<span style="background:#fee2e2;color:#b91c1c;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px">REVOKED</span>`:''}</div></div>
       <div class="info-item"><div class="lbl">Phone</div><div class="val">${p.phone}</div></div>
       <div class="info-item"><div class="lbl">Email</div><div class="val">${p.email}</div></div>
-      <div class="info-item"><div class="lbl">Recruited</div><div class="val">${p.recruited}</div></div>
-      <div class="info-item"><div class="lbl">Reports To</div><div class="val">${p.parentName||'— (Top Level)'}</div></div>
-      <div class="info-item"><div class="lbl">Apr MSV</div><div class="val t-green fw7">₦${p.msv.toLocaleString()}</div></div>
-      <div class="info-item"><div class="lbl">Apr Commission</div><div class="val t-green fw7">₦${p.commission.toLocaleString()}</div></div>
+      <div class="info-item"><div class="lbl">Joined</div><div class="val">${p.recruited}</div></div>
+      <div class="info-item"><div class="lbl">Invited By</div><div class="val">${p.parentName||'— (joined directly)'}</div></div>
+      <div class="info-item"><div class="lbl">Invitee MSV (Apr)</div><div class="val t-green fw7">₦${p.msv.toLocaleString()}</div></div>
+      <div class="info-item"><div class="lbl">Commission (Apr)</div><div class="val t-green fw7">₦${p.commission.toLocaleString()}</div></div>
     </div>
-    ${children.length?`<div class="section-hdg">Downline (${children.length})</div>${children.map(c=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd2)"><span class="bdg ${lvlClass[c.level]}" style="font-size:9px">${c.level}</span><span style="font-size:12px;font-weight:600;flex:1">${c.name}</span><span style="font-size:11px;color:var(--t3)">${c.pharmacies} ph</span></div>`).join('')}`:''}
+    ${invitees.length?`<div class="section-hdg">Direct Invitees (${invitees.length})</div>${invitees.map(c=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd2)"><span class="bdg invitee" style="font-size:9px">Invitee</span><span style="font-size:12px;font-weight:600;flex:1">${c.name}</span><span style="font-size:11px;color:var(--t3)">${c.pharmacies} ph</span></div>`).join('')}`:''}
     ${phList.length?`<div class="section-hdg">Pharmacies (${p.pharmacies})</div>${phList.map(ph=>`<div class="mini-ph-row"><div class="mini-ph-name">${ph.name}</div><div class="mini-ph-msv">${ph.msv?'₦'+ph.msv.toLocaleString():''}</div><span class="bdg ${ph.status}" style="font-size:9px">${ph.status}</span></div>`).join('')}${p.pharmacies>5?`<div style="font-size:11px;color:var(--t3);margin-top:6px">+${p.pharmacies-5} more pharmacies</div>`:''}`:''}`;
   const foot = isSus
-    ? `<button class="btn" onclick="closeDrawer()">Close</button><button class="btn primary" onclick="openReinstateModal('${id}')">Reinstate Promoter</button>`
-    : `<button class="btn danger" onclick="openSuspendModal('${id}')">Suspend</button><button class="btn" onclick="closeDrawer()">Close</button>`;
+    ? `<button class="btn" onclick="closeDrawer()">Close</button><button class="btn primary" onclick="openReinstateModal('${id}')">Reinstate Inviter</button>`
+    : `<button class="btn" style="background:${p.fieldPromoter?'#f3e8ff':'var(--bg)'};color:${p.fieldPromoter?'#7c3aed':'var(--text)'};border-color:${p.fieldPromoter?'#e9d5ff':'var(--bd)'}" onclick="toggleFieldPromoter('${id}')">${p.fieldPromoter?'✓ Field Promoter':'Tag as Field Promoter'}</button><button class="btn danger" onclick="openSuspendModal('${id}')">Suspend</button><button class="btn" onclick="closeDrawer()">Close</button>`;
   openDrawer(p.name, body, foot);
+}
+
+// ══════════ FIELD PROMOTER TAG ══════════
+function toggleFieldPromoter(id) {
+  const p = DB.promoters.find(x=>x.id===id);
+  if(!p) return;
+  p.fieldPromoter = !p.fieldPromoter;
+  closeDrawer();
+  renderPromoters();
+  const action = p.fieldPromoter ? 'set' : 'unset';
+  toast(p.fieldPromoter?'Field Promoter tag set':'Field Promoter tag removed','success',`user_flag ${action === 'set'?'→ FIELD_PROMOTER':'cleared'} for ${p.name}. They continue to earn commission through the same engine.`);
+  addAudit('Super Admin','edit','Inviter',p.name,`user_flag ${action === 'set'?'set to FIELD_PROMOTER':'cleared'} — tag is for operational reporting only; commission rules unchanged`,'edit','EDIT');
 }
 
 // ══════════ SUSPEND / REINSTATE ══════════
 function openSuspendModal(id) {
   const p = DB.promoters.find(x=>x.id===id);
   openModal('Suspend Promoter — '+p.name,
-    `<div style="background:var(--red-bg);border:1px solid var(--red-bd);border-radius:10px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--red)">⚠ Suspension immediately freezes all commission accrual. Pharmacies under this promoter remain active but are flagged for reassignment review.</div>
+    `<div style="background:var(--red-bg);border:1px solid var(--red-bd);border-radius:10px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--red)">⚠ Suspension runs in a single transaction: <code style="font-size:10px">ucenter_user_info.is_delete = 1</code> + <code style="font-size:10px">ucenter_inviter_code.status = REVOKED</code>. Commission accrual frozen from next batch. Existing Invitee bindings remain intact. New registrations using this code will be rejected.</div>
      <div class="field"><label>Reason for Suspension (required)</label><textarea id="suspend-reason" placeholder="e.g. Policy violation, misrepresentation, fraud suspicion…"></textarea></div>`,
     `<button class="btn" onclick="closeModal()">Cancel</button><button class="btn danger" onclick="confirmSuspend('${id}')">Confirm Suspension</button>`);
 }
@@ -1630,8 +1724,8 @@ function confirmSuspend(id) {
   const p = DB.promoters.find(x=>x.id===id);
   p.status = 'suspended'; p.suspendReason = reason; p.suspendDate = '15 Apr 2026'; p.commission = 0;
   closeModal(); closeDrawer(); renderPromoters();
-  toast('Promoter Suspended','warning',`${p.name}'s commission accrual is now frozen.`);
-  addAudit('Super Admin','suspend','Promoter',p.name,reason,'suspend','SUSPEND');
+  toast('Inviter Suspended','warning',`${p.name} suspended. Invite code REVOKED — new registrations using ${p.barcode} will be rejected.`);
+  addAudit('Super Admin','suspend','Inviter',p.name,`${reason} · ucenter_inviter_code status → REVOKED · Existing bindings preserved`,'suspend','SUSPEND');
 }
 function openReinstateModal(id) {
   const p = DB.promoters.find(x=>x.id===id);
@@ -1645,21 +1739,24 @@ function confirmReinstate(id) {
   const p = DB.promoters.find(x=>x.id===id);
   p.status = 'active'; delete p.suspendReason; delete p.suspendDate;
   closeModal(); closeDrawer(); renderPromoters();
-  toast('Promoter Reinstated','success',`${p.name} is now active. Commission accrual resumed.`);
-  addAudit('Super Admin','reinstate','Promoter',p.name,reason,'create','REINSTATE');
+  toast('Inviter Reinstated','success',`${p.name} reinstated. Invite code reactivated (ucenter_inviter_code.status → ACTIVE).`);
+  addAudit('Super Admin','reinstate','Inviter',p.name,`${reason} · ucenter_inviter_code status → ACTIVE`,'create','REINSTATE');
 }
 
-// ══════════ CREATE FIELD LEAD ══════════
+// ══════════ CREATE FIELD PROMOTER ══════════
 function openCreateFieldLeadModal() {
-  openModal('Add New Field Lead',
-    `<div class="info-grid">
+  openModal('Register Field Promoter',
+    `<div style="background:#f3e8ff;border:1px solid #e9d5ff;border-radius:9px;padding:10px 13px;font-size:12px;color:#6b21a8;margin-bottom:14px">
+      <strong>In-house field promoter registration.</strong> This user will be created with <code style="font-size:10px">user_flag = FIELD_PROMOTER</code>. They receive an invite code and earn commission through the same engine as all other Inviters — the tag is for operational reporting only.
+    </div>
+    <div class="info-grid">
       <div class="field"><label>Full Name</label><input id="fl-name" placeholder="e.g. Chidi Okonkwo"></div>
       <div class="field"><label>Phone Number</label><input id="fl-phone" placeholder="+234 800 000 0000"></div>
       <div class="field"><label>Email Address</label><input id="fl-email" placeholder="name@example.com"></div>
       <div class="field"><label>Territory</label><input id="fl-territory" placeholder="e.g. Lagos South"></div>
     </div>
-    <div style="background:var(--g50);border:1px solid var(--g200);border-radius:9px;padding:10px;font-size:12px;color:var(--t2)">A unique barcode will be auto-generated and assigned on account creation.</div>`,
-    `<button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="confirmCreateFL()">Create Field Lead</button>`);
+    <div style="background:var(--g50);border:1px solid var(--g200);border-radius:9px;padding:10px;font-size:12px;color:var(--t2)">A unique invite code will be auto-generated at account creation (ucenter_inviter_code).</div>`,
+    `<button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="confirmCreateFL()">Register Field Promoter</button>`);
 }
 function confirmCreateFL() {
   const name = document.getElementById('fl-name').value.trim();
@@ -1670,11 +1767,11 @@ function confirmCreateFL() {
   const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
   const suffix = name.split(' ').map(w=>w.slice(0,3).toUpperCase()).join('').slice(0,3);
   const newId = 'pr'+Date.now();
-  const barcode = 'MSC-FL-0'+(DB.promoters.filter(p=>p.level==='FL').length+1)+'-'+suffix;
-  DB.promoters.push({id:newId,name,initials,level:'FL',levelLabel:'Field Lead',parent:null,parentName:null,territory,barcode,email,phone,pharmacies:0,status:'active',recruited:'15 Apr 2026',msv:0,commission:0,bonus:0});
+  const barcode = suffix+'-INV'+(String(DB.promoters.length+1).padStart(3,'0'));
+  DB.promoters.push({id:newId,name,initials,level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory,barcode,email,phone,pharmacies:0,status:'active',recruited:'15 Apr 2026',msv:0,commission:0,bonus:0,fieldPromoter:true});
   closeModal(); renderPromoters();
-  toast('Field Lead Created','success',`${name} · Barcode: ${barcode}`);
-  addAudit('Super Admin','create','Promoter',name,`New Field Lead — ${territory} territory. Barcode: ${barcode}`,'create','CREATE');
+  toast('Field Promoter Registered','success',`${name} · user_flag: FIELD_PROMOTER · Invite Code: ${barcode}`);
+  addAudit('Super Admin','create','Inviter',name,`Field Promoter registered — user_flag: FIELD_PROMOTER · ${territory} territory · Invite Code: ${barcode}`,'create','CREATE');
 }
 
 // ══════════ ORDERS ══════════
@@ -1723,38 +1820,42 @@ function renderOrders(searchVal) {
 // ══════════ COMMISSIONS ══════════
 function renderCommissions() {
   const month = document.getElementById('comm-month').value;
-  const level = document.getElementById('comm-level').value;
-  S.commMonth = month; S.commLevel = level;
-  const monthData = { '2026-04':{msv:'₦87.4M',comm:'₦3,218,000',bonus:'₦86,000',count:'247'}, '2026-03':{msv:'₦76.2M',comm:'₦3,010,000',bonus:'₦62,000',count:'247'}, '2026-02':{msv:'₦68.4M',comm:'₦2,780,000',bonus:'₦44,000',count:'243'} };
+  S.commMonth = month;
+  const monthData = { '2026-04':{msv:'₦87.4M',comm:'₦3,218,000',invitees:'1,284',count:'247'}, '2026-03':{msv:'₦76.2M',comm:'₦3,010,000',invitees:'1,240',count:'247'}, '2026-02':{msv:'₦68.4M',comm:'₦2,780,000',invitees:'1,196',count:'243'} };
   const md = monthData[month]||monthData['2026-04'];
   document.getElementById('cs-msv').textContent=md.msv;
   document.getElementById('cs-comm').textContent=md.comm;
-  document.getElementById('cs-bonus').textContent=md.bonus;
+  document.getElementById('cs-bonus').textContent=md.invitees;
   document.getElementById('cs-count').textContent=md.count;
-  const isBatch = DB.batchStatus[month]==='approved';
+  const bStatus = DB.batchStatus[month]||'not_run';
+  const isBatch = bStatus==='approved'||bStatus==='paid';
   const bar = document.getElementById('batch-bar');
-  if(isBatch) { bar.className='batch-bar approved'; bar.innerHTML=`<span class="batch-msg">✅ Batch approved and locked — ${month}. No further edits permitted.</span>`; }
-  else { bar.className='batch-bar'; bar.innerHTML=`<span class="batch-msg">⏳ Batch pending approval for ${month}. Review items then approve.</span><button class="btn primary" onclick="approveBatch()">Approve Batch</button>`; }
-  const promoters = DB.promoters.filter(p=>level==='all'||p.level===level);
-  const lvlBdg = {FL:'fl',FA:'fa',FR:'fr'};
+  const snap = DB.rateSnapshot||'Tier 1: 100 BP (1%) · Tier 2: 200 BP (2%) · Threshold: ₦1,000,000';
+  if(bStatus==='not_run')    { bar.className='batch-bar'; bar.innerHTML=`<span class="batch-msg">⬜ Batch not yet run for ${month}. Trigger manually or wait for xxl-job cron (1st of month, 02:00).</span><button class="btn primary" onclick="runBatch()">▶ Run Batch</button>`; }
+  else if(bStatus==='calculated') { bar.className='batch-bar calculated'; bar.innerHTML=`<span class="batch-msg">🔵 Batch calculated — ${month}. Rate snapshot: ${snap}. Review line items then approve.</span><button class="btn" onclick="exportCommCSV()">Export</button><button class="btn primary" onclick="approveBatch()">Approve Batch</button>`; }
+  else if(bStatus==='approved')   { bar.className='batch-bar approved'; bar.innerHTML=`<span class="batch-msg">✅ Batch approved — ${month}. Rate snapshot: ${snap}. Export → Finance for offline bank transfer, then mark paid.</span><button class="btn" onclick="exportCommCSV()">Export CSV</button><button class="btn primary" onclick="markPaid()">Mark Paid</button>`; }
+  else if(bStatus==='paid')       { bar.className='batch-bar paid'; bar.innerHTML=`<span class="batch-msg">💚 Batch paid — ${month}. Offline bank transfers complete. Rate snapshot: ${snap}.</span>`; }
+  const promoters = DB.promoters;
   const monthComm = DB.commByMonth[month] || DB.commByMonth['2026-04'];
+  const inviteeCount = (id) => DB.promoters.filter(x=>x.parent===id).length;
   document.getElementById('comm-tbody').innerHTML = promoters.map(p => {
-    const mc = monthComm[p.id] || {msv:0,comm:0,bonus:0};
+    const mc = monthComm[p.id] || {msv:0,comm:0};
     const isFlagged = DB.flaggedLines.has(p.id+month);
-    const rate = mc.msv>1000000?'1%/2%':'1%';
+    const rate = mc.msv>1000000?'1% / 2%':'1%';
     return `<tr class="${isFlagged?'flagged-row':''}" id="comm-row-${p.id}">
       <td class="td-name">${p.name}</td>
-      <td><span class="bdg ${lvlBdg[p.level]}">${p.levelLabel}</span></td>
+      <td style="font-size:11px;color:var(--t2)">${p.parentName||'—'}</td>
       <td>${p.territory}</td>
-      <td>${p.pharmacies}</td>
+      <td style="font-weight:600">${inviteeCount(p.id)||'—'}</td>
       <td style="font-weight:600">₦${mc.msv.toLocaleString()}</td>
-      <td>${rate}</td>
-      <td style="color:var(--g700);font-weight:600">₦${mc.comm.toLocaleString()}</td>
-      <td>${mc.bonus?`₦${mc.bonus.toLocaleString()}`:'—'}</td>
-      <td style="font-weight:700">₦${(mc.comm+mc.bonus).toLocaleString()}</td>
+      <td style="font-size:11px">${rate}</td>
+      <td style="color:var(--g700);font-weight:700">₦${mc.comm.toLocaleString()}</td>
       <td>${!isBatch?`<button class="btn sm ${isFlagged?'warning':''}" onclick="toggleFlag('${p.id}','${month}')">${isFlagged?'⚑ Flagged':'Flag'}</button>`:''}</td>
     </tr>`;
   }).join('');
+}
+function exportCommCSV() {
+  toast('Commission report exported','success','CSV downloaded for Finance.');
 }
 function toggleFlag(pid, month) {
   const key = pid+month;
@@ -1763,16 +1864,56 @@ function toggleFlag(pid, month) {
 }
 function approveBatch() {
   const month = document.getElementById('comm-month').value;
+  if(DB.batchStatus[month]!=='calculated') { toast('Cannot approve','warning','Batch must be in CALCULATED state before approval.'); return; }
   if(DB.flaggedLines.size>0) { toast('Flagged items remain','warning','Resolve or remove all flagged line items before approving.'); return; }
   DB.batchStatus[month]='approved'; renderCommissions();
-  toast('Batch Approved','success',`${month} commission batch locked. ₦3,218,000 queued for payout.`);
-  addAudit('Super Admin','approve','Batch',`${month} Commission Batch`,'Batch approved and locked — no further edits permitted','commission','APPROVE');
+  toast('Batch Approved','success',`${month} batch approved. Export CSV → Finance for offline bank transfer.`);
+  addAudit('Super Admin','approve','Batch',`${month} Commission Batch`,'Batch status → APPROVED. Export sent to Finance for offline payout.','commission','APPROVE');
+}
+function markPaid() {
+  const month = document.getElementById('comm-month').value;
+  if(DB.batchStatus[month]!=='approved') { toast('Cannot mark paid','warning','Batch must be APPROVED before marking as paid.'); return; }
+  DB.batchStatus[month]='paid'; renderCommissions();
+  toast('Batch Marked Paid','success',`${month} offline bank transfers confirmed. Batch locked as PAID.`);
+  addAudit('Super Admin','approve','Batch',`${month} Commission Batch`,'Batch status → PAID. Offline bank transfers confirmed by Finance.','commission','APPROVE');
 }
 function runBatch() {
   const month = document.getElementById('comm-month').value;
-  if(DB.batchStatus[month]==='approved') { toast('Already approved','info','This batch has already been approved.'); return; }
-  toast('Running batch…','info','Processing commission calculations for all 247 promoters.');
-  setTimeout(()=>{ toast('Batch complete','success','₦3,218,000 across 247 promoters. Ready for review.'); addAudit('System','commission','Batch',`${month} Commission Batch`,'Monthly batch completed — 247 promoters processed','commission','COMMISSION'); },1800);
+  const s = DB.batchStatus[month]||'not_run';
+  if(s==='approved'||s==='paid') { toast('Already finalised','info','This batch has already been approved or paid.'); return; }
+  if(s==='calculated') { toast('Already calculated','info','Batch already calculated. Review and approve.'); return; }
+  toast('Running batch…','info','xxl-job triggered — processing commission calculations.');
+  setTimeout(()=>{
+    DB.batchStatus[month]='calculated'; renderCommissions();
+    toast('Batch Calculated','success','₦3,218,000 across 247 Inviters. Rate snapshot locked. Ready for Admin review.');
+    addAudit('System','commission','Batch',`${month} Commission Batch`,'Batch status → CALCULATED. 247 Inviters processed, ₦3,218,000 total. Rate snapshot: 100 BP / 200 BP / ₦1,000,000 threshold.','commission','COMMISSION');
+  },1800);
+}
+
+// ══════════ COMMISSION RATE CONFIG ══════════
+function saveCommConfig() {
+  const threshold = document.getElementById('cfg-threshold').value;
+  const bp1 = parseInt(document.getElementById('cfg-rate1-bp').value)||0;
+  const bp2 = parseInt(document.getElementById('cfg-rate2-bp').value)||0;
+  const reason = document.getElementById('cfg-reason').value.trim();
+  if(!reason) { toast('Reason required','error','Enter a reason for the rate change before saving.'); return; }
+  if(bp1<=0 || bp2<=0) { toast('Invalid rates','error','Rates must be greater than 0 BP.'); return; }
+  const pct1 = (bp1/100).toFixed(2), pct2 = (bp2/100).toFixed(2);
+  // Update history table row
+  document.getElementById('cfg-new-date').textContent = 'Next billing cycle';
+  document.getElementById('cfg-new-row').style.display='';
+  document.getElementById('cfg-new-actor').textContent = 'Super Admin';
+  document.getElementById('cfg-new-thresh').textContent = '₦'+parseInt(threshold).toLocaleString();
+  document.getElementById('cfg-new-r1-bp').textContent = bp1;
+  document.getElementById('cfg-new-r1-pct').textContent = pct1+'%';
+  document.getElementById('cfg-new-r2-bp').textContent = bp2;
+  document.getElementById('cfg-new-r2-pct').textContent = pct2+'%';
+  document.getElementById('cfg-new-reason').textContent = reason;
+  document.getElementById('cfg-reason').value = '';
+  // Update rate snapshot for next batch
+  DB.rateSnapshot = `Tier 1: ${bp1} BP (${pct1}%) · Tier 2: ${bp2} BP (${pct2}%) · Threshold: ₦${parseInt(threshold).toLocaleString()}`;
+  toast('Rate change saved','success',`${bp1} BP (${pct1}%) / ${bp2} BP (${pct2}%) — effective next billing cycle.`);
+  addAudit('Super Admin','commission','Commission Rates','Rate Configuration',`Threshold: ₦${parseInt(threshold).toLocaleString()} · Tier 1: ${bp1} BP (${pct1}%) · Tier 2: ${bp2} BP (${pct2}%) — ${reason}`,'commission','RATE CHANGE');
 }
 
 // ══════════ AUDIT LOG ══════════
@@ -1841,17 +1982,16 @@ function renderDownlineComm() {
   const d = DB.earnData[S.earnMonth]||DB.earnData['2026-04'];
   const el = document.getElementById('earn-downline');
   if(!el) return;
-  if(!d.downline || !d.downline.length) { el.innerHTML='<div style="padding:10px 14px;font-size:12px;color:var(--t3)">No downline data for this period</div>'; return; }
-  const lvlBdg = {FL:'fl',FA:'fa',FR:'fr'};
+  if(!d.downline || !d.downline.length) { el.innerHTML='<div style="padding:10px 14px;font-size:12px;color:var(--t3)">No invitee data for this period</div>'; return; }
   el.innerHTML = d.downline.map(r => `
     <div class="bdwn-row">
       <div>
-        <div class="bdwn-nm" style="display:flex;align-items:center;gap:5px">${r.name} <span class="bdg ${lvlBdg[r.level]}" style="font-size:9px;padding:1px 5px">${r.level}</span></div>
-        <div class="bdwn-msv">${r.pharmacies} pharmacies · Network MSV ₦${r.msv.toLocaleString()}</div>
+        <div class="bdwn-nm" style="display:flex;align-items:center;gap:5px">${r.name} <span class="bdg invitee" style="font-size:9px;padding:1px 5px">Invitee</span></div>
+        <div class="bdwn-msv">${r.pharmacies} pharmacies · Settled MSV ₦${r.msv.toLocaleString()}</div>
       </div>
       <div style="text-align:right">
-        <div class="bdwn-amt" style="color:var(--g700)">+₦${r.override.toLocaleString()}</div>
-        <div style="font-size:10px;color:var(--t3)">override</div>
+        <div class="bdwn-amt" style="color:var(--g700)">+₦${(r.override||r.commission||0).toLocaleString()}</div>
+        <div style="font-size:10px;color:var(--t3)">commission</div>
       </div>
     </div>`).join('');
 }
@@ -1879,15 +2019,15 @@ function openAgentDetail(id) {
   openModal(p.name,
     `<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
       <div class="nc-av fa" style="width:40px;height:40px;font-size:14px">${p.initials}</div>
-      <div><div style="font-weight:700">${p.name}</div><div style="font-size:11px;color:var(--t3)">${p.levelLabel} · ${p.territory}</div></div>
+      <div><div style="font-weight:700">${p.name}</div><div style="font-size:11px;color:var(--t3)">Inviter · ${p.territory}</div></div>
     </div>
     <div class="info-grid" style="margin-bottom:12px">
-      <div class="info-item"><div class="lbl">Barcode</div><div class="val mono">${p.barcode}</div></div>
+      <div class="info-item"><div class="lbl">Invite Code</div><div class="val mono">${p.barcode}</div></div>
       <div class="info-item"><div class="lbl">Phone</div><div class="val">${p.phone}</div></div>
       <div class="info-item"><div class="lbl">Pharmacies</div><div class="val">${p.pharmacies}</div></div>
       <div class="info-item"><div class="lbl">April MSV</div><div class="val t-green fw7">₦${p.msv.toLocaleString()}</div></div>
     </div>
-    ${reps.length?`<div class="section-hdg">Frontline Reps (${reps.length})</div>${reps.map(r=>`<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--bd2)"><span class="bdg fr" style="font-size:9px">Rep</span><span style="font-size:12px;font-weight:600;flex:1">${r.name}</span><span style="font-size:11px;color:var(--t3)">${r.pharmacies} ph</span></div>`).join('')}`:''}
+    ${reps.length?`<div class="section-hdg">Direct Invitees (${reps.length})</div>${reps.map(r=>`<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--bd2)"><span class="bdg invitee" style="font-size:9px">Invitee</span><span style="font-size:12px;font-weight:600;flex:1">${r.name}</span><span style="font-size:11px;color:var(--t3)">${r.pharmacies} ph</span></div>`).join('')}`:''}
     ${phs.length?`<div class="section-hdg">Pharmacies (${phs.length})</div>${phs.slice(0,4).map(ph=>`<div class="mini-ph-row"><div class="mini-ph-name">${ph.name}</div>${ph.msv?`<div class="mini-ph-msv">₦${ph.msv.toLocaleString()}</div>`:''}<span class="bdg ${ph.status}" style="font-size:9px">${ph.status}</span></div>`).join('')}`:''}`,
     `<button class="btn primary" onclick="closeModal()">Close</button>`);
 }
@@ -1895,7 +2035,7 @@ function openAgentDetail(id) {
 // ══════════ INVITE AGENT ══════════
 function openInviteAgent() {
   openModal('Recruit New Agent',
-    `<p style="font-size:12px;color:var(--t2);margin-bottom:14px">Send an invitation to a new Field Agent. Once accepted, they appear in your hierarchy and a sub-barcode is generated.</p>
+    `<p style="font-size:12px;color:var(--t2);margin-bottom:14px">Send an invitation to a new Invitee. Once they register using your invite code, they appear in your network.</p>
      <div class="field"><label>Agent Name</label><input id="inv-name" placeholder="Full name"></div>
      <div class="field"><label>Phone Number</label><input id="inv-phone" placeholder="+234 800 000 0000"></div>
      <div class="field"><label>Email Address</label><input id="inv-email" placeholder="email@example.com"></div>`,
@@ -1979,19 +2119,19 @@ const reportData = {
   rpt1: {
     subject: 'Commission shortfall — April batch',
     detail: 'Expected ₦312K but received ₦290K in payout. The shortfall of ₦22,000 appears to relate to 11 pharmacies whose MSV was not counted in the batch. Please review and correct.',
-    type: 'Payment Discrepancy', filedBy: 'Adeyemi Okafor', level: 'Field Lead',
+    type: 'Payment Discrepancy', filedBy: 'Adeyemi Okafor', level: 'Inviter',
     date: '14 Apr 2026', status: 'pending'
   },
   rpt2: {
     subject: 'MedPlus Ikeja verification delay',
     detail: 'MedPlus Ikeja submitted all required documents (CAC, address proof, phone verification) over 2 weeks ago on 26 Mar 2026. The pharmacy is still showing as Pending, which is preventing commission accrual.',
-    type: 'Pharmacy Issue', filedBy: 'Emeka Dike', level: 'Field Agent',
+    type: 'Pharmacy Issue', filedBy: 'MedPlus Lagos', level: 'Inviter',
     date: '10 Apr 2026', status: 'resolved', resolvedNote: 'Pharmacy verified and activated on 11 Apr 2026.'
   },
   rpt3: {
     subject: 'Network sync error on barcode scan',
     detail: 'When a pharmacy scans my barcode, the registration sometimes goes through but the pharmacy does not appear in my network list for up to 24 hours. This has affected 3 pharmacies this month.',
-    type: 'Network Problem', filedBy: 'Fatima Aliyu', level: 'Field Agent',
+    type: 'Network Problem', filedBy: 'Fatima Aliyu', level: 'Inviter',
     date: '09 Apr 2026', status: 'pending'
   }
 };
@@ -2051,7 +2191,7 @@ function resolveReport(id) {
 function joinNav(screen) {
   document.querySelectorAll('#surface-join .app-scr').forEach(s => { s.classList.remove('active'); s.style.display='none'; });
   const el = document.getElementById('join-' + screen);
-  if (el) { el.style.display = 'block'; el.classList.add('active'); }
+  if (el) { el.style.display = screen === 'success' ? 'flex' : 'block'; el.classList.add('active'); }
 }
 
 function submitJoinForm() {
@@ -2094,7 +2234,7 @@ function toggleSuspendFields() {
   const fields = document.getElementById('suspend-fields');
   fields.style.display = type === 'suspend' ? 'block' : 'none';
   if (type === 'suspend') {
-    document.getElementById('rpt-subject').placeholder = 'e.g. Request suspension of Tunde Alli';
+    document.getElementById('rpt-subject').placeholder = 'e.g. Request suspension of QualiCare Pharmacy';
   } else {
     document.getElementById('rpt-subject').placeholder = 'Brief subject…';
   }
