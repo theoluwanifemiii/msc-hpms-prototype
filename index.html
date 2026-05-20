@@ -409,6 +409,9 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
     <button class="stab" id="tab-join" onclick="switchSurface('join')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>Become a Promoter
     </button>
+    <button class="stab" id="tab-pc" onclick="switchSurface('pc')" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;border-color:transparent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Personal Centre
+    </button>
   </div>
   <div class="tb-right">v3.0 · Inviter/Invitee Model</div>
 </div>
@@ -1388,6 +1391,299 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 </div>
 </div>
 
+<!-- ══════════ PERSONAL CENTRE SURFACE ══════════ -->
+<div class="surface" id="surface-pc">
+<div style="min-height:100vh;background:#f0f4f8;font-family:'DM Sans',sans-serif">
+
+  <!-- PC Top Nav -->
+  <div style="background:#fff;border-bottom:1px solid #e2e8f0;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:10">
+    <div style="display:flex;align-items:center;gap:20px">
+      <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#1e3a5f;font-weight:700">Personal Centre</div>
+      <div style="font-size:11px;color:#64748b;padding:3px 10px;background:#f1f5f9;border-radius:20px">Kingsway Pharmacy Ltd</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:12px;color:#64748b">Verified ✓</div>
+      <div style="width:32px;height:32px;border-radius:50%;background:#1e3a5f;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">KP</div>
+    </div>
+  </div>
+
+  <!-- PC Sidebar + Content -->
+  <div style="display:flex;max-width:1140px;margin:0 auto;gap:0;padding:28px 20px">
+
+    <!-- Sidebar nav -->
+    <div style="width:200px;flex-shrink:0;margin-right:24px">
+      <div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden">
+        <div onclick="pcNav('promoter')" id="pcnav-promoter" class="pc-nav-item active" style="padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:9px;border-bottom:1px solid #f1f5f9;font-size:13px;font-weight:600;background:#eff6ff;color:#1d4ed8">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Promoter Page
+        </div>
+        <div onclick="pcNav('orders')" id="pcnav-orders" class="pc-nav-item" style="padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:9px;border-bottom:1px solid #f1f5f9;font-size:13px;font-weight:500;color:#475569">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          My Orders
+        </div>
+        <div onclick="pcNav('catalogue')" id="pcnav-catalogue" class="pc-nav-item" style="padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:#475569">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Catalogue
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:10px 12px;background:#fef9c3;border:1px solid #fde68a;border-radius:10px;font-size:10px;color:#92400e;line-height:1.5">
+        <strong>PRD Note:</strong> Promoter Page entry point is exclusively within Personal Centre. No external link or separate app.
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div style="flex:1;min-width:0" id="pc-content">
+
+      <!-- ── PROMOTER PAGE ── -->
+      <div id="pc-promoter">
+        <div style="margin-bottom:20px">
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#0f172a">Promoter Page</div>
+          <div style="font-size:12px;color:#64748b;margin-top:2px">Invite pharmacies · Track your network · Earn commission</div>
+        </div>
+
+        <!-- SECTION 1 — Promoter Identity -->
+        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
+          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 1 — My Promoter Identity</div>
+          </div>
+          <div style="padding:20px;display:flex;gap:28px;align-items:flex-start">
+            <!-- QR Code visual -->
+            <div style="text-align:center;flex-shrink:0">
+              <div style="width:120px;height:120px;background:#0f172a;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;position:relative;overflow:hidden">
+                <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+                  <rect fill="white" x="5" y="5" width="30" height="30" rx="2"/>
+                  <rect fill="#0f172a" x="10" y="10" width="20" height="20" rx="1"/>
+                  <rect fill="white" x="65" y="5" width="30" height="30" rx="2"/>
+                  <rect fill="#0f172a" x="70" y="10" width="20" height="20" rx="1"/>
+                  <rect fill="white" x="5" y="65" width="30" height="30" rx="2"/>
+                  <rect fill="#0f172a" x="10" y="70" width="20" height="20" rx="1"/>
+                  <rect fill="white" x="15" y="15" width="10" height="10"/>
+                  <rect fill="white" x="75" y="15" width="10" height="10"/>
+                  <rect fill="white" x="15" y="75" width="10" height="10"/>
+                  <rect fill="white" x="40" y="5" width="5" height="5"/><rect fill="white" x="50" y="5" width="5" height="5"/>
+                  <rect fill="white" x="40" y="15" width="5" height="5"/><rect fill="white" x="55" y="20" width="5" height="5"/>
+                  <rect fill="white" x="5" y="40" width="5" height="5"/><rect fill="white" x="5" y="50" width="5" height="5"/>
+                  <rect fill="white" x="15" y="40" width="5" height="5"/><rect fill="white" x="20" y="55" width="5" height="5"/>
+                  <rect fill="white" x="40" y="40" width="5" height="5"/><rect fill="white" x="50" y="40" width="5" height="5"/>
+                  <rect fill="white" x="60" y="40" width="5" height="5"/><rect fill="white" x="45" y="50" width="5" height="5"/>
+                  <rect fill="white" x="55" y="50" width="5" height="5"/><rect fill="white" x="65" y="50" width="5" height="5"/>
+                  <rect fill="white" x="40" y="60" width="5" height="5"/><rect fill="white" x="50" y="65" width="5" height="5"/>
+                  <rect fill="white" x="65" y="65" width="5" height="5"/><rect fill="white" x="75" y="65" width="5" height="5"/>
+                  <rect fill="white" x="85" y="40" width="5" height="5"/><rect fill="white" x="90" y="50" width="5" height="5"/>
+                  <rect fill="white" x="80" y="55" width="5" height="5"/><rect fill="white" x="85" y="65" width="5" height="5"/>
+                  <rect fill="white" x="70" y="75" width="5" height="5"/><rect fill="white" x="80" y="80" width="5" height="5"/>
+                  <rect fill="white" x="90" y="75" width="5" height="5"/>
+                </svg>
+              </div>
+              <button onclick="toast('QR Code Downloaded','success','KWY-PH001_QRCode.png saved to your downloads.')" style="width:120px;padding:7px 0;background:#0f172a;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:5px">⬇ Download</button>
+              <button onclick="toast('Share Sheet Opened','info','Native share sheet opened with QR code and invite code pre-populated.')" style="width:120px;padding:7px 0;background:#fff;color:#0f172a;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">↗ Share</button>
+            </div>
+            <!-- Invite code + info -->
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:6px">My Invitation Code</div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="font-size:26px;font-weight:800;font-family:'DM Mono',monospace;letter-spacing:.06em;color:#0f172a;background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:10px 18px">KWY-PH001</div>
+                <button onclick="toast('Copied!','success','Invitation code KWY-PH001 copied to clipboard.')" style="padding:10px 16px;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Copy</button>
+              </div>
+              <div style="font-size:12px;color:#475569;line-height:1.6;background:#f8fafc;border-radius:10px;padding:12px 14px;border:1px solid #e2e8f0">
+                Share this code or QR with other pharmacies. When they register using your code, they become your Invitee and you earn commission on their settled orders — permanently.
+              </div>
+              <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+                <div style="font-size:11px;padding:4px 10px;border-radius:6px;background:#dcfce7;color:#15803d;font-weight:600">✓ Verified Pharmacy</div>
+                <div style="font-size:11px;padding:4px 10px;border-radius:6px;background:#dbeafe;color:#1d4ed8;font-weight:600">Active Inviter</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2 — Invitee Network -->
+        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
+          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 2 — My Invitee Network</div>
+            <div style="display:flex;gap:6px">
+              <button onclick="pcFilterInvitees('all',this)" class="pc-filter active" style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #1d4ed8;background:#eff6ff;color:#1d4ed8;font-family:'DM Sans',sans-serif">All (4)</button>
+              <button onclick="pcFilterInvitees('verified',this)" class="pc-filter" style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #e2e8f0;background:#fff;color:#475569;font-family:'DM Sans',sans-serif">Verified</button>
+              <button onclick="pcFilterInvitees('pending',this)" class="pc-filter" style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #e2e8f0;background:#fff;color:#475569;font-family:'DM Sans',sans-serif">Pending</button>
+            </div>
+          </div>
+          <!-- Stats row -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #f1f5f9">
+            <div style="padding:16px 20px;border-right:1px solid #f1f5f9"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Total Invitees</div><div style="font-size:24px;font-weight:700;color:#0f172a">4</div></div>
+            <div style="padding:16px 20px;border-right:1px solid #f1f5f9"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Verified</div><div style="font-size:24px;font-weight:700;color:#15803d">3</div></div>
+            <div style="padding:16px 20px"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Pending Verification</div><div style="font-size:24px;font-weight:700;color:#d97706">1</div></div>
+          </div>
+          <!-- Invitee table -->
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:12px" id="pc-invitee-table">
+              <thead>
+                <tr style="background:#f8fafc">
+                  <th style="padding:10px 20px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Pharmacy</th>
+                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Registered</th>
+                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Status</th>
+                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Last Order</th>
+                  <th style="padding:10px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Commission Generated</th>
+                </tr>
+              </thead>
+              <tbody id="pc-invitee-tbody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 3 — Commission Summary -->
+        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
+          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 3 — Commission Summary</div>
+            <select id="pc-month" onchange="renderPCCommission()" style="padding:5px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;color:#0f172a">
+              <option value="2026-05">May 2026</option>
+              <option value="2026-04" selected>April 2026</option>
+              <option value="2026-03">March 2026</option>
+              <option value="2026-02">February 2026</option>
+            </select>
+          </div>
+          <!-- Totals row -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #f1f5f9">
+            <div style="padding:16px 20px;border-right:1px solid #f1f5f9"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Total Earned (All Time)</div><div style="font-size:20px;font-weight:700;color:#0f172a">₦1,124,600</div></div>
+            <div style="padding:16px 20px;border-right:1px solid #f1f5f9" id="pc-pending-card"><div style="font-size:11px;color:#d97706;font-weight:600;margin-bottom:4px">⏳ Pending</div><div style="font-size:20px;font-weight:700;color:#0f172a" id="pc-pending-amt">₦42,000</div><div style="font-size:10px;color:#64748b;margin-top:2px">30-day return window active</div></div>
+            <div style="padding:16px 20px;border-right:1px solid #f1f5f9" id="pc-confirmed-card"><div style="font-size:11px;color:#0369a1;font-weight:600;margin-bottom:4px">✓ Confirmed</div><div style="font-size:20px;font-weight:700;color:#0f172a" id="pc-confirmed-amt">₦86,000</div><div style="font-size:10px;color:#64748b;margin-top:2px">Return window passed · Locked</div></div>
+            <div style="padding:16px 20px" id="pc-withdrawable-card"><div style="font-size:11px;color:#15803d;font-weight:600;margin-bottom:4px">💚 Withdrawable</div><div style="font-size:20px;font-weight:700;color:#15803d" id="pc-withdrawable-amt">₦74,000</div><div style="font-size:10px;color:#64748b;margin-top:2px">Available to request withdrawal</div></div>
+          </div>
+          <!-- State explanations -->
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:4px">Commission Lifecycle</div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
+              <span style="font-size:16px;flex-shrink:0">⏳</span>
+              <div><div style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:2px">Pending Confirmation</div><div style="font-size:11px;color:#78350f;line-height:1.5">Commission is calculated immediately when the order status changes to Delivery Confirmed. It enters the 30-day return window. If no return is recorded within 30 days, the commission moves to Confirmed.</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe">
+              <span style="font-size:16px;flex-shrink:0">✓</span>
+              <div><div style="font-size:11px;font-weight:700;color:#1e40af;margin-bottom:2px">Confirmed</div><div style="font-size:11px;color:#1e40af;line-height:1.5">The 30-day return window has passed with no return recorded. This commission is locked and will become withdrawable on the 1st of the following calendar month.</div></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0">
+              <span style="font-size:16px;flex-shrink:0">💚</span>
+              <div><div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:2px">Withdrawable</div><div style="font-size:11px;color:#166534;line-height:1.5">All commissions confirmed in the previous calendar month are now eligible for withdrawal. Withdrawable status is granted on the 1st of each month, regardless of when within the prior month each commission was confirmed. Example: commissions confirmed on any date in April become withdrawable on 1st May.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 4 — Commission Detail List -->
+        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
+          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 4 — Commission Detail List</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <select id="pc-filter-status" onchange="renderPCCommDetail()" style="padding:5px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-family:'DM Sans',sans-serif;background:#fff">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="withdrawable">Withdrawable</option>
+              </select>
+              <select id="pc-filter-invitee" onchange="renderPCCommDetail()" style="padding:5px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-family:'DM Sans',sans-serif;background:#fff">
+                <option value="">All Invitees</option>
+                <option value="MedPlus Ikeja">MedPlus Ikeja</option>
+                <option value="Pharma Direct">Pharma Direct</option>
+                <option value="PharmaLife">PharmaLife</option>
+                <option value="CareMax Pharmacy">CareMax Pharmacy</option>
+              </select>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:12px">
+              <thead>
+                <tr style="background:#f8fafc">
+                  <th style="padding:10px 20px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Invitee Pharmacy</th>
+                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Order Ref</th>
+                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Delivery Confirmed</th>
+                  <th style="padding:10px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Commission</th>
+                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Status</th>
+                </tr>
+              </thead>
+              <tbody id="pc-detail-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 5 — Bank Account & Withdrawal -->
+        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
+          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 5 — Bank Account &amp; Withdrawal</div>
+          </div>
+          <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+            <!-- Bank account card -->
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#0f172a;margin-bottom:12px">Bank Account Details</div>
+              <div id="pc-bank-view" style="background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;padding:14px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b">Bank</span><span style="font-size:12px;font-weight:600">Zenith Bank</span></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b">Account Number</span><span style="font-size:12px;font-weight:600;font-family:'DM Mono',monospace">2048391027</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:#64748b">Account Name</span><span style="font-size:12px;font-weight:600">Kingsway Pharmacy Ltd</span></div>
+                <button onclick="togglePCBankEdit()" style="margin-top:12px;width:100%;padding:8px;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:#475569">Edit Details</button>
+              </div>
+              <div id="pc-bank-edit" style="display:none;background:#f8fafc;border-radius:10px;border:1.5px solid #3b82f6;padding:14px">
+                <div style="margin-bottom:10px">
+                  <div style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px">Bank Name</div>
+                  <select id="pcb-bank" style="width:100%;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff">
+                    <option>Access Bank</option><option>First Bank</option><option>GTBank</option>
+                    <option>Kuda</option><option>UBA</option><option selected>Zenith Bank</option>
+                  </select>
+                </div>
+                <div style="margin-bottom:10px">
+                  <div style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px">Account Number</div>
+                  <input id="pcb-acct" type="text" maxlength="10" value="2048391027" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Mono',monospace">
+                </div>
+                <div style="margin-bottom:12px">
+                  <div style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px">Account Name</div>
+                  <input id="pcb-name" type="text" value="Kingsway Pharmacy Ltd" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif">
+                </div>
+                <div style="display:flex;gap:8px">
+                  <button onclick="togglePCBankEdit()" style="flex:1;padding:8px;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Cancel</button>
+                  <button onclick="savePCBank()" style="flex:2;padding:8px;background:#0f172a;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Save Details</button>
+                </div>
+              </div>
+            </div>
+            <!-- Withdrawal card -->
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#0f172a;margin-bottom:12px">Request Withdrawal</div>
+              <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:14px;margin-bottom:12px">
+                <div style="font-size:11px;color:#15803d;font-weight:700;margin-bottom:4px">💚 Withdrawable Balance</div>
+                <div style="font-size:24px;font-weight:800;color:#0f172a">₦74,000</div>
+                <div style="font-size:10px;color:#64748b;margin-top:2px">Confirmed commissions from April 2026 — eligible from 1 May 2026</div>
+                <button onclick="submitPCWithdrawal()" style="margin-top:10px;width:100%;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Request Withdrawal → Finance</button>
+              </div>
+              <!-- Withdrawal history -->
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:8px">Withdrawal History</div>
+              <div id="pc-withdrawal-history">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:6px">
+                  <div><div style="font-size:12px;font-weight:600">₦58,000</div><div style="font-size:10px;color:#64748b">Requested 01 Apr 2026</div></div>
+                  <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Processed</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0">
+                  <div><div style="font-size:12px;font-weight:600">₦43,000</div><div style="font-size:10px;color:#64748b">Requested 01 Mar 2026</div></div>
+                  <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Processed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /pc-promoter -->
+
+      <!-- Placeholder views for other PC sections -->
+      <div id="pc-orders" style="display:none;background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:40px;text-align:center;color:#94a3b8">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+        <div style="font-size:14px;font-weight:600;margin-bottom:4px">My Orders</div>
+        <div style="font-size:12px">Order history view — out of scope for this prototype</div>
+      </div>
+      <div id="pc-catalogue" style="display:none;background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:40px;text-align:center;color:#94a3b8">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+        <div style="font-size:14px;font-weight:600;margin-bottom:4px">Catalogue</div>
+        <div style="font-size:12px">Product catalogue — out of scope for this prototype</div>
+      </div>
+
+    </div><!-- /pc-content -->
+  </div><!-- /flex -->
+</div>
+</div>
+<!-- ══ END PERSONAL CENTRE ══ -->
+
 <script>
 // ══════════ DATA STORE ══════════
 const DB = {
@@ -1530,6 +1826,140 @@ function addAudit(actor, actionType, entity, entityName, reason, tag, tagLabel) 
   renderActivityFeed();
 }
 
+// ══════════ PERSONAL CENTRE DATA ══════════
+const PC = {
+  invitees: [
+    {id:'i1',name:'MedPlus Ikeja',registered:'02 Apr 2026',status:'pending',lastOrder:'—',commission:0},
+    {id:'i2',name:'Pharma Direct',registered:'15 Feb 2026',status:'verified',lastOrder:'13 Apr 2026',commission:36000},
+    {id:'i3',name:'PharmaLife',registered:'05 Mar 2026',status:'verified',lastOrder:'05 Apr 2026',commission:28000},
+    {id:'i4',name:'CareMax Pharmacy',registered:'18 Feb 2026',status:'verified',lastOrder:'11 Apr 2026',commission:18200},
+  ],
+  commDetail: [
+    {invitee:'Pharma Direct',ref:'ORD-2026-04-0811',confirmed:'18 Apr 2026',amount:2840,status:'pending'},
+    {invitee:'Pharma Direct',ref:'ORD-2026-04-0760',confirmed:'14 Apr 2026',amount:4360,status:'confirmed'},
+    {invitee:'Pharma Direct',ref:'ORD-2026-03-0510',confirmed:'15 Mar 2026',amount:4360,status:'withdrawable'},
+    {invitee:'PharmaLife',ref:'ORD-2026-04-0620',confirmed:'10 Apr 2026',amount:1480,status:'confirmed'},
+    {invitee:'PharmaLife',ref:'ORD-2026-03-0430',confirmed:'08 Mar 2026',amount:2800,status:'withdrawable'},
+    {invitee:'CareMax Pharmacy',ref:'ORD-2026-04-0480',confirmed:'06 Apr 2026',amount:1360,status:'confirmed'},
+    {invitee:'CareMax Pharmacy',ref:'ORD-2026-03-0290',confirmed:'20 Mar 2026',amount:2720,status:'withdrawable'},
+    {invitee:'Pharma Direct',ref:'ORD-2026-04-0901',confirmed:'15 Apr 2026',amount:820,status:'pending'},
+    {invitee:'PharmaLife',ref:'ORD-2026-04-0690',confirmed:'12 Apr 2026',amount:7600,status:'confirmed'},
+    {invitee:'CareMax Pharmacy',ref:'ORD-2026-04-0710',confirmed:'16 Apr 2026',amount:2640,status:'confirmed'},
+  ],
+};
+
+// ══════════ PERSONAL CENTRE FUNCTIONS ══════════
+function pcNav(section) {
+  ['promoter','orders','catalogue'].forEach(s => {
+    const el = document.getElementById('pc-'+s);
+    if(el) el.style.display = s===section?'block':'none';
+    const nav = document.getElementById('pcnav-'+s);
+    if(nav) {
+      nav.style.background = s===section?'#eff6ff':'';
+      nav.style.color = s===section?'#1d4ed8':'#475569';
+      nav.style.fontWeight = s===section?'600':'500';
+    }
+  });
+}
+
+function pcFilterInvitees(filter, btn) {
+  document.querySelectorAll('.pc-filter').forEach(b => {
+    b.style.background='#fff'; b.style.color='#475569'; b.style.borderColor='#e2e8f0';
+  });
+  btn.style.background='#eff6ff'; btn.style.color='#1d4ed8'; btn.style.borderColor='#1d4ed8';
+  const rows = document.querySelectorAll('#pc-invitee-tbody tr');
+  rows.forEach(r => {
+    const st = r.dataset.status;
+    r.style.display = (filter==='all'||st===filter) ? '' : 'none';
+  });
+}
+
+function renderPCInvitees() {
+  const tbody = document.getElementById('pc-invitee-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = PC.invitees.map(i => {
+    const stBadge = i.status==='verified'
+      ? `<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Verified</span>`
+      : `<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;background:#fef9c3;color:#92400e">Pending</span>`;
+    return `<tr data-status="${i.status}" style="border-bottom:1px solid #f1f5f9">
+      <td style="padding:12px 20px;font-weight:600;color:#0f172a">${i.name}</td>
+      <td style="padding:12px 16px;color:#64748b">${i.registered}</td>
+      <td style="padding:12px 16px">${stBadge}</td>
+      <td style="padding:12px 16px;color:#64748b">${i.lastOrder}</td>
+      <td style="padding:12px 16px;text-align:right;font-weight:700;color:${i.commission>0?'#15803d':'#94a3b8'}">
+        ${i.commission>0?'₦'+i.commission.toLocaleString():'—'}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPCCommission() {
+  // Amounts are static for prototype; month picker is cosmetic
+}
+
+function renderPCCommDetail() {
+  const statusFilter = document.getElementById('pc-filter-status').value;
+  const inviteeFilter = document.getElementById('pc-filter-invitee').value;
+  const tbody = document.getElementById('pc-detail-tbody');
+  if(!tbody) return;
+  const statusStyle = {
+    pending: {bg:'#fffbeb',color:'#92400e',label:'⏳ Pending'},
+    confirmed: {bg:'#eff6ff',color:'#1e40af',label:'✓ Confirmed'},
+    withdrawable: {bg:'#f0fdf4',color:'#15803d',label:'💚 Withdrawable'},
+  };
+  const filtered = PC.commDetail.filter(r =>
+    (!statusFilter || r.status===statusFilter) &&
+    (!inviteeFilter || r.invitee===inviteeFilter)
+  );
+  if(filtered.length===0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="padding:28px;text-align:center;color:#94a3b8;font-size:12px">No commission records match the selected filters.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(r => {
+    const s = statusStyle[r.status];
+    return `<tr style="border-bottom:1px solid #f1f5f9">
+      <td style="padding:11px 20px;font-weight:600;color:#0f172a">${r.invitee}</td>
+      <td style="padding:11px 16px;font-family:'DM Mono',monospace;font-size:11px;color:#475569">${r.ref}</td>
+      <td style="padding:11px 16px;color:#64748b">${r.confirmed}</td>
+      <td style="padding:11px 16px;text-align:right;font-weight:700;color:#0f172a">₦${r.amount.toLocaleString()}</td>
+      <td style="padding:11px 16px"><span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:${s.bg};color:${s.color}">${s.label}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function togglePCBankEdit() {
+  const view = document.getElementById('pc-bank-view');
+  const edit = document.getElementById('pc-bank-edit');
+  const editing = edit.style.display==='block';
+  view.style.display = editing?'block':'none';
+  edit.style.display = editing?'none':'block';
+}
+
+function savePCBank() {
+  const bank = document.getElementById('pcb-bank').value;
+  const acct = document.getElementById('pcb-acct').value;
+  const name = document.getElementById('pcb-name').value;
+  if(acct.length!==10||!/^\d+$/.test(acct)){toast('Invalid account number','warning','Must be exactly 10 digits.');return;}
+  document.getElementById('pc-bank-view').innerHTML = `
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b">Bank</span><span style="font-size:12px;font-weight:600">${bank}</span></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b">Account Number</span><span style="font-size:12px;font-weight:600;font-family:'DM Mono',monospace">${acct}</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:#64748b">Account Name</span><span style="font-size:12px;font-weight:600">${name}</span></div>
+    <button onclick="togglePCBankEdit()" style="margin-top:12px;width:100%;padding:8px;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:#475569">Edit Details</button>`;
+  togglePCBankEdit();
+  toast('Bank details saved','success',`${bank} · ${acct} saved. Used for withdrawal processing.`);
+}
+
+function submitPCWithdrawal() {
+  const hist = document.getElementById('pc-withdrawal-history');
+  const today = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const newEntry = `<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#fef9c3;border-radius:8px;border:1px solid #fde68a;margin-bottom:6px">
+    <div><div style="font-size:12px;font-weight:600">₦74,000</div><div style="font-size:10px;color:#64748b">Requested ${today}</div></div>
+    <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#fef9c3;color:#92400e">Pending</span>
+  </div>`;
+  hist.insertAdjacentHTML('afterbegin', newEntry);
+  toast('Withdrawal request submitted','success','Your withdrawal request has been submitted. Finance will process your payment shortly.');
+}
+
 // ══════════ SURFACE SWITCH ══════════
 function switchSurface(name) {
   document.querySelectorAll('.surface').forEach(s => s.classList.remove('active'));
@@ -1539,6 +1969,7 @@ function switchSurface(name) {
   closeDrawer(); closeModal();
   if(name==='admin') setTimeout(initCommChart,80);
   if(name==='promoter') { setTimeout(initEarnChart,80); renderEarnBreakdown(); }
+  if(name==='pc') { renderPCInvitees(); renderPCCommDetail(); }
 }
 
 function showView(name, btn) {
