@@ -1855,7 +1855,40 @@ function renderCommissions() {
   }).join('');
 }
 function exportCommCSV() {
-  toast('Commission report exported','success','CSV downloaded for Finance.');
+  const month = document.getElementById('comm-month').value;
+  const monthComm = DB.commByMonth[month] || DB.commByMonth['2026-04'];
+  const snap = DB.rateSnapshot || 'Tier 1: 100 BP (1%) · Tier 2: 200 BP (2%) · Threshold: ₦1,000,000';
+  const inviteeCount = (id) => DB.promoters.filter(x => x.parent === id).length;
+
+  const headers = ['Inviter Name','Inviter Code','Inviter Of','Territory','Email','Phone','Invitees','Monthly Sales (₦)','Commission (₦)','Status','Rate Config'];
+  const rows = DB.promoters.map(p => {
+    const mc = monthComm[p.id] || {msv:0, comm:0};
+    return [
+      p.name,
+      p.barcode,
+      p.parentName || '—',
+      p.territory,
+      p.email,
+      p.phone,
+      inviteeCount(p.id),
+      mc.msv,
+      mc.comm,
+      p.status,
+      snap
+    ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(',');
+  });
+
+  const csv = [headers.join(','), ...rows].join('\r\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `HPMS_Commission_${month}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Commission report exported', 'success', `HPMS_Commission_${month}.csv downloaded — send to Finance for bank transfer processing.`);
 }
 function toggleFlag(pid, month) {
   const key = pid+month;
