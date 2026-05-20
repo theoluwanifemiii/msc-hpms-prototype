@@ -985,13 +985,93 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
           </div>
         </div>
 
+        <!-- PROFILE -->
+        <div class="app-scr" id="p-profile" style="background:var(--g50)">
+          <div class="app-hdr"><div class="app-hdr-top"><div><div class="app-greeting">Account</div><div class="app-name">Profile &amp; Settings</div></div></div></div>
+          <!-- Identity card -->
+          <div style="margin:14px 14px 0;background:#fff;border-radius:14px;border:1px solid var(--bd);padding:16px;display:flex;align-items:center;gap:12px">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--g800);color:#fff;font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">AO</div>
+            <div>
+              <div style="font-size:14px;font-weight:700">Adeyemi Okafor</div>
+              <div style="font-size:11px;color:var(--t3)">fatima@msc.ng · +234 801 234 5678</div>
+              <div style="margin-top:4px;display:flex;gap:5px;align-items:center">
+                <span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;background:#f3e8ff;color:#7c3aed">FIELD</span>
+                <span style="font-size:10px;color:var(--t3)">Invite code: <span style="font-family:'DM Mono',monospace;font-weight:600;color:var(--t1)">ADY-INV001</span></span>
+              </div>
+            </div>
+          </div>
+          <!-- Payout Details -->
+          <div style="margin:12px 14px 0;background:#fff;border-radius:14px;border:1px solid var(--bd);overflow:hidden">
+            <div style="padding:12px 14px;border-bottom:1px solid var(--bd2);display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3)">Payout Details</div>
+              <button id="payout-edit-btn" style="font-size:11px;font-weight:600;color:var(--g700);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif" onclick="togglePayoutEdit()">Edit</button>
+            </div>
+            <!-- View mode -->
+            <div id="payout-view" style="padding:14px">
+              <div style="display:grid;gap:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:11px;color:var(--t3)">Bank</span>
+                  <span style="font-size:12px;font-weight:600">Zenith Bank</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:11px;color:var(--t3)">Account Number</span>
+                  <span style="font-size:12px;font-weight:600;font-family:'DM Mono',monospace">2048391027</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:11px;color:var(--t3)">Account Name</span>
+                  <span style="font-size:12px;font-weight:600">Adeyemi Okafor</span>
+                </div>
+              </div>
+              <div style="margin-top:12px;padding:8px 10px;background:var(--g50);border-radius:8px;font-size:10px;color:var(--t3)">Used for monthly commission bank transfers. Changes take effect from the next settlement cycle.</div>
+            </div>
+            <!-- Edit mode -->
+            <div id="payout-edit" style="padding:14px;display:none">
+              <div style="display:grid;gap:10px">
+                <div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t3);margin-bottom:4px">Bank Name</div>
+                  <select id="pe-bank" style="width:100%;padding:9px 11px;border:1.5px solid var(--bd);border-radius:9px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff">
+                    <option>Access Bank</option><option>First Bank</option><option>GTBank</option>
+                    <option>Kuda</option><option>OPay</option><option>Palmpay</option>
+                    <option>Polaris Bank</option><option>Stanbic IBTC</option><option>Sterling Bank</option>
+                    <option>UBA</option><option selected>Zenith Bank</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t3);margin-bottom:4px">Account Number</div>
+                  <input id="pe-acct" type="text" maxlength="10" value="2048391027" style="width:100%;box-sizing:border-box;padding:9px 11px;border:1.5px solid var(--bd);border-radius:9px;font-size:12px;font-family:'DM Mono',monospace">
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t3);margin-bottom:4px">Account Name</div>
+                  <input id="pe-name" type="text" value="Adeyemi Okafor" style="width:100%;box-sizing:border-box;padding:9px 11px;border:1.5px solid var(--bd);border-radius:9px;font-size:12px;font-family:'DM Sans',sans-serif">
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <button onclick="togglePayoutEdit()" style="flex:1;padding:10px;border:1.5px solid var(--bd);border-radius:9px;background:#fff;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer">Cancel</button>
+                <button onclick="savePayoutDetails()" style="flex:2;padding:10px;border:none;border-radius:9px;background:var(--g800);color:#fff;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer">Save Payout Details</button>
+              </div>
+            </div>
+          </div>
+          <!-- Settings rows -->
+          <div style="margin:12px 14px 20px;background:#fff;border-radius:14px;border:1px solid var(--bd);overflow:hidden">
+            <div style="padding:13px 14px;border-bottom:1px solid var(--bd2);display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toast('Notifications','info','Notification preferences coming soon.')">
+              <span style="font-size:13px;font-weight:500">Notification Preferences</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+            <div style="padding:13px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="toast('Support','info','Support chat coming soon.')">
+              <span style="font-size:13px;font-weight:500">Help &amp; Support</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /p-screen -->
-      <div class="p-nav">
+      <div class="p-nav" style="justify-content:space-evenly">
         <button class="p-nav-item active" id="pnav-home" onclick="pNav('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></button>
         <button class="p-nav-item" id="pnav-barcode" onclick="pNav('barcode')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h.01M12 7h.01M17 7h.01M7 12h10M7 17h.01M12 17h.01M17 17h.01"/></svg><span>Barcode</span></button>
         <button class="p-nav-item" id="pnav-network" onclick="pNav('network')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg><span>Network</span></button>
         <button class="p-nav-item" id="pnav-earnings" onclick="pNav('earnings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span>Earnings</span></button>
         <button class="p-nav-item" id="pnav-report" onclick="pNav('report')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Report</span></button>
+        <button class="p-nav-item" id="pnav-profile" onclick="pNav('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></button>
       </div>
     </div>
   </div>
@@ -1035,7 +1115,24 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
             <div class="form-group"><label>LGA</label><input type="text" value="Ikeja"></div>
             <div class="form-group"><label>State</label><input type="text" value="Lagos"></div>
             <div class="form-group"><label>Invite Code <span style="font-weight:400;color:var(--t3)">(optional)</span></label><input type="text" id="reg-invite-code" placeholder="e.g. ADY-INV001" style="font-family:'DM Mono',monospace"></div>
-            <div style="font-size:10px;color:var(--t3);margin-top:-6px;margin-bottom:8px;padding:0 1px">If you were referred by another pharmacy, enter their invite code. This binding is permanent once set.</div>
+            <div style="font-size:10px;color:var(--t3);margin-top:-6px;margin-bottom:12px;padding:0 1px">If you were referred by another pharmacy, enter their invite code. This binding is permanent once set.</div>
+            <div style="padding-top:14px;border-top:1px solid var(--bd2);margin-bottom:4px">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:3px">Payout Details</div>
+              <div style="font-size:10px;color:var(--t3);margin-bottom:10px">Used for commission bank transfers. You can update this anytime in Profile settings.</div>
+              <div class="form-group">
+                <label>Bank Name</label>
+                <select style="width:100%;padding:10px 12px;border:1.5px solid var(--bd);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;background:#fff;color:var(--t1)">
+                  <option value="">— Select bank —</option>
+                  <option>Access Bank</option><option>First Bank</option><option>GTBank</option>
+                  <option>Kuda</option><option>OPay</option><option>Opay</option>
+                  <option>Palmpay</option><option>Polaris Bank</option><option>Stanbic IBTC</option>
+                  <option>Sterling Bank</option><option>UBA</option><option selected>Zenith Bank</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Account Number</label><input type="text" maxlength="10" value="2048391027" placeholder="10-digit NUBAN" style="font-family:'DM Mono',monospace"></div>
+              <div class="form-group"><label>Account Name</label><input type="text" value="Kingsway Pharmacy Ltd" placeholder="As it appears on your bank account"></div>
+              <div style="font-size:10px;color:var(--t3);margin-top:-6px;margin-bottom:10px;padding:0 1px">Account name must match your CAC-registered business name exactly.</div>
+            </div>
             <button class="form-submit" onclick="submitReg()">Submit Registration</button>
           </div>
         </div>
@@ -1307,16 +1404,16 @@ const DB = {
     {id:'ph10',name:'CareMax Pharmacy',cac:'BN-012345',phone:'+234 811 234 5678',address:'5 Lagos Road, Ibadan',city:'Ibadan',lga:'Ibadan North',state:'Oyo',promoterId:'pr6',promoterName:'Prime Health Pharmacy',promoterLevel:'PR',status:'verified',date:'18 Feb 2026',msv:980000,verifiedBy:'Super Admin',verifiedDate:'20 Feb 2026',verificationNote:'Physical visit confirmed'},
   ],
   promoters: [
-    {id:'pr1',name:'Adeyemi Okafor',initials:'AO',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Lagos Central',barcode:'ADY-INV001',email:'adeyemi@msc.ng',phone:'+234 801 234 5678',pharmacies:62,status:'active',recruited:'15 Jan 2026',msv:18400000,commission:308000,bonus:0,fieldPromoter:true},
-    {id:'pr2',name:'MedPlus Lagos',initials:'ML',level:'PR',levelLabel:'Inviter',parent:'pr1',parentName:'Adeyemi Okafor',territory:'Lagos Central',barcode:'MED-INV001',email:'medplus@msc.ng',phone:'+234 802 234 5678',pharmacies:38,status:'active',recruited:'20 Jan 2026',msv:5200000,commission:84000,bonus:0,fieldPromoter:false},
-    {id:'pr3',name:'Blessing Nwosu',initials:'BN',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Abuja North',barcode:'BLS-INV001',email:'blessing@msc.ng',phone:'+234 803 234 5678',pharmacies:54,status:'active',recruited:'14 Jan 2026',msv:11200000,commission:184000,bonus:0,fieldPromoter:true},
-    {id:'pr4',name:'QualiCare Pharmacy',initials:'QC',level:'PR',levelLabel:'Inviter',parent:'pr6',parentName:'Prime Health Pharmacy',territory:'Lagos South',barcode:'QLC-INV001',email:'qualicare@msc.ng',phone:'+234 804 234 5678',pharmacies:18,status:'active',recruited:'25 Jan 2026',msv:2600000,commission:42000,bonus:0,fieldPromoter:false},
-    {id:'pr5',name:'Sunrise Pharmacy',initials:'SP',level:'PR',levelLabel:'Inviter',parent:'pr8',parentName:'Fatima Aliyu',territory:'Port Harcourt',barcode:'SUN-INV001',email:'sunrise@msc.ng',phone:'+234 805 234 5678',pharmacies:0,status:'suspended',suspendReason:'Policy violation — misrepresentation',suspendDate:'14 Apr 2026',recruited:'10 Feb 2026',msv:0,commission:0,bonus:0,fieldPromoter:false},
-    {id:'pr6',name:'Prime Health Pharmacy',initials:'PH',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Lagos South',barcode:'PRM-INV001',email:'primehealth@msc.ng',phone:'+234 806 234 5678',pharmacies:48,status:'active',recruited:'22 Jan 2026',msv:7800000,commission:128000,bonus:0,fieldPromoter:false},
-    {id:'pr7',name:'Lifeline Pharmacy',initials:'LP',level:'PR',levelLabel:'Inviter',parent:'pr3',parentName:'Blessing Nwosu',territory:'Abuja North',barcode:'LIF-INV001',email:'lifeline@msc.ng',phone:'+234 807 234 5678',pharmacies:24,status:'active',recruited:'01 Mar 2026',msv:3100000,commission:52000,bonus:0,fieldPromoter:false},
-    {id:'pr8',name:'Fatima Aliyu',initials:'FA',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Port Harcourt',barcode:'FAT-INV001',email:'fatima@msc.ng',phone:'+234 808 234 5678',pharmacies:38,status:'active',recruited:'05 Feb 2026',msv:6200000,commission:100000,bonus:0,fieldPromoter:true},
-    {id:'pr9',name:'CityPharm Ikeja',initials:'CI',level:'PR',levelLabel:'Inviter',parent:'pr2',parentName:'MedPlus Lagos',territory:'Lagos Central',barcode:'CTY-INV001',email:'citypharm@msc.ng',phone:'+234 809 234 5678',pharmacies:8,status:'active',recruited:'28 Jan 2026',msv:980000,commission:9800,bonus:0,fieldPromoter:false},
-    {id:'pr10',name:'WellCare Pharmacy',initials:'WC',level:'PR',levelLabel:'Inviter',parent:'pr7',parentName:'Lifeline Pharmacy',territory:'Abuja North',barcode:'WLC-INV001',email:'wellcare@msc.ng',phone:'+234 810 234 5678',pharmacies:9,status:'active',recruited:'01 Mar 2026',msv:860000,commission:8600,bonus:0,fieldPromoter:false},
+    {id:'pr1',name:'Adeyemi Okafor',initials:'AO',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Lagos Central',barcode:'ADY-INV001',email:'adeyemi@msc.ng',phone:'+234 801 234 5678',pharmacies:62,status:'active',recruited:'15 Jan 2026',msv:18400000,commission:308000,bonus:0,fieldPromoter:true,bankName:'Zenith Bank',accountNumber:'2048391027',accountName:'Adeyemi Okafor'},
+    {id:'pr2',name:'MedPlus Lagos',initials:'ML',level:'PR',levelLabel:'Inviter',parent:'pr1',parentName:'Adeyemi Okafor',territory:'Lagos Central',barcode:'MED-INV001',email:'medplus@msc.ng',phone:'+234 802 234 5678',pharmacies:38,status:'active',recruited:'20 Jan 2026',msv:5200000,commission:84000,bonus:0,fieldPromoter:false,bankName:'GTBank',accountNumber:'0123456789',accountName:'MedPlus Pharmacy Ltd'},
+    {id:'pr3',name:'Blessing Nwosu',initials:'BN',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Abuja North',barcode:'BLS-INV001',email:'blessing@msc.ng',phone:'+234 803 234 5678',pharmacies:54,status:'active',recruited:'14 Jan 2026',msv:11200000,commission:184000,bonus:0,fieldPromoter:true,bankName:'First Bank',accountNumber:'3012345678',accountName:'Blessing Nwosu'},
+    {id:'pr4',name:'QualiCare Pharmacy',initials:'QC',level:'PR',levelLabel:'Inviter',parent:'pr6',parentName:'Prime Health Pharmacy',territory:'Lagos South',barcode:'QLC-INV001',email:'qualicare@msc.ng',phone:'+234 804 234 5678',pharmacies:18,status:'active',recruited:'25 Jan 2026',msv:2600000,commission:42000,bonus:0,fieldPromoter:false,bankName:'Access Bank',accountNumber:'0987654321',accountName:'QualiCare Pharmacy Ltd'},
+    {id:'pr5',name:'Sunrise Pharmacy',initials:'SP',level:'PR',levelLabel:'Inviter',parent:'pr8',parentName:'Fatima Aliyu',territory:'Port Harcourt',barcode:'SUN-INV001',email:'sunrise@msc.ng',phone:'+234 805 234 5678',pharmacies:0,status:'suspended',suspendReason:'Policy violation — misrepresentation',suspendDate:'14 Apr 2026',recruited:'10 Feb 2026',msv:0,commission:0,bonus:0,fieldPromoter:false,bankName:'UBA',accountNumber:'2109876543',accountName:'Sunrise Pharmacy'},
+    {id:'pr6',name:'Prime Health Pharmacy',initials:'PH',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Lagos South',barcode:'PRM-INV001',email:'primehealth@msc.ng',phone:'+234 806 234 5678',pharmacies:48,status:'active',recruited:'22 Jan 2026',msv:7800000,commission:128000,bonus:0,fieldPromoter:false,bankName:'Zenith Bank',accountNumber:'1122334455',accountName:'Prime Health Pharmacy Ltd'},
+    {id:'pr7',name:'Lifeline Pharmacy',initials:'LP',level:'PR',levelLabel:'Inviter',parent:'pr3',parentName:'Blessing Nwosu',territory:'Abuja North',barcode:'LIF-INV001',email:'lifeline@msc.ng',phone:'+234 807 234 5678',pharmacies:24,status:'active',recruited:'01 Mar 2026',msv:3100000,commission:52000,bonus:0,fieldPromoter:false,bankName:'Kuda',accountNumber:'5544332211',accountName:'Lifeline Pharmacy'},
+    {id:'pr8',name:'Fatima Aliyu',initials:'FA',level:'PR',levelLabel:'Inviter',parent:null,parentName:null,territory:'Port Harcourt',barcode:'FAT-INV001',email:'fatima@msc.ng',phone:'+234 808 234 5678',pharmacies:38,status:'active',recruited:'05 Feb 2026',msv:6200000,commission:100000,bonus:0,fieldPromoter:true,bankName:'Sterling Bank',accountNumber:'0011223344',accountName:'Fatima Aliyu'},
+    {id:'pr9',name:'CityPharm Ikeja',initials:'CI',level:'PR',levelLabel:'Inviter',parent:'pr2',parentName:'MedPlus Lagos',territory:'Lagos Central',barcode:'CTY-INV001',email:'citypharm@msc.ng',phone:'+234 809 234 5678',pharmacies:8,status:'active',recruited:'28 Jan 2026',msv:980000,commission:9800,bonus:0,fieldPromoter:false,bankName:'Polaris Bank',accountNumber:'9988776655',accountName:'CityPharm Ikeja Ltd'},
+    {id:'pr10',name:'WellCare Pharmacy',initials:'WC',level:'PR',levelLabel:'Inviter',parent:'pr7',parentName:'Lifeline Pharmacy',territory:'Abuja North',barcode:'WLC-INV001',email:'wellcare@msc.ng',phone:'+234 810 234 5678',pharmacies:9,status:'active',recruited:'01 Mar 2026',msv:860000,commission:8600,bonus:0,fieldPromoter:false,bankName:'Stanbic IBTC',accountNumber:'6677889900',accountName:'WellCare Pharmacy'},
   ],
   orders: [
     {id:'or1',phId:'ph1',phName:'Kingsway Pharmacy',phCity:'Ikeja, Lagos',promoterName:'Adeyemi Okafor',promoterLevel:'PR',ref:'ORD-2026-04-0892',date:'14 Apr 2026',items:'Paracetamol, Amoxicillin',amount:184500,status:'settled'},
@@ -1466,6 +1563,36 @@ function pNav(screen) {
   document.getElementById('pnav-'+screen).classList.add('active');
   if(screen==='earnings') setTimeout(initEarnChart,80);
 }
+function togglePayoutEdit() {
+  const view = document.getElementById('payout-view');
+  const edit = document.getElementById('payout-edit');
+  const btn  = document.getElementById('payout-edit-btn');
+  const editing = edit.style.display === 'block';
+  view.style.display = editing ? 'block' : 'none';
+  edit.style.display = editing ? 'none'  : 'block';
+  btn.textContent    = editing ? 'Edit'  : 'Cancel';
+}
+function savePayoutDetails() {
+  const bank = document.getElementById('pe-bank').value;
+  const acct = document.getElementById('pe-acct').value;
+  const name = document.getElementById('pe-name').value;
+  if(acct.length !== 10 || !/^\d+$/.test(acct)) {
+    toast('Invalid account number','warning','Must be exactly 10 digits.'); return;
+  }
+  // Update view
+  const rows = document.querySelectorAll('#payout-view .grid-row, #payout-view span[style*="font-weight:600"]');
+  // Simple inline update
+  document.getElementById('payout-view').innerHTML = `
+    <div style="display:grid;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;color:var(--t3)">Bank</span><span style="font-size:12px;font-weight:600">${bank}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;color:var(--t3)">Account Number</span><span style="font-size:12px;font-weight:600;font-family:'DM Mono',monospace">${acct}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;color:var(--t3)">Account Name</span><span style="font-size:12px;font-weight:600">${name}</span></div>
+    </div>
+    <div style="margin-top:12px;padding:8px 10px;background:var(--g50);border-radius:8px;font-size:10px;color:var(--t3)">Used for monthly commission bank transfers. Changes take effect from the next settlement cycle.</div>`;
+  togglePayoutEdit();
+  toast('Payout details saved', 'success', `${bank} · ${acct} · ${name} — will be used from next settlement cycle.`);
+}
+
 function phNav(screen, btn) {
   document.querySelectorAll('#surface-pharmacy .app-scr').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('#surface-pharmacy .p-nav-item').forEach(b => b.classList.remove('active'));
@@ -1860,7 +1987,7 @@ function exportCommCSV() {
   const snap = DB.rateSnapshot || 'Tier 1: 100 BP (1%) · Tier 2: 200 BP (2%) · Threshold: ₦1,000,000';
   const inviteeCount = (id) => DB.promoters.filter(x => x.parent === id).length;
 
-  const headers = ['Inviter Name','Inviter Code','Inviter Of','Territory','Email','Phone','Invitees','Monthly Sales (₦)','Commission (₦)','Status','Rate Config'];
+  const headers = ['Inviter Name','Inviter Code','Inviter Of','Territory','Email','Phone','Invitees','Monthly Sales (₦)','Commission (₦)','Bank Name','Account Number','Account Name','Status','Rate Config'];
   const rows = DB.promoters.map(p => {
     const mc = monthComm[p.id] || {msv:0, comm:0};
     return [
@@ -1873,6 +2000,9 @@ function exportCommCSV() {
       inviteeCount(p.id),
       mc.msv,
       mc.comm,
+      p.bankName || 'NOT PROVIDED',
+      p.accountNumber || 'NOT PROVIDED',
+      p.accountName || 'NOT PROVIDED',
       p.status,
       snap
     ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(',');
