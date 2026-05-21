@@ -1393,293 +1393,502 @@ tr.clickable:hover td{background:var(--bg);cursor:pointer}
 
 <!-- ══════════ PERSONAL CENTRE SURFACE ══════════ -->
 <div class="surface" id="surface-pc">
-<div style="min-height:100vh;background:#f0f4f8;font-family:'DM Sans',sans-serif">
+<div style="background:var(--bg);min-height:100vh;font-family:'DM Sans',sans-serif">
 
-  <!-- PC Top Nav -->
-  <div style="background:#fff;border-bottom:1px solid #e2e8f0;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:10">
-    <div style="display:flex;align-items:center;gap:20px">
-      <div style="font-family:'DM Serif Display',serif;font-size:18px;color:#1e3a5f;font-weight:700">Personal Centre</div>
-      <div style="font-size:11px;color:#64748b;padding:3px 10px;background:#f1f5f9;border-radius:20px">Kingsway Pharmacy Ltd</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px">
-      <div style="font-size:12px;color:#64748b">Verified ✓</div>
-      <div style="width:32px;height:32px;border-radius:50%;background:#1e3a5f;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">KP</div>
+  <!-- View toggle bar -->
+  <div style="background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 24px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:12px;color:var(--t2)">Personal Centre · <strong>Kingsway Pharmacy</strong> · Promoter Page</div>
+    <div style="display:flex;gap:3px;background:var(--bg);padding:3px;border-radius:8px;border:1px solid var(--bd)">
+      <button id="pcview-mobile-btn" onclick="pcViewToggle('mobile')" style="padding:5px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;background:var(--g700);color:#fff;display:flex;align-items:center;gap:5px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Mobile</button>
+      <button id="pcview-desktop-btn" onclick="pcViewToggle('desktop')" style="padding:5px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;background:transparent;color:var(--t2);display:flex;align-items:center;gap:5px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Desktop</button>
     </div>
   </div>
 
-  <!-- PC Sidebar + Content -->
-  <div style="display:flex;max-width:1140px;margin:0 auto;gap:0;padding:28px 20px">
+  <!-- ══ MOBILE VIEW ══ -->
+  <div id="pc-view-mobile" style="display:flex;flex-direction:column;align-items:center;padding:28px 24px">
+  <div style="display:flex;align-items:flex-start;gap:32px">
 
-    <!-- Sidebar nav -->
-    <div style="width:200px;flex-shrink:0;margin-right:24px">
-      <div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden">
-        <div onclick="pcNav('promoter')" id="pcnav-promoter" class="pc-nav-item active" style="padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:9px;border-bottom:1px solid #f1f5f9;font-size:13px;font-weight:600;background:#eff6ff;color:#1d4ed8">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Promoter Page
-        </div>
-        <div onclick="pcNav('orders')" id="pcnav-orders" class="pc-nav-item" style="padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:9px;border-bottom:1px solid #f1f5f9;font-size:13px;font-weight:500;color:#475569">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          My Orders
-        </div>
-        <div onclick="pcNav('catalogue')" id="pcnav-catalogue" class="pc-nav-item" style="padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:#475569">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          Catalogue
-        </div>
-      </div>
-      <div style="margin-top:12px;padding:10px 12px;background:#fef9c3;border:1px solid #fde68a;border-radius:10px;font-size:10px;color:#92400e;line-height:1.5">
-        <strong>PRD Note:</strong> Promoter Page entry point is exclusively within Personal Centre. No external link or separate app.
-      </div>
-    </div>
+  <!-- Phone mockup -->
+  <div class="phone">
+    <div class="phone-in">
+      <div class="p-status"><span class="time">9:41</span><div class="icons">📶 🔋</div></div>
+      <div class="p-screen" style="background:#f1f5f9">
 
-    <!-- Main content -->
-    <div style="flex:1;min-width:0" id="pc-content">
-
-      <!-- ── PROMOTER PAGE ── -->
-      <div id="pc-promoter">
-        <div style="margin-bottom:20px">
-          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#0f172a">Promoter Page</div>
-          <div style="font-size:12px;color:#64748b;margin-top:2px">Invite pharmacies · Track your network · Earn commission</div>
+        <!-- Inherited app header — back arrow + title (no custom nav; this is the host app's chrome) -->
+        <div style="background:#fff;border-bottom:1px solid #e8ecf0;padding:12px 14px 10px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <button style="background:none;border:none;cursor:pointer;padding:2px;display:flex;align-items:center" onclick="toast('Navigation','info','Back arrow returns to Personal Centre home screen — handled by host app.')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div style="font-size:15px;font-weight:700;color:#0f172a">Promoter</div>
         </div>
 
-        <!-- SECTION 1 — Promoter Identity -->
-        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
-          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 1 — My Promoter Identity</div>
+        <!-- Section tab bar -->
+        <div style="background:#fff;border-bottom:1px solid #e8ecf0;display:flex;overflow-x:auto;flex-shrink:0" id="pc-tabs">
+          <button onclick="pcTab('identity')" id="pctab-identity" style="flex:1;padding:10px 4px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;background:none;border-bottom:2px solid #0f172a;color:#0f172a;white-space:nowrap">Identity</button>
+          <button onclick="pcTab('network')" id="pctab-network" style="flex:1;padding:10px 4px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;background:none;border-bottom:2px solid transparent;color:#94a3b8;white-space:nowrap">Network</button>
+          <button onclick="pcTab('earnings')" id="pctab-earnings" style="flex:1;padding:10px 4px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;background:none;border-bottom:2px solid transparent;color:#94a3b8;white-space:nowrap">Earnings</button>
+          <button onclick="pcTab('detail')" id="pctab-detail" style="flex:1;padding:10px 4px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;background:none;border-bottom:2px solid transparent;color:#94a3b8;white-space:nowrap">History</button>
+          <button onclick="pcTab('payout')" id="pctab-payout" style="flex:1;padding:10px 4px;font-size:10px;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;background:none;border-bottom:2px solid transparent;color:#94a3b8;white-space:nowrap">Payout</button>
+        </div>
+
+        <!-- ── TAB: IDENTITY (Section 1) ── -->
+        <div class="pc-tab-content" id="pct-identity" style="overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px">
+          <!-- QR card -->
+          <div style="background:#0f172a;border-radius:14px;padding:18px;text-align:center">
+            <div style="font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">My Invitation QR Code</div>
+            <div style="background:#fff;border-radius:12px;padding:10px;width:110px;height:110px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center">
+              <svg viewBox="0 0 100 100" width="96" height="96" xmlns="http://www.w3.org/2000/svg">
+                <rect fill="#0f172a" x="5" y="5" width="30" height="30" rx="2"/><rect fill="white" x="10" y="10" width="20" height="20" rx="1"/><rect fill="#0f172a" x="65" y="5" width="30" height="30" rx="2"/><rect fill="white" x="70" y="10" width="20" height="20" rx="1"/><rect fill="#0f172a" x="5" y="65" width="30" height="30" rx="2"/><rect fill="white" x="10" y="70" width="20" height="20" rx="1"/>
+                <rect fill="white" x="15" y="15" width="10" height="10"/><rect fill="white" x="75" y="15" width="10" height="10"/><rect fill="white" x="15" y="75" width="10" height="10"/>
+                <rect fill="white" x="40" y="5" width="5" height="5"/><rect fill="white" x="50" y="5" width="5" height="5"/><rect fill="white" x="40" y="15" width="5" height="5"/><rect fill="white" x="55" y="20" width="5" height="5"/>
+                <rect fill="white" x="5" y="40" width="5" height="5"/><rect fill="white" x="5" y="50" width="5" height="5"/><rect fill="white" x="15" y="40" width="5" height="5"/><rect fill="white" x="20" y="55" width="5" height="5"/>
+                <rect fill="white" x="40" y="40" width="5" height="5"/><rect fill="white" x="50" y="40" width="5" height="5"/><rect fill="white" x="60" y="40" width="5" height="5"/><rect fill="white" x="45" y="50" width="5" height="5"/><rect fill="white" x="55" y="50" width="5" height="5"/><rect fill="white" x="65" y="50" width="5" height="5"/>
+                <rect fill="white" x="40" y="60" width="5" height="5"/><rect fill="white" x="50" y="65" width="5" height="5"/><rect fill="white" x="65" y="65" width="5" height="5"/><rect fill="white" x="75" y="65" width="5" height="5"/>
+                <rect fill="white" x="85" y="40" width="5" height="5"/><rect fill="white" x="90" y="50" width="5" height="5"/><rect fill="white" x="80" y="55" width="5" height="5"/><rect fill="white" x="85" y="65" width="5" height="5"/>
+                <rect fill="white" x="70" y="75" width="5" height="5"/><rect fill="white" x="80" y="80" width="5" height="5"/><rect fill="white" x="90" y="75" width="5" height="5"/>
+              </svg>
+            </div>
+            <div style="display:flex;gap:8px;justify-content:center">
+              <button onclick="toast('Downloaded','success','KWY-PH001_QRCode.png saved to your downloads.')" style="flex:1;padding:9px 0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">⬇ Save</button>
+              <button onclick="toast('Share sheet opened','info','Native share sheet opened with QR + invite code pre-filled.')" style="flex:1;padding:9px 0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">↗ Share</button>
+            </div>
           </div>
-          <div style="padding:20px;display:flex;gap:28px;align-items:flex-start">
-            <!-- QR Code visual -->
-            <div style="text-align:center;flex-shrink:0">
-              <div style="width:120px;height:120px;background:#0f172a;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;position:relative;overflow:hidden">
-                <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-                  <rect fill="white" x="5" y="5" width="30" height="30" rx="2"/>
-                  <rect fill="#0f172a" x="10" y="10" width="20" height="20" rx="1"/>
-                  <rect fill="white" x="65" y="5" width="30" height="30" rx="2"/>
-                  <rect fill="#0f172a" x="70" y="10" width="20" height="20" rx="1"/>
-                  <rect fill="white" x="5" y="65" width="30" height="30" rx="2"/>
-                  <rect fill="#0f172a" x="10" y="70" width="20" height="20" rx="1"/>
-                  <rect fill="white" x="15" y="15" width="10" height="10"/>
-                  <rect fill="white" x="75" y="15" width="10" height="10"/>
-                  <rect fill="white" x="15" y="75" width="10" height="10"/>
-                  <rect fill="white" x="40" y="5" width="5" height="5"/><rect fill="white" x="50" y="5" width="5" height="5"/>
-                  <rect fill="white" x="40" y="15" width="5" height="5"/><rect fill="white" x="55" y="20" width="5" height="5"/>
-                  <rect fill="white" x="5" y="40" width="5" height="5"/><rect fill="white" x="5" y="50" width="5" height="5"/>
-                  <rect fill="white" x="15" y="40" width="5" height="5"/><rect fill="white" x="20" y="55" width="5" height="5"/>
-                  <rect fill="white" x="40" y="40" width="5" height="5"/><rect fill="white" x="50" y="40" width="5" height="5"/>
-                  <rect fill="white" x="60" y="40" width="5" height="5"/><rect fill="white" x="45" y="50" width="5" height="5"/>
-                  <rect fill="white" x="55" y="50" width="5" height="5"/><rect fill="white" x="65" y="50" width="5" height="5"/>
-                  <rect fill="white" x="40" y="60" width="5" height="5"/><rect fill="white" x="50" y="65" width="5" height="5"/>
-                  <rect fill="white" x="65" y="65" width="5" height="5"/><rect fill="white" x="75" y="65" width="5" height="5"/>
-                  <rect fill="white" x="85" y="40" width="5" height="5"/><rect fill="white" x="90" y="50" width="5" height="5"/>
-                  <rect fill="white" x="80" y="55" width="5" height="5"/><rect fill="white" x="85" y="65" width="5" height="5"/>
-                  <rect fill="white" x="70" y="75" width="5" height="5"/><rect fill="white" x="80" y="80" width="5" height="5"/>
-                  <rect fill="white" x="90" y="75" width="5" height="5"/>
+          <!-- Invite code card -->
+          <div style="background:#fff;border-radius:14px;padding:14px">
+            <div style="font-size:10px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">My Invitation Code</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+              <div style="font-size:22px;font-weight:800;font-family:'DM Mono',monospace;letter-spacing:.05em;color:#0f172a;flex:1">KWY-PH001</div>
+              <button onclick="toast('Copied!','success','KWY-PH001 copied to clipboard.')" style="padding:8px 14px;background:#0f172a;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Copy</button>
+            </div>
+            <div style="font-size:11px;color:#64748b;line-height:1.5">Pharmacies who register with your code become your Invitees permanently. You earn commission on their settled orders.</div>
+            <div style="margin-top:10px;display:flex;gap:6px">
+              <span style="font-size:10px;padding:3px 8px;border-radius:5px;background:#dcfce7;color:#15803d;font-weight:700">✓ Verified</span>
+              <span style="font-size:10px;padding:3px 8px;border-radius:5px;background:#dbeafe;color:#1d4ed8;font-weight:700">Active Inviter</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB: NETWORK (Section 2) ── -->
+        <div class="pc-tab-content" id="pct-network" style="overflow-y:auto;display:none;flex-direction:column">
+          <!-- Stats strip -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-bottom:1px solid #e8ecf0;flex-shrink:0">
+            <div style="padding:12px 10px;text-align:center;border-right:1px solid #e8ecf0"><div style="font-size:18px;font-weight:700;color:#0f172a">4</div><div style="font-size:9px;color:#94a3b8;margin-top:1px">Total</div></div>
+            <div style="padding:12px 10px;text-align:center;border-right:1px solid #e8ecf0"><div style="font-size:18px;font-weight:700;color:#15803d">3</div><div style="font-size:9px;color:#94a3b8;margin-top:1px">Verified</div></div>
+            <div style="padding:12px 10px;text-align:center"><div style="font-size:18px;font-weight:700;color:#d97706">1</div><div style="font-size:9px;color:#94a3b8;margin-top:1px">Pending</div></div>
+          </div>
+          <!-- Filter chips -->
+          <div style="padding:10px 14px;display:flex;gap:6px;background:#fff;border-bottom:1px solid #e8ecf0;flex-shrink:0">
+            <button onclick="pcFilterInvitees('all',this)" class="pc-filter" style="padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid #0f172a;background:#0f172a;color:#fff;font-family:'DM Sans',sans-serif">All</button>
+            <button onclick="pcFilterInvitees('verified',this)" class="pc-filter" style="padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid #e2e8f0;background:#fff;color:#64748b;font-family:'DM Sans',sans-serif">Verified</button>
+            <button onclick="pcFilterInvitees('pending',this)" class="pc-filter" style="padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid #e2e8f0;background:#fff;color:#64748b;font-family:'DM Sans',sans-serif">Pending</button>
+          </div>
+          <!-- Invitee cards -->
+          <div style="overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px" id="pc-invitee-tbody"></div>
+        </div>
+
+        <!-- ── TAB: EARNINGS (Section 3) ── -->
+        <div class="pc-tab-content" id="pct-earnings" style="overflow-y:auto;display:none;padding:14px;display:none;flex-direction:column;gap:10px">
+          <!-- Month picker -->
+          <select id="pc-month" onchange="renderPCCommission()" style="width:100%;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;color:#0f172a">
+            <option value="2026-05">May 2026</option>
+            <option value="2026-04" selected>April 2026</option>
+            <option value="2026-03">March 2026</option>
+            <option value="2026-02">February 2026</option>
+          </select>
+          <!-- All-time total -->
+          <div style="background:#0f172a;border-radius:14px;padding:16px;color:#fff">
+            <div style="font-size:10px;opacity:.6;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px">Total Earned · All Time</div>
+            <div style="font-size:26px;font-weight:800">₦1,124,600</div>
+          </div>
+          <!-- 3 status cards -->
+          <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:13px">
+            <div style="font-size:10px;font-weight:700;color:#92400e;margin-bottom:3px">⏳ Pending Confirmation</div>
+            <div style="font-size:20px;font-weight:700;color:#0f172a">₦42,000</div>
+            <div style="font-size:10px;color:#78350f;margin-top:5px;line-height:1.5">Commission calculated on delivery confirmation. Enters 30-day return window. Moves to Confirmed if no return within 30 days.</div>
+          </div>
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:13px">
+            <div style="font-size:10px;font-weight:700;color:#1e40af;margin-bottom:3px">✓ Confirmed</div>
+            <div style="font-size:20px;font-weight:700;color:#0f172a">₦86,000</div>
+            <div style="font-size:10px;color:#1e40af;margin-top:5px;line-height:1.5">30-day return window passed with no return. Commission is locked. Becomes withdrawable on the 1st of the following month.</div>
+          </div>
+          <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:13px">
+            <div style="font-size:10px;font-weight:700;color:#15803d;margin-bottom:3px">💚 Withdrawable</div>
+            <div style="font-size:20px;font-weight:700;color:#15803d">₦74,000</div>
+            <div style="font-size:10px;color:#166534;margin-top:5px;line-height:1.5">All commissions confirmed in April are now eligible. Withdrawable status granted on 1st May regardless of when in April each commission was confirmed.</div>
+          </div>
+        </div>
+
+        <!-- ── TAB: HISTORY (Section 4) ── -->
+        <div class="pc-tab-content" id="pct-detail" style="overflow-y:auto;display:none;flex-direction:column">
+          <div style="padding:10px 14px;display:flex;gap:6px;background:#fff;border-bottom:1px solid #e8ecf0;flex-shrink:0;flex-wrap:wrap">
+            <select id="pc-filter-status" onchange="renderPCCommDetail()" style="flex:1;padding:7px 8px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:10px;font-family:'DM Sans',sans-serif;background:#fff">
+              <option value="">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="withdrawable">Withdrawable</option>
+            </select>
+            <select id="pc-filter-invitee" onchange="renderPCCommDetail()" style="flex:1;padding:7px 8px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:10px;font-family:'DM Sans',sans-serif;background:#fff">
+              <option value="">All Invitees</option>
+              <option value="MedPlus Ikeja">MedPlus Ikeja</option>
+              <option value="Pharma Direct">Pharma Direct</option>
+              <option value="PharmaLife">PharmaLife</option>
+              <option value="CareMax Pharmacy">CareMax Pharmacy</option>
+            </select>
+          </div>
+          <div style="overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px" id="pc-detail-tbody"></div>
+        </div>
+
+        <!-- ── TAB: PAYOUT (Section 5) ── -->
+        <div class="pc-tab-content" id="pct-payout" style="overflow-y:auto;display:none;padding:14px;flex-direction:column;gap:12px">
+          <!-- Withdrawable balance -->
+          <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:14px;padding:14px">
+            <div style="font-size:10px;font-weight:700;color:#15803d;margin-bottom:4px">💚 Withdrawable Balance</div>
+            <div style="font-size:24px;font-weight:800;color:#0f172a">₦74,000</div>
+            <div style="font-size:10px;color:#64748b;margin-top:2px;margin-bottom:10px">Confirmed commissions from April 2026 — eligible from 1 May 2026</div>
+            <button onclick="submitPCWithdrawal()" style="width:100%;padding:11px;background:#15803d;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Request Withdrawal</button>
+          </div>
+          <!-- Bank account -->
+          <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;overflow:hidden">
+            <div style="padding:12px 14px;border-bottom:1px solid #e8ecf0;display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:12px;font-weight:700;color:#0f172a">Bank Account</div>
+              <button id="payout-edit-btn2" onclick="togglePCBankEdit()" style="font-size:11px;font-weight:600;color:#1d4ed8;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif">Edit</button>
+            </div>
+            <div id="pc-bank-view" style="padding:12px 14px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-size:11px;color:#94a3b8">Bank</span><span style="font-size:12px;font-weight:600">Zenith Bank</span></div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-size:11px;color:#94a3b8">Account No.</span><span style="font-size:12px;font-weight:600;font-family:'DM Mono',monospace">2048391027</span></div>
+              <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:#94a3b8">Account Name</span><span style="font-size:12px;font-weight:600">Kingsway Pharmacy Ltd</span></div>
+            </div>
+            <div id="pc-bank-edit" style="display:none;padding:12px 14px;border-top:1px solid #e8ecf0">
+              <div style="margin-bottom:9px">
+                <div style="font-size:10px;font-weight:600;color:#94a3b8;margin-bottom:3px">Bank Name</div>
+                <select id="pcb-bank" style="width:100%;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff">
+                  <option>Access Bank</option><option>First Bank</option><option>GTBank</option><option>Kuda</option><option>UBA</option><option selected>Zenith Bank</option>
+                </select>
+              </div>
+              <div style="margin-bottom:9px">
+                <div style="font-size:10px;font-weight:600;color:#94a3b8;margin-bottom:3px">Account Number</div>
+                <input id="pcb-acct" type="text" maxlength="10" value="2048391027" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Mono',monospace">
+              </div>
+              <div style="margin-bottom:12px">
+                <div style="font-size:10px;font-weight:600;color:#94a3b8;margin-bottom:3px">Account Name</div>
+                <input id="pcb-name" type="text" value="Kingsway Pharmacy Ltd" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif">
+              </div>
+              <div style="display:flex;gap:8px">
+                <button onclick="togglePCBankEdit()" style="flex:1;padding:9px;background:#fff;border:1.5px solid #e2e8f0;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Cancel</button>
+                <button onclick="savePCBank()" style="flex:2;padding:9px;background:#0f172a;color:#fff;border:none;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Save</button>
+              </div>
+            </div>
+          </div>
+          <!-- Withdrawal history -->
+          <div>
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin-bottom:8px">Withdrawal History</div>
+            <div id="pc-withdrawal-history" style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#fff;border-radius:10px;border:1px solid #e2e8f0">
+                <div><div style="font-size:12px;font-weight:600">₦58,000</div><div style="font-size:10px;color:#94a3b8">01 Apr 2026</div></div>
+                <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Processed</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#fff;border-radius:10px;border:1px solid #e2e8f0">
+                <div><div style="font-size:12px;font-weight:600">₦43,000</div><div style="font-size:10px;color:#94a3b8">01 Mar 2026</div></div>
+                <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Processed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /p-screen -->
+    </div><!-- /phone-in -->
+  </div><!-- /phone -->
+
+  <!-- Side annotation -->
+  <div style="max-width:280px;padding-top:8px">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:10px">Implementation note</div>
+    <div style="font-size:12px;color:var(--t2);line-height:1.7;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:10px">
+      This screen is <strong>nested inside the existing Personal Centre app</strong>. It inherits the host app's navigation chrome — the back arrow and "Promoter" title are standard app-level header components, not custom to this feature.
+    </div>
+    <div style="font-size:12px;color:var(--t2);line-height:1.7;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px 14px;margin-bottom:10px">
+      <strong>Entry point</strong> is a menu item or card within the Personal Centre home screen — exclusively. No external deep link, no separate app.
+    </div>
+    <div style="font-size:12px;color:var(--t2);line-height:1.7;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px 14px">
+      <strong>APIs consumed</strong> from HPMS backend:<br>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--t3)">GET /invitations/my-code<br>GET /invitations/stats<br>GET /invitations/invitees<br>GET /commissions/my-summary<br>GET /commissions/my-breakdown<br>POST /users/bank-account<br>GET /users/bank-account<br>POST /commissions/withdraw<br>GET /commissions/withdrawals</span>
+    </div>
+  </div>
+
+  </div><!-- /flex -->
+  </div><!-- /pc-view-mobile -->
+
+  <!-- ══ DESKTOP VIEW ══ -->
+  <div id="pc-view-desktop" style="display:none">
+    <div style="display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 93px)">
+
+      <!-- Desktop sidebar -->
+      <div style="background:#0f2a1a;position:sticky;top:93px;height:calc(100vh - 93px);overflow-y:auto;display:flex;flex-direction:column;padding:14px 0">
+        <!-- Profile block -->
+        <div style="padding:14px 16px 16px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:8px">
+          <div style="width:44px;height:44px;border-radius:12px;background:#1a6b3c;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;margin-bottom:10px">KP</div>
+          <div style="color:#fff;font-size:13px;font-weight:700;margin-bottom:2px">Kingsway Pharmacy</div>
+          <div style="color:rgba(255,255,255,.4);font-size:11px;margin-bottom:8px">KWY-PH001</div>
+          <div style="display:flex;gap:5px">
+            <span style="font-size:10px;padding:2px 7px;border-radius:5px;background:#166534;color:#bbf7d0;font-weight:700">✓ Verified</span>
+            <span style="font-size:10px;padding:2px 7px;border-radius:5px;background:#1e40af;color:#bfdbfe;font-weight:700">Active</span>
+          </div>
+        </div>
+        <!-- Nav items -->
+        <div style="padding:0 10px">
+          <button onclick="pcdTab('identity')" id="pcdnav-identity" class="pcd-nav" style="display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border-radius:8px;background:#1a6b3c;color:#fff;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;margin-bottom:2px;text-align:left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Identity & Code</button>
+          <button onclick="pcdTab('network')" id="pcdnav-network" class="pcd-nav" style="display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border-radius:8px;background:transparent;color:rgba(255,255,255,.5);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;margin-bottom:2px;text-align:left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg>My Network</button>
+          <button onclick="pcdTab('earnings')" id="pcdnav-earnings" class="pcd-nav" style="display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border-radius:8px;background:transparent;color:rgba(255,255,255,.5);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;margin-bottom:2px;text-align:left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Earnings Summary</button>
+          <button onclick="pcdTab('history')" id="pcdnav-history" class="pcd-nav" style="display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border-radius:8px;background:transparent;color:rgba(255,255,255,.5);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;margin-bottom:2px;text-align:left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Commission History</button>
+          <button onclick="pcdTab('payout')" id="pcdnav-payout" class="pcd-nav" style="display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border-radius:8px;background:transparent;color:rgba(255,255,255,.5);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;margin-bottom:2px;text-align:left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payout & Bank</button>
+        </div>
+      </div>
+
+      <!-- Desktop main content -->
+      <div style="padding:28px 32px;overflow-x:hidden">
+
+        <!-- ── DESKTOP: IDENTITY ── -->
+        <div class="pcd-content" id="pcd-identity" style="display:block">
+          <div style="margin-bottom:22px">
+            <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--text)">Identity & Code</div>
+            <div style="color:var(--t2);font-size:12px;margin-top:2px">Your invitation QR code and inviter status</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+            <!-- QR card -->
+            <div style="background:#0f172a;border-radius:16px;padding:28px;text-align:center">
+              <div style="font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">My Invitation QR Code</div>
+              <div style="background:#fff;border-radius:14px;padding:14px;width:150px;height:150px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center">
+                <svg viewBox="0 0 100 100" width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+                  <rect fill="#0f172a" x="5" y="5" width="30" height="30" rx="2"/><rect fill="white" x="10" y="10" width="20" height="20" rx="1"/><rect fill="#0f172a" x="65" y="5" width="30" height="30" rx="2"/><rect fill="white" x="70" y="10" width="20" height="20" rx="1"/><rect fill="#0f172a" x="5" y="65" width="30" height="30" rx="2"/><rect fill="white" x="10" y="70" width="20" height="20" rx="1"/>
+                  <rect fill="white" x="15" y="15" width="10" height="10"/><rect fill="white" x="75" y="15" width="10" height="10"/><rect fill="white" x="15" y="75" width="10" height="10"/>
+                  <rect fill="white" x="40" y="5" width="5" height="5"/><rect fill="white" x="50" y="5" width="5" height="5"/><rect fill="white" x="40" y="15" width="5" height="5"/><rect fill="white" x="55" y="20" width="5" height="5"/>
+                  <rect fill="white" x="5" y="40" width="5" height="5"/><rect fill="white" x="5" y="50" width="5" height="5"/><rect fill="white" x="15" y="40" width="5" height="5"/><rect fill="white" x="20" y="55" width="5" height="5"/>
+                  <rect fill="white" x="40" y="40" width="5" height="5"/><rect fill="white" x="50" y="40" width="5" height="5"/><rect fill="white" x="60" y="40" width="5" height="5"/><rect fill="white" x="45" y="50" width="5" height="5"/><rect fill="white" x="55" y="50" width="5" height="5"/><rect fill="white" x="65" y="50" width="5" height="5"/>
+                  <rect fill="white" x="40" y="60" width="5" height="5"/><rect fill="white" x="50" y="65" width="5" height="5"/><rect fill="white" x="65" y="65" width="5" height="5"/><rect fill="white" x="75" y="65" width="5" height="5"/>
+                  <rect fill="white" x="85" y="40" width="5" height="5"/><rect fill="white" x="90" y="50" width="5" height="5"/><rect fill="white" x="80" y="55" width="5" height="5"/><rect fill="white" x="85" y="65" width="5" height="5"/>
+                  <rect fill="white" x="70" y="75" width="5" height="5"/><rect fill="white" x="80" y="80" width="5" height="5"/><rect fill="white" x="90" y="75" width="5" height="5"/>
                 </svg>
               </div>
-              <button onclick="toast('QR Code Downloaded','success','KWY-PH001_QRCode.png saved to your downloads.')" style="width:120px;padding:7px 0;background:#0f172a;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:5px">⬇ Download</button>
-              <button onclick="toast('Share Sheet Opened','info','Native share sheet opened with QR code and invite code pre-populated.')" style="width:120px;padding:7px 0;background:#fff;color:#0f172a;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">↗ Share</button>
+              <div style="display:flex;gap:10px;justify-content:center">
+                <button onclick="toast('Downloaded','success','KWY-PH001_QRCode.png saved.')" style="flex:1;padding:10px 0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">⬇ Save PNG</button>
+                <button onclick="toast('Copied!','success','Share link copied to clipboard.')" style="flex:1;padding:10px 0;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">↗ Share</button>
+              </div>
             </div>
-            <!-- Invite code + info -->
-            <div style="flex:1">
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:6px">My Invitation Code</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="font-size:26px;font-weight:800;font-family:'DM Mono',monospace;letter-spacing:.06em;color:#0f172a;background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:10px 18px">KWY-PH001</div>
-                <button onclick="toast('Copied!','success','Invitation code KWY-PH001 copied to clipboard.')" style="padding:10px 16px;background:#eff6ff;color:#1d4ed8;border:1.5px solid #bfdbfe;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Copy</button>
+            <!-- Code + status -->
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:22px">
+                <div style="font-size:11px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">My Invitation Code</div>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                  <div style="font-size:28px;font-weight:800;font-family:'DM Mono',monospace;letter-spacing:.04em;color:var(--text);flex:1">KWY-PH001</div>
+                  <button onclick="toast('Copied!','success','KWY-PH001 copied to clipboard.')" class="btn primary">Copy</button>
+                </div>
+                <div style="font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:14px">Pharmacies who register using this code become your Invitees permanently. You earn commission on all their settled orders.</div>
+                <div style="display:flex;gap:7px">
+                  <span style="font-size:11px;padding:3px 10px;border-radius:6px;background:#dcfce7;color:#15803d;font-weight:700">✓ Verified</span>
+                  <span style="font-size:11px;padding:3px 10px;border-radius:6px;background:#dbeafe;color:#1d4ed8;font-weight:700">Active Inviter</span>
+                </div>
               </div>
-              <div style="font-size:12px;color:#475569;line-height:1.6;background:#f8fafc;border-radius:10px;padding:12px 14px;border:1px solid #e2e8f0">
-                Share this code or QR with other pharmacies. When they register using your code, they become your Invitee and you earn commission on their settled orders — permanently.
-              </div>
-              <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-                <div style="font-size:11px;padding:4px 10px;border-radius:6px;background:#dcfce7;color:#15803d;font-weight:600">✓ Verified Pharmacy</div>
-                <div style="font-size:11px;padding:4px 10px;border-radius:6px;background:#dbeafe;color:#1d4ed8;font-weight:600">Active Inviter</div>
+              <div style="background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:22px">
+                <div style="font-size:11px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">Quick Stats</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                  <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:20px;font-weight:700;color:var(--g700)">4</div><div style="font-size:11px;color:var(--t2);margin-top:2px">Invitees</div></div>
+                  <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:20px;font-weight:700;color:var(--g700)">3</div><div style="font-size:11px;color:var(--t2);margin-top:2px">Verified</div></div>
+                  <div style="background:var(--amb-bg);border-radius:10px;padding:12px"><div style="font-size:20px;font-weight:700;color:#d97706">1</div><div style="font-size:11px;color:var(--t2);margin-top:2px">Pending</div></div>
+                  <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:16px;font-weight:700;color:var(--g700)">₦1.12M</div><div style="font-size:11px;color:var(--t2);margin-top:2px">All-time earned</div></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- SECTION 2 — Invitee Network -->
-        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
-          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 2 — My Invitee Network</div>
-            <div style="display:flex;gap:6px">
-              <button onclick="pcFilterInvitees('all',this)" class="pc-filter active" style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #1d4ed8;background:#eff6ff;color:#1d4ed8;font-family:'DM Sans',sans-serif">All (4)</button>
-              <button onclick="pcFilterInvitees('verified',this)" class="pc-filter" style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #e2e8f0;background:#fff;color:#475569;font-family:'DM Sans',sans-serif">Verified</button>
-              <button onclick="pcFilterInvitees('pending',this)" class="pc-filter" style="padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #e2e8f0;background:#fff;color:#475569;font-family:'DM Sans',sans-serif">Pending</button>
+        <!-- ── DESKTOP: NETWORK ── -->
+        <div class="pcd-content" id="pcd-network" style="display:none">
+          <div style="margin-bottom:22px">
+            <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--text)">My Network</div>
+            <div style="color:var(--t2);font-size:12px;margin-top:2px">All pharmacies you have invited to the MSC platform</div>
+          </div>
+          <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between">
+              <div style="font-weight:600;font-size:14px">Invitees <span style="font-size:12px;color:var(--t3);font-weight:400">(4 total)</span></div>
+              <div style="display:flex;gap:6px">
+                <button onclick="pcdFilterNetwork('all',this)" class="pcd-nf-btn btn sm" style="background:var(--g700);color:#fff;border-color:var(--g700)">All</button>
+                <button onclick="pcdFilterNetwork('verified',this)" class="pcd-nf-btn btn sm">Verified</button>
+                <button onclick="pcdFilterNetwork('pending',this)" class="pcd-nf-btn btn sm">Pending</button>
+              </div>
             </div>
-          </div>
-          <!-- Stats row -->
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #f1f5f9">
-            <div style="padding:16px 20px;border-right:1px solid #f1f5f9"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Total Invitees</div><div style="font-size:24px;font-weight:700;color:#0f172a">4</div></div>
-            <div style="padding:16px 20px;border-right:1px solid #f1f5f9"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Verified</div><div style="font-size:24px;font-weight:700;color:#15803d">3</div></div>
-            <div style="padding:16px 20px"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Pending Verification</div><div style="font-size:24px;font-weight:700;color:#d97706">1</div></div>
-          </div>
-          <!-- Invitee table -->
-          <div style="overflow-x:auto">
-            <table style="width:100%;border-collapse:collapse;font-size:12px" id="pc-invitee-table">
-              <thead>
-                <tr style="background:#f8fafc">
-                  <th style="padding:10px 20px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Pharmacy</th>
-                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Registered</th>
-                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Status</th>
-                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Last Order</th>
-                  <th style="padding:10px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Commission Generated</th>
-                </tr>
-              </thead>
-              <tbody id="pc-invitee-tbody">
-              </tbody>
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--bg)">
+                <th style="padding:10px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Pharmacy</th>
+                <th style="padding:10px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Joined</th>
+                <th style="padding:10px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Status</th>
+                <th style="padding:10px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Last Order</th>
+                <th style="padding:10px 18px;text-align:right;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Commission Earned</th>
+              </tr></thead>
+              <tbody id="pcd-network-tbody"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- SECTION 3 — Commission Summary -->
-        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
-          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 3 — Commission Summary</div>
-            <select id="pc-month" onchange="renderPCCommission()" style="padding:5px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff;color:#0f172a">
+        <!-- ── DESKTOP: EARNINGS ── -->
+        <div class="pcd-content" id="pcd-earnings" style="display:none">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px">
+            <div>
+              <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--text)">Earnings Summary</div>
+              <div style="color:var(--t2);font-size:12px;margin-top:2px">Commission status breakdown for the selected month</div>
+            </div>
+            <select id="pcd-month" style="padding:8px 12px;border:1.5px solid var(--bd);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--sf)">
               <option value="2026-05">May 2026</option>
               <option value="2026-04" selected>April 2026</option>
               <option value="2026-03">March 2026</option>
               <option value="2026-02">February 2026</option>
             </select>
           </div>
-          <!-- Totals row -->
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #f1f5f9">
-            <div style="padding:16px 20px;border-right:1px solid #f1f5f9"><div style="font-size:11px;color:#64748b;margin-bottom:4px">Total Earned (All Time)</div><div style="font-size:20px;font-weight:700;color:#0f172a">₦1,124,600</div></div>
-            <div style="padding:16px 20px;border-right:1px solid #f1f5f9" id="pc-pending-card"><div style="font-size:11px;color:#d97706;font-weight:600;margin-bottom:4px">⏳ Pending</div><div style="font-size:20px;font-weight:700;color:#0f172a" id="pc-pending-amt">₦42,000</div><div style="font-size:10px;color:#64748b;margin-top:2px">30-day return window active</div></div>
-            <div style="padding:16px 20px;border-right:1px solid #f1f5f9" id="pc-confirmed-card"><div style="font-size:11px;color:#0369a1;font-weight:600;margin-bottom:4px">✓ Confirmed</div><div style="font-size:20px;font-weight:700;color:#0f172a" id="pc-confirmed-amt">₦86,000</div><div style="font-size:10px;color:#64748b;margin-top:2px">Return window passed · Locked</div></div>
-            <div style="padding:16px 20px" id="pc-withdrawable-card"><div style="font-size:11px;color:#15803d;font-weight:600;margin-bottom:4px">💚 Withdrawable</div><div style="font-size:20px;font-weight:700;color:#15803d" id="pc-withdrawable-amt">₦74,000</div><div style="font-size:10px;color:#64748b;margin-top:2px">Available to request withdrawal</div></div>
+          <!-- All-time banner -->
+          <div style="background:#0f172a;border-radius:14px;padding:22px 28px;color:#fff;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-size:11px;opacity:.5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Total Earned · All Time</div>
+              <div style="font-size:32px;font-weight:800">₦1,124,600</div>
+            </div>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
-          <!-- State explanations -->
-          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:8px">
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:4px">Commission Lifecycle</div>
-            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
-              <span style="font-size:16px;flex-shrink:0">⏳</span>
-              <div><div style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:2px">Pending Confirmation</div><div style="font-size:11px;color:#78350f;line-height:1.5">Commission is calculated immediately when the order status changes to Delivery Confirmed. It enters the 30-day return window. If no return is recorded within 30 days, the commission moves to Confirmed.</div></div>
+          <!-- 3-state cards in grid -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:14px;padding:20px">
+              <div style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:6px">⏳ Pending Confirmation</div>
+              <div style="font-size:28px;font-weight:800;color:var(--text);margin-bottom:8px">₦42,000</div>
+              <div style="font-size:11px;color:#78350f;line-height:1.6">Calculated on delivery confirmation. Enters a 30-day return window. Moves to Confirmed if no return within 30 days.</div>
             </div>
-            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe">
-              <span style="font-size:16px;flex-shrink:0">✓</span>
-              <div><div style="font-size:11px;font-weight:700;color:#1e40af;margin-bottom:2px">Confirmed</div><div style="font-size:11px;color:#1e40af;line-height:1.5">The 30-day return window has passed with no return recorded. This commission is locked and will become withdrawable on the 1st of the following calendar month.</div></div>
+            <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:14px;padding:20px">
+              <div style="font-size:11px;font-weight:700;color:#1e40af;margin-bottom:6px">✓ Confirmed</div>
+              <div style="font-size:28px;font-weight:800;color:var(--text);margin-bottom:8px">₦86,000</div>
+              <div style="font-size:11px;color:#1e40af;line-height:1.6">30-day return window passed with no return. Commission is locked. Becomes withdrawable on the 1st of the following month.</div>
             </div>
-            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0">
-              <span style="font-size:16px;flex-shrink:0">💚</span>
-              <div><div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:2px">Withdrawable</div><div style="font-size:11px;color:#166534;line-height:1.5">All commissions confirmed in the previous calendar month are now eligible for withdrawal. Withdrawable status is granted on the 1st of each month, regardless of when within the prior month each commission was confirmed. Example: commissions confirmed on any date in April become withdrawable on 1st May.</div></div>
+            <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:14px;padding:20px">
+              <div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:6px">💚 Withdrawable</div>
+              <div style="font-size:28px;font-weight:800;color:#15803d;margin-bottom:8px">₦74,000</div>
+              <div style="font-size:11px;color:#166534;line-height:1.6">All commissions confirmed in April are now eligible. Status granted on 1st May regardless of when each was confirmed.</div>
             </div>
           </div>
         </div>
 
-        <!-- SECTION 4 — Commission Detail List -->
-        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
-          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 4 — Commission Detail List</div>
-            <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <select id="pc-filter-status" onchange="renderPCCommDetail()" style="padding:5px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-family:'DM Sans',sans-serif;background:#fff">
+        <!-- ── DESKTOP: COMMISSION HISTORY ── -->
+        <div class="pcd-content" id="pcd-history" style="display:none">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px">
+            <div>
+              <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--text)">Commission History</div>
+              <div style="color:var(--t2);font-size:12px;margin-top:2px">Per-order commission detail with lifecycle status</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <select id="pcd-filter-status" onchange="renderPCDHistory()" style="padding:7px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--sf)">
                 <option value="">All Statuses</option>
                 <option value="pending">Pending</option>
                 <option value="confirmed">Confirmed</option>
                 <option value="withdrawable">Withdrawable</option>
               </select>
-              <select id="pc-filter-invitee" onchange="renderPCCommDetail()" style="padding:5px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-family:'DM Sans',sans-serif;background:#fff">
+              <select id="pcd-filter-invitee" onchange="renderPCDHistory()" style="padding:7px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--sf)">
                 <option value="">All Invitees</option>
-                <option value="MedPlus Ikeja">MedPlus Ikeja</option>
                 <option value="Pharma Direct">Pharma Direct</option>
                 <option value="PharmaLife">PharmaLife</option>
                 <option value="CareMax Pharmacy">CareMax Pharmacy</option>
               </select>
             </div>
           </div>
-          <div style="overflow-x:auto">
-            <table style="width:100%;border-collapse:collapse;font-size:12px">
-              <thead>
-                <tr style="background:#f8fafc">
-                  <th style="padding:10px 20px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Invitee Pharmacy</th>
-                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Order Ref</th>
-                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Delivery Confirmed</th>
-                  <th style="padding:10px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Commission</th>
-                  <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;border-bottom:1px solid #e2e8f0">Status</th>
-                </tr>
-              </thead>
-              <tbody id="pc-detail-tbody"></tbody>
+          <div style="background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden">
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--bg)">
+                <th style="padding:11px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Invitee</th>
+                <th style="padding:11px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Order Reference</th>
+                <th style="padding:11px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Confirmed</th>
+                <th style="padding:11px 18px;text-align:right;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Commission</th>
+                <th style="padding:11px 18px;text-align:left;font-size:11px;font-weight:600;color:var(--t2);border-bottom:1px solid var(--bd)">Status</th>
+              </tr></thead>
+              <tbody id="pcd-history-tbody"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- SECTION 5 — Bank Account & Withdrawal -->
-        <div style="background:#fff;border-radius:14px;border:1px solid #e2e8f0;margin-bottom:16px;overflow:hidden">
-          <div style="padding:14px 20px;border-bottom:1px solid #f1f5f9">
-            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b">Section 5 — Bank Account &amp; Withdrawal</div>
+        <!-- ── DESKTOP: PAYOUT ── -->
+        <div class="pcd-content" id="pcd-payout" style="display:none">
+          <div style="margin-bottom:22px">
+            <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--text)">Payout & Bank Details</div>
+            <div style="color:var(--t2);font-size:12px;margin-top:2px">Withdraw your earnings and manage your bank account</div>
           </div>
-          <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
-            <!-- Bank account card -->
-            <div>
-              <div style="font-size:12px;font-weight:700;color:#0f172a;margin-bottom:12px">Bank Account Details</div>
-              <div id="pc-bank-view" style="background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;padding:14px">
-                <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b">Bank</span><span style="font-size:12px;font-weight:600">Zenith Bank</span></div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b">Account Number</span><span style="font-size:12px;font-weight:600;font-family:'DM Mono',monospace">2048391027</span></div>
-                <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:#64748b">Account Name</span><span style="font-size:12px;font-weight:600">Kingsway Pharmacy Ltd</span></div>
-                <button onclick="togglePCBankEdit()" style="margin-top:12px;width:100%;padding:8px;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:#475569">Edit Details</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+            <!-- Left: withdrawal -->
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:16px;padding:24px">
+                <div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:6px">💚 Withdrawable Balance</div>
+                <div style="font-size:36px;font-weight:800;color:var(--text);margin-bottom:4px">₦74,000</div>
+                <div style="font-size:11px;color:var(--t2);margin-bottom:18px">Confirmed commissions from April 2026 · eligible from 1 May 2026</div>
+                <button onclick="pcdWithdraw()" style="width:100%;padding:13px;background:#15803d;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Request Withdrawal</button>
               </div>
-              <div id="pc-bank-edit" style="display:none;background:#f8fafc;border-radius:10px;border:1.5px solid #3b82f6;padding:14px">
-                <div style="margin-bottom:10px">
-                  <div style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px">Bank Name</div>
-                  <select id="pcb-bank" style="width:100%;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:#fff">
-                    <option>Access Bank</option><option>First Bank</option><option>GTBank</option>
-                    <option>Kuda</option><option>UBA</option><option selected>Zenith Bank</option>
-                  </select>
-                </div>
-                <div style="margin-bottom:10px">
-                  <div style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px">Account Number</div>
-                  <input id="pcb-acct" type="text" maxlength="10" value="2048391027" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Mono',monospace">
-                </div>
-                <div style="margin-bottom:12px">
-                  <div style="font-size:10px;font-weight:600;color:#64748b;margin-bottom:4px">Account Name</div>
-                  <input id="pcb-name" type="text" value="Kingsway Pharmacy Ltd" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif">
-                </div>
-                <div style="display:flex;gap:8px">
-                  <button onclick="togglePCBankEdit()" style="flex:1;padding:8px;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Cancel</button>
-                  <button onclick="savePCBank()" style="flex:2;padding:8px;background:#0f172a;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Save Details</button>
+              <!-- Withdrawal history -->
+              <div style="background:var(--sf);border:1px solid var(--bd);border-radius:16px;overflow:hidden">
+                <div style="padding:14px 18px;border-bottom:1px solid var(--bd);font-weight:600;font-size:14px">Withdrawal History</div>
+                <div id="pcd-withdrawal-hist" style="padding:12px 18px;display:flex;flex-direction:column;gap:8px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:8px">
+                    <div><div style="font-weight:600;font-size:14px">₦58,000</div><div style="font-size:11px;color:var(--t3)">01 Apr 2026</div></div>
+                    <span class="bdg verified">Processed</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg);border-radius:8px">
+                    <div><div style="font-weight:600;font-size:14px">₦43,000</div><div style="font-size:11px;color:var(--t3)">01 Mar 2026</div></div>
+                    <span class="bdg verified">Processed</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- Withdrawal card -->
-            <div>
-              <div style="font-size:12px;font-weight:700;color:#0f172a;margin-bottom:12px">Request Withdrawal</div>
-              <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:14px;margin-bottom:12px">
-                <div style="font-size:11px;color:#15803d;font-weight:700;margin-bottom:4px">💚 Withdrawable Balance</div>
-                <div style="font-size:24px;font-weight:800;color:#0f172a">₦74,000</div>
-                <div style="font-size:10px;color:#64748b;margin-top:2px">Confirmed commissions from April 2026 — eligible from 1 May 2026</div>
-                <button onclick="submitPCWithdrawal()" style="margin-top:10px;width:100%;padding:10px;background:#15803d;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Request Withdrawal → Finance</button>
+            <!-- Right: bank account -->
+            <div style="background:var(--sf);border:1px solid var(--bd);border-radius:16px;overflow:hidden">
+              <div style="padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between">
+                <div style="font-weight:600;font-size:14px">Bank Account</div>
+                <button id="pcd-bank-edit-btn" onclick="togglePCDBankEdit()" class="btn sm">Edit</button>
               </div>
-              <!-- Withdrawal history -->
-              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:8px">Withdrawal History</div>
-              <div id="pc-withdrawal-history">
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:6px">
-                  <div><div style="font-size:12px;font-weight:600">₦58,000</div><div style="font-size:10px;color:#64748b">Requested 01 Apr 2026</div></div>
-                  <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Processed</span>
+              <div id="pcd-bank-view" style="padding:20px 18px;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--t2)">Bank Name</span><span style="font-weight:600">Zenith Bank</span></div>
+                <div style="height:1px;background:var(--bd)"></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--t2)">Account Number</span><span style="font-weight:600;font-family:'DM Mono',monospace">2048391027</span></div>
+                <div style="height:1px;background:var(--bd)"></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--t2)">Account Name</span><span style="font-weight:600">Kingsway Pharmacy Ltd</span></div>
+                <div style="margin-top:4px;padding:10px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.5">
+                  Account name must match your CAC-registered business name exactly. Changes require admin verification.
                 </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0">
-                  <div><div style="font-size:12px;font-weight:600">₦43,000</div><div style="font-size:10px;color:#64748b">Requested 01 Mar 2026</div></div>
-                  <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Processed</span>
+              </div>
+              <div id="pcd-bank-edit" style="display:none;padding:20px 18px;border-top:1px solid var(--bd)">
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div>
+                    <div style="font-size:11px;font-weight:600;color:var(--t2);margin-bottom:4px">Bank Name</div>
+                    <select id="pcdb-bank" style="width:100%;padding:8px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--sf)">
+                      <option>Access Bank</option><option>First Bank</option><option>GTBank</option><option>Kuda</option><option>Sterling Bank</option><option>UBA</option><option selected>Zenith Bank</option>
+                    </select>
+                  </div>
+                  <div>
+                    <div style="font-size:11px;font-weight:600;color:var(--t2);margin-bottom:4px">Account Number (10 digits)</div>
+                    <input id="pcdb-acct" type="text" maxlength="10" value="2048391027" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:13px;font-family:'DM Mono',monospace">
+                  </div>
+                  <div>
+                    <div style="font-size:11px;font-weight:600;color:var(--t2);margin-bottom:4px">Account Name</div>
+                    <input id="pcdb-name" type="text" value="Kingsway Pharmacy Ltd" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif">
+                  </div>
+                  <div style="display:flex;gap:10px;margin-top:4px">
+                    <button onclick="togglePCDBankEdit()" class="btn" style="flex:1">Cancel</button>
+                    <button onclick="savePCDBank()" class="btn primary" style="flex:2">Save Details</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-      </div><!-- /pc-promoter -->
+      </div><!-- /desktop main -->
+    </div><!-- /desktop grid -->
+  </div><!-- /pc-view-desktop -->
 
-      <!-- Placeholder views for other PC sections -->
-      <div id="pc-orders" style="display:none;background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:40px;text-align:center;color:#94a3b8">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
-        <div style="font-size:14px;font-weight:600;margin-bottom:4px">My Orders</div>
-        <div style="font-size:12px">Order history view — out of scope for this prototype</div>
-      </div>
-      <div id="pc-catalogue" style="display:none;background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:40px;text-align:center;color:#94a3b8">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:10px"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
-        <div style="font-size:14px;font-weight:600;margin-bottom:4px">Catalogue</div>
-        <div style="font-size:12px">Product catalogue — out of scope for this prototype</div>
-      </div>
-
-    </div><!-- /pc-content -->
-  </div><!-- /flex -->
 </div>
 </div>
 <!-- ══ END PERSONAL CENTRE ══ -->
@@ -1849,15 +2058,15 @@ const PC = {
 };
 
 // ══════════ PERSONAL CENTRE FUNCTIONS ══════════
-function pcNav(section) {
-  ['promoter','orders','catalogue'].forEach(s => {
-    const el = document.getElementById('pc-'+s);
-    if(el) el.style.display = s===section?'block':'none';
-    const nav = document.getElementById('pcnav-'+s);
-    if(nav) {
-      nav.style.background = s===section?'#eff6ff':'';
-      nav.style.color = s===section?'#1d4ed8':'#475569';
-      nav.style.fontWeight = s===section?'600':'500';
+function pcTab(tab) {
+  const tabs = ['identity','network','earnings','detail','payout'];
+  tabs.forEach(t => {
+    const content = document.getElementById('pct-'+t);
+    const btn     = document.getElementById('pctab-'+t);
+    if(content) { content.style.display = t===tab ? 'flex' : 'none'; }
+    if(btn) {
+      btn.style.borderBottom = t===tab ? '2px solid #0f172a' : '2px solid transparent';
+      btn.style.color        = t===tab ? '#0f172a' : '#94a3b8';
     }
   });
 }
@@ -1866,11 +2075,11 @@ function pcFilterInvitees(filter, btn) {
   document.querySelectorAll('.pc-filter').forEach(b => {
     b.style.background='#fff'; b.style.color='#475569'; b.style.borderColor='#e2e8f0';
   });
-  btn.style.background='#eff6ff'; btn.style.color='#1d4ed8'; btn.style.borderColor='#1d4ed8';
-  const rows = document.querySelectorAll('#pc-invitee-tbody tr');
-  rows.forEach(r => {
-    const st = r.dataset.status;
-    r.style.display = (filter==='all'||st===filter) ? '' : 'none';
+  btn.style.background='#0f172a'; btn.style.color='#fff'; btn.style.borderColor='#0f172a';
+  const cards = document.querySelectorAll('#pc-invitee-tbody [data-status]');
+  cards.forEach(c => {
+    const st = c.dataset.status;
+    c.style.display = (filter==='all'||st===filter) ? '' : 'none';
   });
 }
 
@@ -1879,17 +2088,22 @@ function renderPCInvitees() {
   if(!tbody) return;
   tbody.innerHTML = PC.invitees.map(i => {
     const stBadge = i.status==='verified'
-      ? `<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;background:#dcfce7;color:#15803d">Verified</span>`
-      : `<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;background:#fef9c3;color:#92400e">Pending</span>`;
-    return `<tr data-status="${i.status}" style="border-bottom:1px solid #f1f5f9">
-      <td style="padding:12px 20px;font-weight:600;color:#0f172a">${i.name}</td>
-      <td style="padding:12px 16px;color:#64748b">${i.registered}</td>
-      <td style="padding:12px 16px">${stBadge}</td>
-      <td style="padding:12px 16px;color:#64748b">${i.lastOrder}</td>
-      <td style="padding:12px 16px;text-align:right;font-weight:700;color:${i.commission>0?'#15803d':'#94a3b8'}">
-        ${i.commission>0?'₦'+i.commission.toLocaleString():'—'}
-      </td>
-    </tr>`;
+      ? `<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;background:#dcfce7;color:#15803d">✓ Verified</span>`
+      : `<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;background:#fef9c3;color:#92400e">Pending</span>`;
+    const commText = i.commission>0 ? `<span style="font-weight:700;color:#15803d">₦${i.commission.toLocaleString()}</span>` : `<span style="color:#94a3b8">—</span>`;
+    return `<div data-status="${i.status}" style="background:#fff;border-radius:10px;padding:12px;border:1px solid #e8ecf0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div style="font-size:12px;font-weight:700;color:#0f172a">${i.name}</div>
+        ${stBadge}
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b">
+        <span>Joined ${i.registered}</span>
+        <span>Last order: ${i.lastOrder}</span>
+      </div>
+      <div style="margin-top:7px;padding-top:7px;border-top:1px solid #f1f5f9;font-size:10px;color:#64748b;display:flex;justify-content:space-between;align-items:center">
+        <span>Commission earned</span>${commText}
+      </div>
+    </div>`;
   }).join('');
 }
 
@@ -1912,18 +2126,22 @@ function renderPCCommDetail() {
     (!inviteeFilter || r.invitee===inviteeFilter)
   );
   if(filtered.length===0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="padding:28px;text-align:center;color:#94a3b8;font-size:12px">No commission records match the selected filters.</td></tr>`;
+    tbody.innerHTML = `<div style="padding:28px;text-align:center;color:#94a3b8;font-size:12px">No records match the selected filters.</div>`;
     return;
   }
   tbody.innerHTML = filtered.map(r => {
     const s = statusStyle[r.status];
-    return `<tr style="border-bottom:1px solid #f1f5f9">
-      <td style="padding:11px 20px;font-weight:600;color:#0f172a">${r.invitee}</td>
-      <td style="padding:11px 16px;font-family:'DM Mono',monospace;font-size:11px;color:#475569">${r.ref}</td>
-      <td style="padding:11px 16px;color:#64748b">${r.confirmed}</td>
-      <td style="padding:11px 16px;text-align:right;font-weight:700;color:#0f172a">₦${r.amount.toLocaleString()}</td>
-      <td style="padding:11px 16px"><span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:${s.bg};color:${s.color}">${s.label}</span></td>
-    </tr>`;
+    return `<div style="background:#fff;border-radius:10px;padding:12px;border:1px solid #e8ecf0">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div style="font-size:12px;font-weight:700;color:#0f172a">${r.invitee}</div>
+        <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;background:${s.bg};color:${s.color}">${s.label}</span>
+      </div>
+      <div style="font-size:10px;font-family:'DM Mono',monospace;color:#64748b;margin-bottom:6px">${r.ref}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#64748b">
+        <span>Confirmed ${r.confirmed}</span>
+        <span style="font-size:13px;font-weight:700;color:#0f172a">₦${r.amount.toLocaleString()}</span>
+      </div>
+    </div>`;
   }).join('');
 }
 
@@ -1960,6 +2178,133 @@ function submitPCWithdrawal() {
   toast('Withdrawal request submitted','success','Your withdrawal request has been submitted. Finance will process your payment shortly.');
 }
 
+// ══════════ PC VIEW TOGGLE ══════════
+function pcViewToggle(mode) {
+  document.getElementById('pc-view-mobile').style.display  = mode==='mobile'  ? 'flex'  : 'none';
+  document.getElementById('pc-view-desktop').style.display = mode==='desktop' ? 'block' : 'none';
+  const mb = document.getElementById('pcview-mobile-btn');
+  const db = document.getElementById('pcview-desktop-btn');
+  mb.style.background = mode==='mobile'  ? 'var(--g700)' : 'transparent';
+  mb.style.color      = mode==='mobile'  ? '#fff'        : 'var(--t2)';
+  db.style.background = mode==='desktop' ? 'var(--g700)' : 'transparent';
+  db.style.color      = mode==='desktop' ? '#fff'        : 'var(--t2)';
+  if(mode==='desktop') { renderPCDNetwork(); renderPCDHistory(); }
+}
+
+// ══════════ PC DESKTOP FUNCTIONS ══════════
+function pcdTab(tab) {
+  const tabs = ['identity','network','earnings','history','payout'];
+  tabs.forEach(t => {
+    const c = document.getElementById('pcd-'+t);
+    const n = document.getElementById('pcdnav-'+t);
+    if(c) c.style.display = t===tab ? 'block' : 'none';
+    if(n) {
+      n.style.background  = t===tab ? '#1a6b3c' : 'transparent';
+      n.style.color       = t===tab ? '#fff'     : 'rgba(255,255,255,.5)';
+    }
+  });
+}
+
+function pcdFilterNetwork(filter, btn) {
+  document.querySelectorAll('.pcd-nf-btn').forEach(b => {
+    b.style.background='var(--sf)'; b.style.color='var(--text)'; b.style.borderColor='var(--bd)';
+  });
+  btn.style.background='var(--g700)'; btn.style.color='#fff'; btn.style.borderColor='var(--g700)';
+  const rows = document.querySelectorAll('#pcd-network-tbody tr');
+  rows.forEach(r => {
+    r.style.display = (filter==='all' || r.dataset.status===filter) ? '' : 'none';
+  });
+}
+
+function renderPCDNetwork() {
+  const tbody = document.getElementById('pcd-network-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = PC.invitees.map(i => {
+    const stBadge = i.status==='verified'
+      ? `<span class="bdg verified">Verified</span>`
+      : `<span class="bdg pending">Pending</span>`;
+    return `<tr data-status="${i.status}" style="border-bottom:1px solid var(--bd)">
+      <td style="padding:13px 18px;font-weight:600">${i.name}</td>
+      <td style="padding:13px 18px;color:var(--t2)">${i.registered}</td>
+      <td style="padding:13px 18px">${stBadge}</td>
+      <td style="padding:13px 18px;color:var(--t2)">${i.lastOrder}</td>
+      <td style="padding:13px 18px;text-align:right;font-weight:700;color:${i.commission>0?'var(--g700)':'var(--t3)'}">
+        ${i.commission>0 ? '₦'+i.commission.toLocaleString() : '—'}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPCDHistory() {
+  const statusFilter  = (document.getElementById('pcd-filter-status')  || {}).value || '';
+  const inviteeFilter = (document.getElementById('pcd-filter-invitee') || {}).value || '';
+  const tbody = document.getElementById('pcd-history-tbody');
+  if(!tbody) return;
+  const statusStyle = {
+    pending:     {bg:'#fffbeb',color:'#92400e', label:'⏳ Pending'},
+    confirmed:   {bg:'#eff6ff',color:'#1e40af', label:'✓ Confirmed'},
+    withdrawable:{bg:'#f0fdf4',color:'#15803d', label:'💚 Withdrawable'},
+  };
+  const filtered = PC.commDetail.filter(r =>
+    (!statusFilter  || r.status===statusFilter) &&
+    (!inviteeFilter || r.invitee===inviteeFilter)
+  );
+  if(filtered.length===0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="padding:28px;text-align:center;color:var(--t3);font-size:12px">No records match the selected filters.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(r => {
+    const s = statusStyle[r.status];
+    return `<tr style="border-bottom:1px solid var(--bd)">
+      <td style="padding:13px 18px;font-weight:600">${r.invitee}</td>
+      <td style="padding:13px 18px;font-family:'DM Mono',monospace;font-size:12px;color:var(--t2)">${r.ref}</td>
+      <td style="padding:13px 18px;color:var(--t2)">${r.confirmed}</td>
+      <td style="padding:13px 18px;text-align:right;font-weight:700">₦${r.amount.toLocaleString()}</td>
+      <td style="padding:13px 18px"><span style="font-size:11px;font-weight:700;padding:3px 9px;border-radius:5px;background:${s.bg};color:${s.color}">${s.label}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function togglePCDBankEdit() {
+  const view = document.getElementById('pcd-bank-view');
+  const edit = document.getElementById('pcd-bank-edit');
+  const btn  = document.getElementById('pcd-bank-edit-btn');
+  const editing = edit.style.display === 'block';
+  view.style.display = editing ? 'flex' : 'none';
+  edit.style.display = editing ? 'none' : 'block';
+  btn.textContent    = editing ? 'Edit'  : 'Cancel';
+}
+
+function savePCDBank() {
+  const bank = document.getElementById('pcdb-bank').value;
+  const acct = document.getElementById('pcdb-acct').value;
+  const name = document.getElementById('pcdb-name').value;
+  if(acct.length!==10||!/^\d+$/.test(acct)){toast('Invalid account number','warning','Must be exactly 10 digits.');return;}
+  document.getElementById('pcd-bank-view').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--t2)">Bank Name</span><span style="font-weight:600">${bank}</span></div>
+    <div style="height:1px;background:var(--bd)"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--t2)">Account Number</span><span style="font-weight:600;font-family:'DM Mono',monospace">${acct}</span></div>
+    <div style="height:1px;background:var(--bd)"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--t2)">Account Name</span><span style="font-weight:600">${name}</span></div>`;
+  document.getElementById('pcd-bank-view').style.display = 'flex';
+  document.getElementById('pcd-bank-view').style.flexDirection = 'column';
+  document.getElementById('pcd-bank-view').style.gap = '14px';
+  document.getElementById('pcd-bank-edit').style.display = 'none';
+  document.getElementById('pcd-bank-edit-btn').textContent = 'Edit';
+  toast('Bank details saved','success',`${bank} · ${acct} updated.`);
+}
+
+function pcdWithdraw() {
+  const hist = document.getElementById('pcd-withdrawal-hist');
+  const today = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const entry = `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--amb-bg);border:1px solid var(--amb-bd);border-radius:8px">
+    <div><div style="font-weight:600;font-size:14px">₦74,000</div><div style="font-size:11px;color:var(--t3)">Requested ${today}</div></div>
+    <span class="bdg pending">Processing</span>
+  </div>`;
+  hist.insertAdjacentHTML('afterbegin', entry);
+  toast('Withdrawal requested','success','Your request has been submitted. Finance will process within 2 business days.');
+}
+
 // ══════════ SURFACE SWITCH ══════════
 function switchSurface(name) {
   document.querySelectorAll('.surface').forEach(s => s.classList.remove('active'));
@@ -1969,7 +2314,7 @@ function switchSurface(name) {
   closeDrawer(); closeModal();
   if(name==='admin') setTimeout(initCommChart,80);
   if(name==='promoter') { setTimeout(initEarnChart,80); renderEarnBreakdown(); }
-  if(name==='pc') { renderPCInvitees(); renderPCCommDetail(); }
+  if(name==='pc') { renderPCInvitees(); renderPCCommDetail(); renderPCDNetwork(); renderPCDHistory(); }
 }
 
 function showView(name, btn) {
